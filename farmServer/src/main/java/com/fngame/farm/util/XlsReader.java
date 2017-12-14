@@ -35,6 +35,7 @@ public class XlsReader {
         HSSFCell cell = null;
         for (int i = 0; i < titleRow.getLastCellNum(); i++) {
             cell = titleRow.getCell(i);
+
             System.out.println("public String " + cell.getStringCellValue() + ";");
         }
 
