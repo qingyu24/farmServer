@@ -156,8 +156,10 @@
                     <configurationFile>${basedir}/src/main/resources/generator/generatorConfig.xml</configurationFile>
                     <overwrite>true</overwrite>
                     <verbose>true</verbose>
+
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 

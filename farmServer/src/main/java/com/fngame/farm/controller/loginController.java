@@ -3,8 +3,6 @@ package com.fngame.farm.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.fngame.farm.model.User;
 import com.fngame.farm.service.loginService;
-import org.apache.catalina.servlet4preview.ServletContext;
-import org.springframework.boot.web.support.ServletContextApplicationContextInitializer;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
