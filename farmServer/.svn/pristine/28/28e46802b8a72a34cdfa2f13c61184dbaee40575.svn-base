@@ -1,0 +1,75 @@
+package com.fngame.farm.util;
+
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
+import java.io.*;
+//根据表生成实体类
+public class XlsUtil {
+    public static void creatClass() throws IOException {
+        File file = new File("/src/main/resources/config/");
+file.mkdirs();
+        File[] files = file.listFiles();
+
+        for (File file1 : files) {
+            String name = file1.getName();
+            if (name.endsWith(".xls")) {
+                File file2 = new File("class/" + name.replace(".xls", ".java"));
+                file2.createNewFile();
+
+                FileWriter writer = new FileWriter(file2, true);
+                XlsUtil.read(writer, file1);
+
+            }
+        }
+
+    }
+
+    public static void read(FileWriter writer1, File file) throws IOException {
+        BufferedWriter writer = new BufferedWriter(writer1);
+        HSSFWorkbook wb = null;
+        try {
+
+            wb = new HSSFWorkbook(new FileInputStream(file));
+        } catch (IOException e) {
+
+            System.out.println("运行有错");
+        }
+        //Excel工作表
+        HSSFSheet sheet = wb.getSheetAt(0);
+
+        //表头那一行
+        HSSFRow titleRow = sheet.getRow(1);
+        System.out.println(titleRow.getLastCellNum());
+        HSSFCell cell = null;
+        writer.write(String.format("public class %s {", file.getName().replace(".xls", "")));
+        writer.newLine();
+        writer.flush();
+
+        for (int i = 0; i < titleRow.getLastCellNum(); i++) {
+            cell = titleRow.getCell(i);
+
+            try {
+
+                writer.write("public String " + cell.getStringCellValue() + ";");
+            } catch (Exception e) {
+                try {
+                    writer.write("public Integer " + cell.getNumericCellValue() + ";");
+                } catch (Exception e1) {
+                    writer.write("public boolean " + cell.getBooleanCellValue() + ";");
+                }
+            }
+            writer.newLine();
+            writer.flush();
+            System.out.println("ddddddd");
+        }
+        writer.write("}");
+        writer.close();
+        writer1.close();
+
+    }
+
+
+}
