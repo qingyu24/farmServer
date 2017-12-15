@@ -1,9 +1,9 @@
 package com.fngame.farm.util;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.*;
 
@@ -18,8 +18,8 @@ public class XlsUtil {
 
         for (File file1 : files) {
             String name = file1.getName();
-            if (name.endsWith(".xls")) {
-                File file2 = new File("src/main/java/com/fngame/farm/configer/" + name.replace(".xls", ".java"));
+            if (name.endsWith(".xlsx")) {
+                File file2 = new File("src/main/java/com/fngame/farm/configer/" + name.replace(".xlsx", ".java"));
                 file2.createNewFile();
 
                 FileWriter writer = new FileWriter(file2, true);
@@ -32,24 +32,24 @@ public class XlsUtil {
 
     public static void read(FileWriter writer1, File file) throws IOException {
         BufferedWriter writer = new BufferedWriter(writer1);
-        HSSFWorkbook wb = null;
+        XSSFWorkbook wb = null;
         try {
 
-            wb = new HSSFWorkbook(new FileInputStream(file));
+            wb = new XSSFWorkbook(new FileInputStream(file));
         } catch (IOException e) {
 
             System.out.println("运行有错");
         }
         //Excel工作表
-        HSSFSheet sheet = wb.getSheetAt(0);
+        XSSFSheet sheet = wb.getSheetAt(0);
 
         //表头那一行
-        HSSFRow titleRow = sheet.getRow(0);
+        XSSFRow titleRow = sheet.getRow(0);
         System.out.println(titleRow.getLastCellNum());
-        HSSFCell cell = null;
+        XSSFCell cell = null;
         writer.write("package com.fngame.farm.configer;");
         writer.newLine();
-        writer.write(String.format("public class %s {", file.getName().replace(".xls", "")));
+        writer.write(String.format("public class %s {", file.getName().replace(".xlsx", "")));
         writer.newLine();
         writer.flush();
 
@@ -63,7 +63,11 @@ public class XlsUtil {
                 try {
                     writer.write("  public Integer " + cell.getNumericCellValue() + ";");
                 } catch (Exception e1) {
-                    writer.write("  public boolean " + cell.getBooleanCellValue() + ";");
+                    try {
+                        writer.write("  public boolean " + cell.getBooleanCellValue() + ";");
+                    } catch (Exception e3) {
+                        System.out.println(e3);
+                    }
                 }
             }
             writer.newLine();
@@ -76,5 +80,33 @@ public class XlsUtil {
 
     }
 
+
+    public static void getloader() throws IOException {
+        //        File file = new File("src/main/java/com/fngame/farm/configer/MahJongConfig.xls");
+        File file = new File("src/main/resources/config/");
+
+
+        File[] files = file.listFiles();
+
+        for (File file1 : files) {
+            String name = file1.getName();
+            if (name.endsWith(".xlsx")) {
+
+
+                XlsUtil.getlist( name.replace(".xlsx", "loader"));
+
+            }
+        }
+
+    }
+    public static void getlist(String file) {
+        String replace = file.replace(".java", "");
+        String s = "  private static   ArrayList<%s> %sloader=new ArrayList();";
+        String s1= String.format("  loades.put(\"%s\", %s);",file.replace("loader",""),file) ;
+
+        String format = String.format(s, replace, replace, replace);
+        System.out.println(s1);
+
+    }
 
 }
