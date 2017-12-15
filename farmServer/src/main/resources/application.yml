@@ -34,9 +34,3 @@ pagehelper:
     reasonable: true
     supportMethodsArguments: true
     params: count=countSql
-
-  http:
-      multipart:
-        max-file-size: 20M
-          max-request-size: 200Mb
-uploadDir: file

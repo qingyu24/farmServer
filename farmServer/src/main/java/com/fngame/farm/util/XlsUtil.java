@@ -44,7 +44,7 @@ public class XlsUtil {
         HSSFSheet sheet = wb.getSheetAt(0);
 
         //表头那一行
-        HSSFRow titleRow = sheet.getRow(1);
+        HSSFRow titleRow = sheet.getRow(0);
         System.out.println(titleRow.getLastCellNum());
         HSSFCell cell = null;
         writer.write("package com.fngame.farm.configer;");

@@ -3,8 +3,6 @@ package com.fngame.farm.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.fngame.farm.model.User;
 import com.fngame.farm.service.loginService;
-import org.apache.catalina.servlet4preview.ServletContext;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,8 +15,7 @@ public class loginController {
     private static String resp_desc = "resp_desc";
     private static String resp_code = "resp_code";
     private static String data = "data";
-    @Autowired
-    private ServletContext servletContext;
+
     @Resource
     private loginService loginService;
 

@@ -20,8 +20,8 @@ import java.io.*;
 public class FileController {
 
     private static final Logger logger = LoggerFactory.getLogger(FileController.class);
-    @Value("${uploadDir}")
-    private String uploadDir;
+/*    @Value("${uploadDir}")*/
+    private String uploadDir="";
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public JSONObject uploadImage(@RequestParam(value = "file") MultipartFile file) throws RuntimeException {
