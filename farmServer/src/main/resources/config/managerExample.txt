@@ -1,0 +1,45 @@
+package com.fngame.farm.manager;
+
+import com.fngame.farm.configer.*;
+import com.fngame.farm.model.Animal;
+import com.fngame.farm.model.Building;
+import com.fngame.farm.util.XlsReader;
+import com.sun.scenario.effect.Crop;
+import com.sun.tools.javac.jvm.Items;
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+@Component
+public class ConfigLoaderManager {
+    public static ConfigLoaderManager instance;
+
+    public static ConfigLoaderManager getInstance() {
+        if (instance == null) {
+            instance = new ConfigLoaderManager();
+        }
+        return instance;
+    }
+
+    private HashMap<String, ArrayList> loades = new HashMap<>(20);
+add1
+    private ArrayList<%s> %sloader = new ArrayList<%s>(20);
+
+
+
+    public void loaderAll() {
+
+        loades.clear();
+add2
+        loades.put("%s",%sloader);
+
+
+        XlsReader.getInstance().loaderAll(loades);
+    }
+  public HashMap<String,ArrayList> getLoaders() {
+        return loades;
+    }
+
+}

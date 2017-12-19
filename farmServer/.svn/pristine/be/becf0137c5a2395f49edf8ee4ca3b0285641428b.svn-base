@@ -1,0 +1,8 @@
+package com.fngame.farm.configer;
+public class Order {
+  public Integer OrderID;
+  public Integer Display;
+  public Integer Items;
+  public Integer Price;
+  public Integer LvRange;
+}

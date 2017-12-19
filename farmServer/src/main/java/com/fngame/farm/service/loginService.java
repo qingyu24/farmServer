@@ -3,6 +3,9 @@ package com.fngame.farm.service;
 import com.fngame.farm.mapper.UserMapper;
 import com.fngame.farm.model.User;
 import com.fngame.farm.model.UserExample;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -16,8 +19,11 @@ public class loginService {
 
 
     public boolean addUser(User user, Integer type) {
+
+
         //根据type 判断是否注册过
         User user1 = null;
+        if (type == null) type = 1;
         switch (type) {
             case 1:
                 user1 = this.getUser(user.getUsername(), user.getPassword(), 4);
@@ -31,7 +37,14 @@ public class loginService {
         int i = 0;
         if (user1 == null) {
             try {
-                i = userMapper.insertSelective(user);
+                user.setExp(0);
+                user.setScore(0);
+                user.setIcon(0);
+                user.setMoney(0);
+                user.setBeans(0);
+                user.setLevel(0);
+                user.setIngot(0);
+                i = userMapper.insert(user);
             } catch (Exception e) {
                 return false;
             }
@@ -42,7 +55,7 @@ public class loginService {
     public User getUser(String username, String password, Integer type) {
         UserExample userExample = new UserExample();
         UserExample.Criteria criteria = userExample.createCriteria();
-
+if(type==null)type=1;
 
         switch (type) {
             case 1://账户密码登录

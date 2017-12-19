@@ -1,0 +1,12 @@
+package com.fngame.farm.configer;
+public class Building {
+/*  public Integer EntityID;
+  public Integer Display;
+  public Integer Info;
+  public Integer 1stType;
+  public Integer 2ndType;
+  public Integer Price;
+  public Integer CostTime;
+  public Integer BuildLimit;
+  public Integer Unlocklv;*/
+}

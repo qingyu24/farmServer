@@ -1,0 +1,7 @@
+package com.fngame.farm.util;
+
+public class FileUtil {
+    public static void copyFile(){
+
+    }
+}

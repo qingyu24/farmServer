@@ -1,0 +1,39 @@
+package com.fngame.farm.service;
+
+import com.fngame.farm.configer.Structure;
+import com.fngame.farm.manager.ConfigManager;
+import com.fngame.farm.mapper.BuildingMapper;
+import com.fngame.farm.mapper.UserMapper;
+import com.fngame.farm.model.Building;
+import com.fngame.farm.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class BuildingService {
+    @Autowired
+    ConfigManager configManager;
+
+    @Autowired
+    BuildingMapper BuildingMapper;
+    @Autowired
+    UserMapper userMapper;
+    Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public boolean addBuilding(Building building) {
+        int i = BuildingMapper.insertSelective(building);
+
+        return i > 0;
+    }
+
+    public void addBuild(Building building) {
+        Structure bco = configManager.getBuildingConfig(building);
+        User user = userMapper.selectByPrimaryKey(building.getUserid());
+ /*  if(bco.BuildPrice>user.getMoney()){}*/
+
+
+    }
+
+}

@@ -1,12 +1,16 @@
 package com.fngame.farm.util;
 
 import com.fngame.farm.configer.Actor;
-import com.fngame.farm.managetr.ConfigManager;
+import com.fngame.farm.manager.ConfigManager;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.formula.functions.T;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,17 +54,18 @@ public class XlsReader {
 
     }
 
-    public List<T> parseXls(List list, Class<T> t, File file) throws IOException, IllegalAccessException, InstantiationException, NoSuchFieldException {
+    public List<T> parseXls(List list, Class<T> t, File file) throws Exception {
         Field[] fields = t.getFields();
-        T obj = null;
-        HSSFWorkbook wb = new HSSFWorkbook(new FileInputStream(file));
-        HSSFSheet sheet = wb.getSheetAt(0);
+        Object obj = null;
+        XSSFWorkbook wb = new XSSFWorkbook(new FileInputStream(file));
+        XSSFSheet sheet = wb.getSheetAt(0);
         for (int i = 1; i < sheet.getLastRowNum(); i++) {
             obj = t.newInstance();
-            HSSFRow row1 = sheet.getRow(0);
-            HSSFRow row = sheet.getRow(i);
+            XSSFRow row1 = sheet.getRow(0);
+            XSSFRow row = sheet.getRow(i);
+            if (row == null) continue;
             for (int j = 0; j < row.getLastCellNum(); j++) {
-                HSSFCell cell = row1.getCell(j);
+                XSSFCell cell = row1.getCell(j);
                 String key = cell.getStringCellValue();
                 Field field = t.getField(key);
                 switch (field.getName()) {
@@ -88,19 +93,24 @@ public class XlsReader {
     }
 
 
-
     public void loaderAll(HashMap<String, ArrayList> map) {
-/*        String path = "src/main/resources/config/%s.xlsx";*/
- String path="";
-        String Classes = "\"com.fngame.farm.configer.%s\"";
+        String path = "src/main/resources/config/%s.xlsx";
+
+        String Classes = "com.fngame.farm.configer.%s";
         Set set = map.keySet();
         Iterator iterator = set.iterator();
+        int i = 0;
         while (iterator.hasNext()) {
+            i++;
+            System.out.println(i);
             String next = (String) iterator.next();
             ArrayList list = map.get(next);
             File file = new File(String.format(path, next));
             try {
                 Class aClass = Class.forName(String.format(Classes, next));
+                if (i == 20) {
+                    System.out.println("d");
+                }
                 if (file.exists()) {
                     this.parseXls(list, aClass, file);
                     System.out.println("chegns++++++++++++");
@@ -117,6 +127,8 @@ public class XlsReader {
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 

@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.winter</groupId>
-    <artifactId>springboot-mybatis-demo</artifactId>
+    <artifactId>farmServer</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>springboot-mybatis-demo</name>
+    <name>farmServer</name>
     <description>Demo project for Spring Boot</description>
 
     <parent>
