@@ -2,9 +2,11 @@ package com.fngame.farm.controller.base;
 
 import com.fngame.farm.service.AnimaleService;
 import com.fngame.farm.userdate.ResultInfo;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 
 @Component
 
@@ -14,5 +16,6 @@ public class BaseController {
     @Autowired
     public AnimaleService animaleService;
 
+    public Logger logger= LoggerFactory.getLogger(this.getClass());
 
 }

@@ -1,7 +1,8 @@
 package com.fngame.farm.manager;
 
-import com.fngame.farm.configer.Structure;
+import com.fngame.farm.configer.Entity;
 import com.fngame.farm.model.Building;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -26,15 +27,17 @@ public class ConfigManager {
         return loades.get(o.getClass().getSimpleName());
     }
 
-    public Structure getBuildingConfig(Building o) {
-        ArrayList<Structure> arrayList = loades.get(new Structure());
+    @Cacheable(value = "building", key = "#o.baseid")
+    public Entity getBuildingConfig(Building o) {
+        ArrayList<Entity> arrayList = loades.get(Entity.class.getSimpleName());
         if (o != null && arrayList != null) {
-            for (Structure structure : arrayList) {
-                if (structure.ID == o.getBaseid()) {
-                    return structure;
+            for (Entity Entity : arrayList) {
+                if (Entity.BuildingID.intValue() == o.getBaseid()) {
+                    return Entity;
                 }
             }
         }
         return null;
     }
+
 }

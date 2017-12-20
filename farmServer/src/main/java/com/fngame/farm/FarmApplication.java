@@ -9,14 +9,12 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.security.auth.login.Configuration;
-
 @EnableAutoConfiguration
 @SpringBootApplication
-@EnableTransactionManagement
 @MapperScan("com.fngame.farm.mapper")
 @EnableCaching
 @ServletComponentScan
+@EnableTransactionManagement
 public class FarmApplication {
 
     public static void main(String[] args) {

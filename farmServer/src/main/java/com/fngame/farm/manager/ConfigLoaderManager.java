@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Component
 public class ConfigLoaderManager {
@@ -44,40 +45,44 @@ public class ConfigLoaderManager {
     private ArrayList<Structure> Structureloader = new ArrayList<Structure>(20);
     private ArrayList<StructureUpgrade> StructureUpgradeloader = new ArrayList<StructureUpgrade>(20);
     private ArrayList<Test> Testloader = new ArrayList<Test>(20);
-    //  private ArrayList<TestActor> TestActorloader = new ArrayList<TestActor>(20);
+/*    private ArrayList<TestActor> TestActorloader = new ArrayList<TestActor>(20);*/
+
+
 
 
     public void loaderAll() {
 
         loades.clear();
-        loades.put("Actor", Actorloader);
-        loades.put("AddQueue", AddQueueloader);
-        loades.put("Animal", Animalloader);
-        loades.put("Building", Buildingloader);
-        loades.put("Car", Carloader);
-        loades.put("Craft", Craftloader);
-        loades.put("Crafting", Craftingloader);
-        loades.put("Crop", Croploader);
-        loades.put("Entity", Entityloader);
-        loades.put("fruiter", fruiterloader);
-        loades.put("Item", Itemloader);
-        loades.put("Items", Itemsloader);
-        loades.put("Level", Levelloader);
-        loades.put("Obstacle", Obstacleloader);
-        loades.put("Order", Orderloader);
-        loades.put("OrnamentScore", OrnamentScoreloader);
-        loades.put("Pet", Petloader);
-        loades.put("Storehouse", Storehouseloader);
-        loades.put("Structure", Structureloader);
-        loades.put("StructureUpgrade", StructureUpgradeloader);
-        loades.put("Test", Testloader);
-        //   loades.put("TestActor",TestActorloader);
+        loades.put("Actor",Actorloader);
+        loades.put("AddQueue",AddQueueloader);
+        loades.put("Animal",Animalloader);
+        loades.put("Building",Buildingloader);
+        loades.put("Car",Carloader);
+        loades.put("Craft",Craftloader);
+        loades.put("Crafting",Craftingloader);
+        loades.put("Crop",Croploader);
+        loades.put("Entity",Entityloader);
+        loades.put("fruiter",fruiterloader);
+        loades.put("Item",Itemloader);
+        loades.put("Items",Itemsloader);
+        loades.put("Level",Levelloader);
+        loades.put("Obstacle",Obstacleloader);
+        loades.put("Order",Orderloader);
+        loades.put("OrnamentScore",OrnamentScoreloader);
+        loades.put("Pet",Petloader);
+        loades.put("Storehouse",Storehouseloader);
+        loades.put("Structure",Structureloader);
+        loades.put("StructureUpgrade",StructureUpgradeloader);
+        loades.put("Test",Testloader);
+/*        loades.put("TestActor",TestActorloader);*/
+
 
 
         XlsReader.getInstance().loaderAll(loades);
-    }
 
-    public HashMap<String, ArrayList> getLoaders() {
+    }
+  public HashMap<String,ArrayList> getLoaders() {
+
         return loades;
     }
 

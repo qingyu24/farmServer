@@ -56,6 +56,15 @@ public class XlsUtilTest {
         xlsUtil.readManager();
 
     }
+
+    @Test
+    public void creatClass() throws Exception {
+//TODO: Test goes here...
+
+        XlsUtil.creatClass();
+
+
+    }
     @Test
     public void rr() throws Exception {
 //TODO: Test goes here...

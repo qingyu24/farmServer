@@ -48,47 +48,57 @@ public class XlsReader {
         HSSFCell cell = null;
         for (int i = 0; i < titleRow.getLastCellNum(); i++) {
             cell = titleRow.getCell(i);
-
-
         }
-
     }
 
     public List<T> parseXls(List list, Class<T> t, File file) throws Exception {
         Field[] fields = t.getFields();
         Object obj = null;
-        XSSFWorkbook wb = new XSSFWorkbook(new FileInputStream(file));
+        FileInputStream fileInputStream = new FileInputStream(file);
+        XSSFWorkbook wb = new XSSFWorkbook(fileInputStream);
         XSSFSheet sheet = wb.getSheetAt(0);
         for (int i = 1; i < sheet.getLastRowNum(); i++) {
             obj = t.newInstance();
-            XSSFRow row1 = sheet.getRow(0);
+            XSSFRow row0 = sheet.getRow(0);
             XSSFRow row = sheet.getRow(i);
             if (row == null) continue;
             for (int j = 0; j < row.getLastCellNum(); j++) {
-                XSSFCell cell = row1.getCell(j);
-                String key = cell.getStringCellValue();
+                XSSFCell cell0 = row0.getCell(j);
+                String key = cell0.getStringCellValue();
                 Field field = t.getField(key);
-                switch (field.getName()) {
-                    case "class java.lang.String":
-                        String value = cell.getStringCellValue();
-                        field.set(obj, value);
 
-                        break;
-                    case "class java.lang.Integer":
-                        Integer value1 = (int) cell.getNumericCellValue();
-                        field.set(obj, value1);
-                        break;
-                    case "boolean":
-                        boolean booleanCellValue = cell.getBooleanCellValue();
-                        field.set(obj, booleanCellValue);
-                        break;
-                    default:
-                        break;
+                XSSFCell cell = row.getCell(j);
+                try {
+                    switch (field.getGenericType().toString()) {
+
+                        case "class java.lang.String":
+                            String value = cell.getStringCellValue();
+                            field.set(obj, value);
+
+                            break;
+                        case "class java.lang.Integer":
+                            Integer value1 = (int) cell.getNumericCellValue();
+
+                            field.set(obj, value1);
+                            break;
+                        case "boolean":
+                            boolean booleanCellValue = cell.getBooleanCellValue();
+                            field.set(obj, booleanCellValue);
+                            break;
+                        default:
+                            break;
+                    }
+                }catch (IllegalStateException e){
+                    logger.error("类型转化",e.toString());
+                    logger.error("表明"+file.getName()+"字段"+field.getName()+"类型"+field.getGenericType()+"读取目标类型："+cell.getCellTypeEnum().toString());
+                }catch (NullPointerException e){
+                    field.set(obj, null);
                 }
-
             }
+
             list.add(obj);
         }
+        fileInputStream.close();
         return list;
     }
 
@@ -101,19 +111,16 @@ public class XlsReader {
         Iterator iterator = set.iterator();
         int i = 0;
         while (iterator.hasNext()) {
-            i++;
-            System.out.println(i);
+
             String next = (String) iterator.next();
             ArrayList list = map.get(next);
             File file = new File(String.format(path, next));
             try {
                 Class aClass = Class.forName(String.format(Classes, next));
-                if (i == 20) {
-                    System.out.println("d");
-                }
+
                 if (file.exists()) {
                     this.parseXls(list, aClass, file);
-                    System.out.println("chegns++++++++++++");
+
                 } else {
                     logger.error("配置表不存在：" + next);
                 }

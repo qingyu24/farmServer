@@ -1,16 +1,16 @@
 package com.fngame.farm.configer;
 public class Entity {
   public Integer BuildingID;
-  public Integer Prefab;
-  public Integer Display;
-  public Integer Info;
+  public String Prefab;
+  public String Display;
+  public String Info;
   public Integer width;
   public Integer height;
   public Integer Type;
-  public Integer Move;
-  public Integer Flip;
-  public Integer PackUp;
-  public Integer Clear;
+  public boolean Move;
+  public boolean Flip;
+  public boolean PackUp;
+  public boolean Clear;
   public Integer BuildPrice;
   public Integer BuildTime;
   public Integer BuildLimited;

@@ -20,6 +20,7 @@ public interface BuildingMapper {
 
     Building selectByPrimaryKey(Long id);
 
+
     int updateByExampleSelective(@Param("record") Building record, @Param("example") BuildingExample example);
 
     int updateByExample(@Param("record") Building record, @Param("example") BuildingExample example);

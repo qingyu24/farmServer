@@ -1,6 +1,7 @@
 package com.fngame.farm.controller;
 
 import com.fngame.farm.controller.base.BaseContorllerInterface;
+import com.fngame.farm.controller.base.BaseController;
 import com.fngame.farm.etypes.EResultType;
 import com.fngame.farm.model.Building;
 import com.fngame.farm.service.BuildingService;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/buliding")
-public class BuildingController implements BaseContorllerInterface<Building> {
+public class BuildingController extends BaseController implements BaseContorllerInterface<Building> {
 
     @Autowired
     BuildingService BuildingService;
@@ -23,9 +24,15 @@ public class BuildingController implements BaseContorllerInterface<Building> {
     public ResultInfo add(RequserOrder order, Building building) {
         resultInfo.setOrder(order);
         System.out.println(resultInfo.toString());
-        boolean b = BuildingService.addBuild(building, resultInfo);
+        boolean b = false;
+        try {
+            b = BuildingService.add(resultInfo, building);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         System.out.println(resultInfo.toString());
         if (b) {
+            resultInfo.setSucess();
             resultInfo.getData().put(EResultType.buildinfo.toString(), building);
         }
         return resultInfo;
@@ -35,6 +42,11 @@ public class BuildingController implements BaseContorllerInterface<Building> {
     @RequestMapping("modify")
     public ResultInfo modify(RequserOrder order, Building building) {
         resultInfo.setOrder(order);
+        Boolean modify = BuildingService.modify(resultInfo, building);
+        if (modify) resultInfo.setSucess();
+        else {
+            resultInfo.setResult("111", "建筑物移动失败");
+        }
 
         return resultInfo;
     }
@@ -42,6 +54,11 @@ public class BuildingController implements BaseContorllerInterface<Building> {
     @RequestMapping("remove")
     public ResultInfo remove(RequserOrder order, Building building) {
         resultInfo.setOrder(order);
+        Boolean remove = BuildingService.remove(resultInfo, building);
+        if (remove) resultInfo.setSucess();
+        else {
+            resultInfo.setResult("111", "删除建筑物失败");
+        }
 
         return resultInfo;
     }

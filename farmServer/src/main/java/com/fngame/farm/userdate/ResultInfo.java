@@ -38,10 +38,11 @@ public class ResultInfo {
     }
 
     public HashMap<String, Object> getData() {
+        if(data==null)data=new HashMap<>();
         return data;
     }
 
-    private void setData(HashMap<String, Object> data) {
+    public void setData(HashMap<String, Object> data) {
         this.data = data;
     }
 
@@ -71,5 +72,16 @@ public class ResultInfo {
 
         this.main = order.main;
         this.sub = order.main;
+    }
+
+    @Override
+    public String toString() {
+        return "ResultInfo{" +
+                "resp_code='" + resp_code + '\'' +
+                ", resp_desc='" + resp_desc + '\'' +
+                ", data=" + data +
+                ", main='" + main + '\'' +
+                ", sub='" + sub + '\'' +
+                '}';
     }
 }
