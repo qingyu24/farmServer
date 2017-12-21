@@ -1,11 +1,14 @@
 package com.fngame.farm.model;
 
-public class Order {
-    private Long id;
+import org.springframework.stereotype.Component;
 
-    private Long userid;
+@Component
+public class UserOrder {
+    public Long id;
 
-    private Integer baseid;
+    public Long userid;
+
+    public Integer baseid;
 
     public Long getId() {
         return id;

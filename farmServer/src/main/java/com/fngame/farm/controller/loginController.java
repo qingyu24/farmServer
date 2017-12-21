@@ -3,10 +3,12 @@ package com.fngame.farm.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.fngame.farm.model.User;
 import com.fngame.farm.service.loginService;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @RestController
@@ -22,7 +24,7 @@ public class loginController {
     private JSONObject jsonObject = new JSONObject();
 
     @RequestMapping("login")
-    public JSONObject login(Integer type, String username, String password, String sign) {
+    public JSONObject login(HttpServletRequest req, Integer type, String username, String password, String sign) {
         //根据type 区分登录方式
         jsonObject.clear();
         User userByname = loginService.getUser(username, password, type);
@@ -33,6 +35,8 @@ public class loginController {
             JSONObject jsonObject1 = new JSONObject();
             jsonObject1.put("userinfo", userByname);
             jsonObject.put(data, jsonObject1);
+            req.getSession().setAttribute("userid",userByname.getUserid());
+
         } else {
             jsonObject.put(resp_code, "0000");
             jsonObject.put(resp_desc, "登录失败，用户不存在");

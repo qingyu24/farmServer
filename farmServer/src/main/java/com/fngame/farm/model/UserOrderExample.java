@@ -1,16 +1,18 @@
 package com.fngame.farm.model;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
-
-public class OrderExample {
+@Component
+public class UserOrderExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public OrderExample() {
+    public UserOrderExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 

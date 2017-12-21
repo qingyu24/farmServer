@@ -7,6 +7,7 @@ import com.fngame.farm.mapper.UserMapper;
 import com.fngame.farm.model.Building;
 import com.fngame.farm.model.BuildingExample;
 import com.fngame.farm.model.User;
+import com.fngame.farm.userdate.RequserOrder;
 import com.fngame.farm.userdate.ResultInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +45,7 @@ public class BuildingService {
     public Boolean add(ResultInfo resultInfo, Building building) throws Exception{
 
 
+
         Entity bco = configManager.getBuildingConfig(building);
         if (bco == null) {
             resultInfo.setResult("001", "该类型建筑不存在");
@@ -51,11 +53,11 @@ public class BuildingService {
         }
         User user = userMapper.selectByPrimaryKey(building.getUserid());
 
-        if (bco.BuildPrice > user.getMoney()) {
+    /*    if (bco.BuildPrice > user.getMoney()) {
             resultInfo.setResult("001", "金币不足");
 
             return false;
-        }
+        }*/
         buildingExample.clear();
         BuildingExample.Criteria criteria = buildingExample.createCriteria();
         criteria.andUseridEqualTo(building.getUserid());

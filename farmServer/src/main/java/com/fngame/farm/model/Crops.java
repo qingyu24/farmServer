@@ -13,6 +13,10 @@ public class Crops {
 
     private String status;
 
+    private Integer warehouse;
+
+    private Integer ownerid;
+
     public Long getId() {
         return id;
     }
@@ -51,5 +55,21 @@ public class Crops {
 
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
+    }
+
+    public Integer getWarehouse() {
+        return warehouse;
+    }
+
+    public void setWarehouse(Integer warehouse) {
+        this.warehouse = warehouse;
+    }
+
+    public Integer getOwnerid() {
+        return ownerid;
+    }
+
+    public void setOwnerid(Integer ownerid) {
+        this.ownerid = ownerid;
     }
 }

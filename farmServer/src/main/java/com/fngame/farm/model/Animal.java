@@ -9,6 +9,10 @@ public class Animal {
 
     private Integer count;
 
+    private Integer warehouse;
+
+    private Integer ownerid;
+
     public Long getId() {
         return id;
     }
@@ -39,5 +43,21 @@ public class Animal {
 
     public void setCount(Integer count) {
         this.count = count;
+    }
+
+    public Integer getWarehouse() {
+        return warehouse;
+    }
+
+    public void setWarehouse(Integer warehouse) {
+        this.warehouse = warehouse;
+    }
+
+    public Integer getOwnerid() {
+        return ownerid;
+    }
+
+    public void setOwnerid(Integer ownerid) {
+        this.ownerid = ownerid;
     }
 }

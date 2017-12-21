@@ -41,15 +41,6 @@ public class Building {
         this.baseid = baseid;
     }
 
-    public Integer baseid() {
-
-        return baseid;
-    }
-
-    public void setbaseid(Integer baseid) {
-        this.baseid = baseid;
-    }
-
     public Integer getDir() {
         return dir;
     }

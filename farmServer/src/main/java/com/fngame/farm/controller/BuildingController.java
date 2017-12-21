@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/buliding")
+@RequestMapping("/building")
 public class BuildingController extends BaseController implements BaseContorllerInterface<Building> {
+        
 
     @Autowired
     BuildingService BuildingService;

@@ -2,10 +2,8 @@ package com.fngame.farm.mapper;
 
 import com.fngame.farm.model.User;
 import com.fngame.farm.model.UserExample;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.cache.annotation.Cacheable;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
     int countByExample(UserExample example);

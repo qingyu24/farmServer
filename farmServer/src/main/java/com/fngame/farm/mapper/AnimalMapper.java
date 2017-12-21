@@ -27,4 +27,6 @@ public interface AnimalMapper {
     int updateByPrimaryKeySelective(Animal record);
 
     int updateByPrimaryKey(Animal record);
+
+    List<Animal> selectByUserid(long userid);
 }

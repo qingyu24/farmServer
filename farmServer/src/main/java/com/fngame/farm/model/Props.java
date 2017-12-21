@@ -9,6 +9,10 @@ public class Props {
 
     private Integer count;
 
+    private Integer warehouse;
+
+    private Long ownerid;
+
     public Long getId() {
         return id;
     }
@@ -39,5 +43,21 @@ public class Props {
 
     public void setCount(Integer count) {
         this.count = count;
+    }
+
+    public Integer getWarehouse() {
+        return warehouse;
+    }
+
+    public void setWarehouse(Integer warehouse) {
+        this.warehouse = warehouse;
+    }
+
+    public Long getOwnerid() {
+        return ownerid;
+    }
+
+    public void setOwnerid(Long ownerid) {
+        this.ownerid = ownerid;
     }
 }

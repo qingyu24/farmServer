@@ -72,7 +72,7 @@ public class XlsReader {
                     switch (field.getGenericType().toString()) {
 
                         case "class java.lang.String":
-                            String value = cell.getStringCellValue();
+                            String value = XlsReader.getStringCellValue(cell);
                             field.set(obj, value);
 
                             break;
@@ -103,7 +103,7 @@ public class XlsReader {
     }
 
 
-    public void loaderAll(HashMap<String, ArrayList> map) {
+    public  void loaderAll(HashMap<String, ArrayList> map) {
         String path = "src/main/resources/config/%s.xlsx";
 
         String Classes = "com.fngame.farm.configer.%s";
@@ -144,7 +144,7 @@ public class XlsReader {
     }
 
 
-    private static String getStringCellValue(HSSFCell cell) {
+    public static String getStringCellValue(XSSFCell cell) {
 
         String strCell = "";
         switch (cell.getCellType()) {

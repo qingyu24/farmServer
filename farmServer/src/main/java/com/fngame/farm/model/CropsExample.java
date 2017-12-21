@@ -1,9 +1,11 @@
 package com.fngame.farm.model;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+@Component
 public class CropsExample {
     protected String orderByClause;
 
@@ -412,6 +414,126 @@ public class CropsExample {
 
         public Criteria andStatusNotBetween(String value1, String value2) {
             addCriterion("status not between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andWarehouseIsNull() {
+            addCriterion("warehouse is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWarehouseIsNotNull() {
+            addCriterion("warehouse is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWarehouseEqualTo(Integer value) {
+            addCriterion("warehouse =", value, "warehouse");
+            return (Criteria) this;
+        }
+
+        public Criteria andWarehouseNotEqualTo(Integer value) {
+            addCriterion("warehouse <>", value, "warehouse");
+            return (Criteria) this;
+        }
+
+        public Criteria andWarehouseGreaterThan(Integer value) {
+            addCriterion("warehouse >", value, "warehouse");
+            return (Criteria) this;
+        }
+
+        public Criteria andWarehouseGreaterThanOrEqualTo(Integer value) {
+            addCriterion("warehouse >=", value, "warehouse");
+            return (Criteria) this;
+        }
+
+        public Criteria andWarehouseLessThan(Integer value) {
+            addCriterion("warehouse <", value, "warehouse");
+            return (Criteria) this;
+        }
+
+        public Criteria andWarehouseLessThanOrEqualTo(Integer value) {
+            addCriterion("warehouse <=", value, "warehouse");
+            return (Criteria) this;
+        }
+
+        public Criteria andWarehouseIn(List<Integer> values) {
+            addCriterion("warehouse in", values, "warehouse");
+            return (Criteria) this;
+        }
+
+        public Criteria andWarehouseNotIn(List<Integer> values) {
+            addCriterion("warehouse not in", values, "warehouse");
+            return (Criteria) this;
+        }
+
+        public Criteria andWarehouseBetween(Integer value1, Integer value2) {
+            addCriterion("warehouse between", value1, value2, "warehouse");
+            return (Criteria) this;
+        }
+
+        public Criteria andWarehouseNotBetween(Integer value1, Integer value2) {
+            addCriterion("warehouse not between", value1, value2, "warehouse");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwneridIsNull() {
+            addCriterion("ownerid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwneridIsNotNull() {
+            addCriterion("ownerid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwneridEqualTo(Integer value) {
+            addCriterion("ownerid =", value, "ownerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwneridNotEqualTo(Integer value) {
+            addCriterion("ownerid <>", value, "ownerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwneridGreaterThan(Integer value) {
+            addCriterion("ownerid >", value, "ownerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwneridGreaterThanOrEqualTo(Integer value) {
+            addCriterion("ownerid >=", value, "ownerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwneridLessThan(Integer value) {
+            addCriterion("ownerid <", value, "ownerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwneridLessThanOrEqualTo(Integer value) {
+            addCriterion("ownerid <=", value, "ownerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwneridIn(List<Integer> values) {
+            addCriterion("ownerid in", values, "ownerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwneridNotIn(List<Integer> values) {
+            addCriterion("ownerid not in", values, "ownerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwneridBetween(Integer value1, Integer value2) {
+            addCriterion("ownerid between", value1, value2, "ownerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwneridNotBetween(Integer value1, Integer value2) {
+            addCriterion("ownerid not between", value1, value2, "ownerid");
             return (Criteria) this;
         }
     }

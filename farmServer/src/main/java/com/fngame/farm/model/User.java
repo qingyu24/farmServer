@@ -5,7 +5,6 @@ import java.util.Date;
 public class User {
     private Long userid;
 
-
     private String openid;
 
     private String tel;

@@ -27,4 +27,6 @@ public interface PropsMapper {
     int updateByPrimaryKeySelective(Props record);
 
     int updateByPrimaryKey(Props record);
+
+    List<Props> selectByUserid(long userid);
 }

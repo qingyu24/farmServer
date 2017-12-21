@@ -1,4 +1,7 @@
 package com.fngame.farm.configer;
+
+import org.omg.CORBA.INTERNAL;
+
 public class Item {
   public Integer ItemID;
   public String Icon;

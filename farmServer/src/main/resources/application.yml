@@ -28,6 +28,7 @@ spring:
         max-file-size: 10MB
         max-request-size: 10MB
 
+
 mybatis:
   mapper-locations: classpath:mapping/*.xml
   type-aliases-package: com.winter.model
@@ -43,4 +44,3 @@ pagehelper:
 order:
  main: 5
  sub : 4
-

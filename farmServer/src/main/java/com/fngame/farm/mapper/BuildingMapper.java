@@ -20,7 +20,6 @@ public interface BuildingMapper {
 
     Building selectByPrimaryKey(Long id);
 
-
     int updateByExampleSelective(@Param("record") Building record, @Param("example") BuildingExample example);
 
     int updateByExample(@Param("record") Building record, @Param("example") BuildingExample example);
@@ -28,4 +27,6 @@ public interface BuildingMapper {
     int updateByPrimaryKeySelective(Building record);
 
     int updateByPrimaryKey(Building record);
+
+    List<Building> selectByUserid(long userid);
 }
