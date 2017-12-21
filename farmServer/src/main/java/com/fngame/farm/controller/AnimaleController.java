@@ -2,6 +2,7 @@ package com.fngame.farm.controller;
 
 import com.fngame.farm.controller.base.BaseContorllerInterface;
 import com.fngame.farm.controller.base.BaseController;
+import com.fngame.farm.etypes.EResultType;
 import com.fngame.farm.model.Animal;
 import com.fngame.farm.service.AnimaleService;
 import com.fngame.farm.userdate.RequserOrder;
@@ -19,7 +20,20 @@ public class AnimaleController extends BaseController implements BaseContorllerI
 
     @RequestMapping("add")
     public ResultInfo add(RequserOrder order, Animal animal) {
+        resultInfo.setOrder(order);
+      /*  System.out.println(resultInfo.toString());
+        boolean b = false;
+        try {
+            animaleService.add(resultInfo, animal);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(resultInfo.toString());
+        if (b) {
+            resultInfo.setSucess();
 
+        }
+        return resultInfo;*/
         return resultInfo;
     }
 

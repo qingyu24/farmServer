@@ -1,6 +1,8 @@
 package com.fngame.farm.userdate;
 
+import com.fngame.farm.manager.PlayerManager;
 import com.fngame.farm.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -77,5 +79,12 @@ public class PlayerInfo {
 
     public void setOrders(List<UserOrder> orders) {
         this.orders = orders;
+    }
+
+
+
+    public void UpdatePlayer() {
+
+        PlayerManager.getInstance().UpdatePlayer(this);
     }
 }

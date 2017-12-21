@@ -33,4 +33,24 @@ public class UserOrder {
     public void setBaseid(Integer baseid) {
         this.baseid = baseid;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UserOrder userOrder = (UserOrder) o;
+
+        if (id != null ? !id.equals(userOrder.id) : userOrder.id != null) return false;
+        if (userid != null ? !userid.equals(userOrder.userid) : userOrder.userid != null) return false;
+        return baseid != null ? baseid.equals(userOrder.baseid) : userOrder.baseid == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (userid != null ? userid.hashCode() : 0);
+        result = 31 * result + (baseid != null ? baseid.hashCode() : 0);
+        return result;
+    }
 }

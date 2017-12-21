@@ -27,23 +27,45 @@ public class OederController implements BaseContorllerInterface<UserOrder> {
 
         resultInfo.setOrder(requsetOrder);
 
-        orderService.getOrders(resultInfo,order2);
+        orderService.getOrders(resultInfo, order2);
 
         return resultInfo;
     }
 
     @Override
     public ResultInfo add(RequserOrder order, UserOrder userOrder) {
-        return null;
+
+        resultInfo.setOrder(order);
+        orderService.addOrder(resultInfo, userOrder);
+        return resultInfo;
     }
 
     @Override
     public ResultInfo modify(RequserOrder order, UserOrder userOrder) {
+
+
         return null;
     }
 
     @Override
     public ResultInfo remove(RequserOrder order, UserOrder userOrder) {
-        return null;
+        resultInfo.setOrder(order);
+        orderService.remove(resultInfo, userOrder);
+
+        return resultInfo;
+    }
+
+    @RequestMapping("delete")
+    public ResultInfo remove(RequserOrder order, UserOrder userOrder, Integer achieve) {
+
+        resultInfo.setOrder(order);
+
+        if (achieve == 1) {//完成订单给予奖励
+            orderService.remove(resultInfo, userOrder);
+        } else {//删除订单
+            orderService.remove(resultInfo, userOrder);
+
+        }
+        return resultInfo;
     }
 }

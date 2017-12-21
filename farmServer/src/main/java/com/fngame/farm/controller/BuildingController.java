@@ -24,7 +24,7 @@ public class BuildingController extends BaseController implements BaseContorller
     @RequestMapping("add")
     public ResultInfo add(RequserOrder order, Building building) {
         resultInfo.setOrder(order);
-        System.out.println(resultInfo.toString());
+
         boolean b = false;
         try {
             b = BuildingService.add(resultInfo, building);

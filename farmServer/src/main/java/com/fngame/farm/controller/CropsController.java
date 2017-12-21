@@ -20,7 +20,7 @@ public class CropsController extends BaseController implements BaseContorllerInt
     @Override
     public ResultInfo add(RequserOrder order, Crops crops) {
         resultInfo.setOrder(order);
-        System.out.println("ddd");
+
         return resultInfo;
     }
 

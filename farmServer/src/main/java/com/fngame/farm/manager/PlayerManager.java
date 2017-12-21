@@ -2,6 +2,7 @@ package com.fngame.farm.manager;
 
 import com.fngame.farm.model.*;
 import com.fngame.farm.userdate.PlayerInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -15,7 +16,11 @@ import java.util.List;
 @Component
 public class PlayerManager extends BaseAutowired {
 
-
+    private static PlayerManager playerManager;
+    public static PlayerManager getInstance() {
+if(playerManager==null)playerManager=new PlayerManager();
+        return playerManager;
+    }
     @Cacheable(value = "player", key = "#userid")
     public PlayerInfo getPlayer(long userid) {
         PlayerInfo playerInfo = new PlayerInfo();

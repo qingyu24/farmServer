@@ -37,7 +37,12 @@ public class OrderService implements BaseServiceImpl<UserOrder> {
 
     @Override
     public Boolean remove(ResultInfo resultInfo, UserOrder userOrder) {
-        return null;
+        orderMapper.deleteByPrimaryKey(userOrder.getId());
+        PlayerInfo player = playerManager.getPlayer(userOrder.getUserid());
+        player.getOrders().remove(userOrder);
+        this.addOrder(resultInfo,userOrder);
+        player.UpdatePlayer();
+        return true;
     }
 
     List list = new ArrayList();
@@ -57,15 +62,14 @@ public class OrderService implements BaseServiceImpl<UserOrder> {
 
         PlayerInfo player = playerManager.getPlayer(userOrder.getUserid());
         List<Order> orders = ConfigManager.getInstance().getOrders(player, 1);
-
         long maxID = orderMapper.getMaxID();
-
         UserOrder ord = new UserOrder();
         ord.setBaseid(orders.get(0).OrderID);
         ord.setUserid(userOrder.getUserid());
         ord.setId(++maxID);
         orderMapper.insertSelective(ord);
-
+        player.getOrders().add(ord);
+        player.UpdatePlayer();
         HashMap<String, Object> data = resultInfo.getData();
         data.put("orders", ord);
         return true;
