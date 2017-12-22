@@ -1,13 +1,12 @@
 package com.fngame.farm.manager;
 
-import com.fngame.farm.mapper.CropsMapper;
 import com.fngame.farm.model.*;
 import com.fngame.farm.userdate.PlayerInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
 
 /**
@@ -18,14 +17,25 @@ import java.util.List;
 public class PlayerManager extends BaseAutowired {
 
     private static PlayerManager playerManager;
+
     public static PlayerManager getInstance() {
-if(playerManager==null)playerManager=new PlayerManager();
+        if (playerManager == null) playerManager = new PlayerManager();
         return playerManager;
     }
+
     @Cacheable(value = "player", key = "#userid")
     public PlayerInfo getPlayer(long userid) {
         PlayerInfo playerInfo = new PlayerInfo();
-        List<Building> buildings = buildingMapper.selectByUserid(userid);
+
+        userExample.clear();
+        userExample.createCriteria().andUseridEqualTo(userid);
+
+        List<User> users = userMapper.selectByExample(userExample);
+        if (users.size() > 0) playerInfo.setUser(users.get(0));
+
+        buildingExample.clear();
+        buildingExample.createCriteria().andUseridEqualTo(userid);
+        List<Building> buildings = buildingMapper.selectByExample(buildingExample);
         playerInfo.setBuildings(buildings);
         List<Animal> animales = animalMapper.selectByUserid(userid);
         playerInfo.setAnimals(animales);
@@ -40,6 +50,12 @@ if(playerManager==null)playerManager=new PlayerManager();
         cropsExample.createCriteria().andUseridEqualTo(userid);
         List<Crops> crops = cropsMapper.selectByExample(cropsExample);
         playerInfo.setCrops(crops);
+        friendExample.clear();
+        FriendExample.Criteria criteria1 = friendExample.createCriteria();
+        criteria1.andUseridEqualTo(userid);
+        List<Friend> friends = friendMapper.selectByExample(friendExample);
+        playerInfo.setFriends(friends);
+
         return playerInfo;
     }
 

@@ -937,6 +937,66 @@ public class UserExample {
             return (Criteria) this;
         }
 
+        public Criteria andSexIsNull() {
+            addCriterion("sex is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexIsNotNull() {
+            addCriterion("sex is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexEqualTo(Integer value) {
+            addCriterion("sex =", value, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexNotEqualTo(Integer value) {
+            addCriterion("sex <>", value, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexGreaterThan(Integer value) {
+            addCriterion("sex >", value, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexGreaterThanOrEqualTo(Integer value) {
+            addCriterion("sex >=", value, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexLessThan(Integer value) {
+            addCriterion("sex <", value, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexLessThanOrEqualTo(Integer value) {
+            addCriterion("sex <=", value, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexIn(List<Integer> values) {
+            addCriterion("sex in", values, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexNotIn(List<Integer> values) {
+            addCriterion("sex not in", values, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexBetween(Integer value1, Integer value2) {
+            addCriterion("sex between", value1, value2, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexNotBetween(Integer value1, Integer value2) {
+            addCriterion("sex not between", value1, value2, "sex");
+            return (Criteria) this;
+        }
+
         public Criteria andHeadurlIsNull() {
             addCriterion("headurl is null");
             return (Criteria) this;
@@ -1194,6 +1254,136 @@ public class UserExample {
 
         public Criteria andLogintimeNotBetween(Date value1, Date value2) {
             addCriterion("loginTime not between", value1, value2, "logintime");
+            return (Criteria) this;
+        }
+
+        public Criteria andGranaryLevelIsNull() {
+            addCriterion("granary_level is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGranaryLevelIsNotNull() {
+            addCriterion("granary_level is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGranaryLevelEqualTo(Integer value) {
+            addCriterion("granary_level =", value, "granaryLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andGranaryLevelNotEqualTo(Integer value) {
+            addCriterion("granary_level <>", value, "granaryLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andGranaryLevelGreaterThan(Integer value) {
+            addCriterion("granary_level >", value, "granaryLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andGranaryLevelGreaterThanOrEqualTo(Integer value) {
+            addCriterion("granary_level >=", value, "granaryLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andGranaryLevelLessThan(Integer value) {
+            addCriterion("granary_level <", value, "granaryLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andGranaryLevelLessThanOrEqualTo(Integer value) {
+            addCriterion("granary_level <=", value, "granaryLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andGranaryLevelIn(List<Integer> values) {
+            addCriterion("granary_level in", values, "granaryLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andGranaryLevelNotIn(List<Integer> values) {
+            addCriterion("granary_level not in", values, "granaryLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andGranaryLevelBetween(Integer value1, Integer value2) {
+            addCriterion("granary_level between", value1, value2, "granaryLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andGranaryLevelNotBetween(Integer value1, Integer value2) {
+            addCriterion("granary_level not between", value1, value2, "granaryLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andPropsLevelIsNull() {
+            addCriterion("props_level is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPropsLevelIsNotNull() {
+            addCriterion("props_level is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPropsLevelEqualTo(String value) {
+            addCriterion("props_level =", value, "propsLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andPropsLevelNotEqualTo(String value) {
+            addCriterion("props_level <>", value, "propsLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andPropsLevelGreaterThan(String value) {
+            addCriterion("props_level >", value, "propsLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andPropsLevelGreaterThanOrEqualTo(String value) {
+            addCriterion("props_level >=", value, "propsLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andPropsLevelLessThan(String value) {
+            addCriterion("props_level <", value, "propsLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andPropsLevelLessThanOrEqualTo(String value) {
+            addCriterion("props_level <=", value, "propsLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andPropsLevelLike(String value) {
+            addCriterion("props_level like", value, "propsLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andPropsLevelNotLike(String value) {
+            addCriterion("props_level not like", value, "propsLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andPropsLevelIn(List<String> values) {
+            addCriterion("props_level in", values, "propsLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andPropsLevelNotIn(List<String> values) {
+            addCriterion("props_level not in", values, "propsLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andPropsLevelBetween(String value1, String value2) {
+            addCriterion("props_level between", value1, value2, "propsLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andPropsLevelNotBetween(String value1, String value2) {
+            addCriterion("props_level not between", value1, value2, "propsLevel");
             return (Criteria) this;
         }
     }

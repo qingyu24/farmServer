@@ -7,13 +7,11 @@ import com.fngame.farm.mapper.UserMapper;
 import com.fngame.farm.model.Building;
 import com.fngame.farm.model.BuildingExample;
 import com.fngame.farm.model.User;
-import com.fngame.farm.userdate.RequserOrder;
 import com.fngame.farm.userdate.ResultInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
@@ -42,8 +40,7 @@ public class BuildingService {
     volatile String d;
 
     @Transactional
-    public Boolean add(ResultInfo resultInfo, Building building) throws Exception{
-
+    public Boolean add(ResultInfo resultInfo, Building building) throws Exception {
 
 
         Entity bco = configManager.getBuildingConfig(building);
@@ -77,14 +74,14 @@ public class BuildingService {
         //前置建筑
 //加上其他判断条件
 
-            building.setBeginTime(new Date());
-            int i = BuildingMapper.insertSelective(building);
-            buildingExample.setDistinct(true);
-            buildingExample.setOrderByClause("begin_time");
-            List<Building> buildings = BuildingMapper.selectByExample(buildingExample);
-            //获取新添加的ＩＤ
-            building.setId(buildings.get(0).getId());
-            return i > 0;
+        building.setBeginTime(new Date());
+        int i = BuildingMapper.insertSelective(building);
+        buildingExample.setDistinct(true);
+        buildingExample.setOrderByClause("begin_time");
+        List<Building> buildings = BuildingMapper.selectByExample(buildingExample);
+        //获取新添加的ＩＤ
+        building.setId(buildings.get(0).getId());
+        return i > 0;
 
     }
 

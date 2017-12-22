@@ -50,6 +50,11 @@ public class OrderService implements BaseServiceImpl<UserOrder> {
         return true;
     }
 
+    @Override
+    public Boolean get(ResultInfo resultInfo, UserOrder userOrder) {
+        return null;
+    }
+
     List list = new ArrayList();
 
 

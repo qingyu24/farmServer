@@ -1,16 +1,17 @@
 package com.fngame.farm.interceptor;
 
-import com.mysql.jdbc.log.LogFactory;
+import groovy.util.logging.Slf4j;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
+@Slf4j
 @WebListener
 public class FarmListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        System.out.println(sce.toString());
+
         System.out.println("servlet 初始化");
     }
 

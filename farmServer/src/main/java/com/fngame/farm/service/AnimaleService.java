@@ -22,4 +22,9 @@ public class AnimaleService implements BaseServiceImpl<Animal> {
     public Boolean remove(ResultInfo resultInfo, Animal animal) {
         return null;
     }
+
+    @Override
+    public Boolean get(ResultInfo resultInfo, Animal animal) {
+        return null;
+    }
 }

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by qingyu on 2017/12/20.
@@ -21,6 +20,7 @@ public class PlayerInfo {
     private List<Crops> crops;
     private List<UserOrder> orders;
     private List<Props> propss;
+    private List<Friend> Friends;
 
 
     public long getId() {
@@ -29,6 +29,14 @@ public class PlayerInfo {
             id = user.getUserid();
         } else id = 0;
         return id;
+    }
+
+    public List<Friend> getFriends() {
+        return Friends;
+    }
+
+    public void setFriends(List<Friend> Friends) {
+        this.Friends = Friends;
     }
 
     public void setId(long id) {
@@ -84,26 +92,19 @@ public class PlayerInfo {
     }
 
     HashMap<String, Object> map = new HashMap<>();
-    private List house_ani = new ArrayList(40);
+    /*    private List house_ani = new ArrayList(40);*/
     private List hous_crop = new ArrayList(40);
 
-    public Map getWarehouse() {
-        house_ani.clear();
+    public List getWarehouse() {
+
         hous_crop.clear();
-        for (Animal animal : animals) {
-            if (animal.getWarehouse() == 1) {
-                house_ani.add(animal);
-            }
-        }
         for (Crops crop : crops) {
             if (crop.getWarehouse() == 1) {
                 hous_crop.add(crop);
             }
         }
-        map.clear();
-        map.put("animals",house_ani);
-        map.put("crops",hous_crop);
-        return map;
+
+        return hous_crop;
     }
 
 
@@ -111,4 +112,5 @@ public class PlayerInfo {
 
         PlayerManager.getInstance().UpdatePlayer(this);
     }
+
 }

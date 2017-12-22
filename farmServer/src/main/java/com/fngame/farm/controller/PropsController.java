@@ -22,4 +22,9 @@ public class PropsController implements BaseContorllerInterface<Props> {
     public ResultInfo remove(RequserOrder order, Props props) {
         return null;
     }
+
+    @Override
+    public ResultInfo get(RequserOrder order, Props props) {
+        return null;
+    }
 }

@@ -50,6 +50,11 @@ public class AnimaleController extends BaseController implements BaseContorllerI
 
         return resultInfo;
     }
+
+    @Override
+    public ResultInfo get(RequserOrder order, Animal animal) {
+        return null;
+    }
     // /
 
     @RequestMapping("reap")

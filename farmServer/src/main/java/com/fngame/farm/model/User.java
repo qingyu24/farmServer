@@ -1,7 +1,9 @@
 package com.fngame.farm.model;
 
-import java.util.Date;
+import org.springframework.stereotype.Component;
 
+import java.util.Date;
+@Component
 public class User {
     private Long userid;
 
@@ -29,6 +31,8 @@ public class User {
 
     private Integer ingot;
 
+    private Integer sex;
+
     private String headurl;
 
     private String dest;
@@ -36,6 +40,10 @@ public class User {
     private Date regtime;
 
     private Date logintime;
+
+    private Integer granaryLevel;
+
+    private String propsLevel;
 
     public Long getUserid() {
         return userid;
@@ -141,6 +149,14 @@ public class User {
         this.ingot = ingot;
     }
 
+    public Integer getSex() {
+        return sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
     public String getHeadurl() {
         return headurl;
     }
@@ -171,5 +187,21 @@ public class User {
 
     public void setLogintime(Date logintime) {
         this.logintime = logintime;
+    }
+
+    public Integer getGranaryLevel() {
+        return granaryLevel;
+    }
+
+    public void setGranaryLevel(Integer granaryLevel) {
+        this.granaryLevel = granaryLevel;
+    }
+
+    public String getPropsLevel() {
+        return propsLevel;
+    }
+
+    public void setPropsLevel(String propsLevel) {
+        this.propsLevel = propsLevel == null ? null : propsLevel.trim();
     }
 }

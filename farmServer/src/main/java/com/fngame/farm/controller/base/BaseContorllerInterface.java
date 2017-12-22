@@ -15,6 +15,7 @@ public interface BaseContorllerInterface<T> {
     @RequestMapping("remove")
     ResultInfo remove(RequserOrder order, T t);
 
-
+    @RequestMapping("get")
+    ResultInfo get(RequserOrder order, T t);
 
 }

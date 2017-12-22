@@ -1,27 +1,35 @@
 package com.fngame.farm.userdate;
 
+import com.fngame.farm.manager.ConfigManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 
 @Component
 public class ResultInfo {
+    private String main;
+
+    private String sub;
+
     private String resp_code;
 
     private String resp_desc;
 
     private HashMap<String, Object> data;
 
-    private String main;
 
-    private String sub;
 
+    @Autowired
+    ConfigManager configManager;
     public String getResp_code() {
         return resp_code;
     }
 
     public void setResp_code(String resp_code) {
         this.resp_code = resp_code;
+        String resp = configManager.getResp(resp_code);
+        this.resp_desc=resp;
     }
 
     public String getResp_desc() {

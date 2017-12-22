@@ -1,9 +1,11 @@
 package com.fngame.farm.manager;
 
+import com.fngame.farm.configer.Crop;
 import com.fngame.farm.configer.Entity;
 import com.fngame.farm.configer.Order;
+import com.fngame.farm.configer.Resp;
 import com.fngame.farm.model.Building;
-import com.fngame.farm.model.UserOrder;
+import com.fngame.farm.model.Crops;
 import com.fngame.farm.userdate.PlayerInfo;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
@@ -30,9 +32,9 @@ public class ConfigManager {
         return loades.get(o.getClass().getSimpleName());
     }
 
-    @Cacheable(value = "building", key = "#o.baseid")
+    @Cacheable(value = "building_conf", key = "#o.baseid")
     public Entity getBuildingConfig(Building o) {
-        System.out.println("没走缓冲");
+
         ArrayList<Entity> arrayList = loades.get(Entity.class.getSimpleName());
         if (o != null && arrayList != null) {
             for (Entity Entity : arrayList) {
@@ -62,5 +64,29 @@ public class ConfigManager {
             }
         }
         return list;
+    }
+
+    @Cacheable(value = "crop_conf", key = "#crops.baseid")
+    public Crop getCrops(Crops crops) {
+        ArrayList<Crop> list = loades.get(Crop.class.getSimpleName());
+        for (Crop crop : list) {
+            if (crops.getBaseid() == crop.ID) {
+                return crop;
+            }
+        }
+
+        return null;
+    }
+
+    @Cacheable(value = "resp_conf", key = "#resp_code")
+    public String getResp(String resp_code) {
+        if (resp_code == null) return "未知错误1";
+        ArrayList<Resp> arrayList = loades.get(Resp.class.getSimpleName());
+        for (Resp resp : arrayList) {
+            if (resp_code.equals(resp.resp_code)) {
+                return resp.resp_desc;
+            }
+        }
+        return "未知错误2";
     }
 }

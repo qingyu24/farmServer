@@ -15,10 +15,13 @@
     <result column="icon" property="icon" jdbcType="INTEGER" />
     <result column="beans" property="beans" jdbcType="INTEGER" />
     <result column="ingot" property="ingot" jdbcType="INTEGER" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
     <result column="headurl" property="headurl" jdbcType="VARCHAR" />
     <result column="dest" property="dest" jdbcType="VARCHAR" />
     <result column="regtime" property="regtime" jdbcType="TIMESTAMP" />
     <result column="loginTime" property="logintime" jdbcType="TIMESTAMP" />
+    <result column="granary_level" property="granaryLevel" jdbcType="INTEGER" />
+    <result column="props_level" property="propsLevel" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -80,7 +83,7 @@
   </sql>
   <sql id="Base_Column_List" >
     userid, openid, tel, username, Password, nickname, level, exp, score, Money, icon, 
-    beans, ingot, headurl, dest, regtime, loginTime
+    beans, ingot, sex, headurl, dest, regtime, loginTime, granary_level, props_level
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fngame.farm.model.UserExample" >
     select
@@ -118,14 +121,16 @@
       username, Password, nickname, 
       level, exp, score, 
       Money, icon, beans, 
-      ingot, headurl, dest, 
-      regtime, loginTime)
+      ingot, sex, headurl, 
+      dest, regtime, loginTime, 
+      granary_level, props_level)
     values (#{userid,jdbcType=BIGINT}, #{openid,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, 
       #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
       #{level,jdbcType=INTEGER}, #{exp,jdbcType=INTEGER}, #{score,jdbcType=INTEGER}, 
       #{money,jdbcType=INTEGER}, #{icon,jdbcType=INTEGER}, #{beans,jdbcType=INTEGER}, 
-      #{ingot,jdbcType=INTEGER}, #{headurl,jdbcType=VARCHAR}, #{dest,jdbcType=VARCHAR}, 
-      #{regtime,jdbcType=TIMESTAMP}, #{logintime,jdbcType=TIMESTAMP})
+      #{ingot,jdbcType=INTEGER}, #{sex,jdbcType=INTEGER}, #{headurl,jdbcType=VARCHAR}, 
+      #{dest,jdbcType=VARCHAR}, #{regtime,jdbcType=TIMESTAMP}, #{logintime,jdbcType=TIMESTAMP}, 
+      #{granaryLevel,jdbcType=INTEGER}, #{propsLevel,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.fngame.farm.model.User" >
     insert into fm_user
@@ -169,6 +174,9 @@
       <if test="ingot != null" >
         ingot,
       </if>
+      <if test="sex != null" >
+        sex,
+      </if>
       <if test="headurl != null" >
         headurl,
       </if>
@@ -180,6 +188,12 @@
       </if>
       <if test="logintime != null" >
         loginTime,
+      </if>
+      <if test="granaryLevel != null" >
+        granary_level,
+      </if>
+      <if test="propsLevel != null" >
+        props_level,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -222,6 +236,9 @@
       <if test="ingot != null" >
         #{ingot,jdbcType=INTEGER},
       </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=INTEGER},
+      </if>
       <if test="headurl != null" >
         #{headurl,jdbcType=VARCHAR},
       </if>
@@ -233,6 +250,12 @@
       </if>
       <if test="logintime != null" >
         #{logintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="granaryLevel != null" >
+        #{granaryLevel,jdbcType=INTEGER},
+      </if>
+      <if test="propsLevel != null" >
+        #{propsLevel,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -284,6 +307,9 @@
       <if test="record.ingot != null" >
         ingot = #{record.ingot,jdbcType=INTEGER},
       </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=INTEGER},
+      </if>
       <if test="record.headurl != null" >
         headurl = #{record.headurl,jdbcType=VARCHAR},
       </if>
@@ -295,6 +321,12 @@
       </if>
       <if test="record.logintime != null" >
         loginTime = #{record.logintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.granaryLevel != null" >
+        granary_level = #{record.granaryLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.propsLevel != null" >
+        props_level = #{record.propsLevel,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -316,10 +348,13 @@
       icon = #{record.icon,jdbcType=INTEGER},
       beans = #{record.beans,jdbcType=INTEGER},
       ingot = #{record.ingot,jdbcType=INTEGER},
+      sex = #{record.sex,jdbcType=INTEGER},
       headurl = #{record.headurl,jdbcType=VARCHAR},
       dest = #{record.dest,jdbcType=VARCHAR},
       regtime = #{record.regtime,jdbcType=TIMESTAMP},
-      loginTime = #{record.logintime,jdbcType=TIMESTAMP}
+      loginTime = #{record.logintime,jdbcType=TIMESTAMP},
+      granary_level = #{record.granaryLevel,jdbcType=INTEGER},
+      props_level = #{record.propsLevel,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -363,6 +398,9 @@
       <if test="ingot != null" >
         ingot = #{ingot,jdbcType=INTEGER},
       </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
       <if test="headurl != null" >
         headurl = #{headurl,jdbcType=VARCHAR},
       </if>
@@ -374,6 +412,12 @@
       </if>
       <if test="logintime != null" >
         loginTime = #{logintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="granaryLevel != null" >
+        granary_level = #{granaryLevel,jdbcType=INTEGER},
+      </if>
+      <if test="propsLevel != null" >
+        props_level = #{propsLevel,jdbcType=VARCHAR},
       </if>
     </set>
     where userid = #{userid,jdbcType=BIGINT}
@@ -392,10 +436,13 @@
       icon = #{icon,jdbcType=INTEGER},
       beans = #{beans,jdbcType=INTEGER},
       ingot = #{ingot,jdbcType=INTEGER},
+      sex = #{sex,jdbcType=INTEGER},
       headurl = #{headurl,jdbcType=VARCHAR},
       dest = #{dest,jdbcType=VARCHAR},
       regtime = #{regtime,jdbcType=TIMESTAMP},
-      loginTime = #{logintime,jdbcType=TIMESTAMP}
+      loginTime = #{logintime,jdbcType=TIMESTAMP},
+      granary_level = #{granaryLevel,jdbcType=INTEGER},
+      props_level = #{propsLevel,jdbcType=VARCHAR}
     where userid = #{userid,jdbcType=BIGINT}
   </update>
 </mapper>

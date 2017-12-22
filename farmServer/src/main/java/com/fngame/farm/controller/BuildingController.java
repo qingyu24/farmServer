@@ -64,4 +64,9 @@ public class BuildingController extends BaseController implements BaseContorller
         return resultInfo;
     }
 
+    @Override
+    public ResultInfo get(RequserOrder order, Building building) {
+        return null;
+    }
+
 }

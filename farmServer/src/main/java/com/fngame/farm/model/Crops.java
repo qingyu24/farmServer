@@ -17,6 +17,8 @@ public class Crops {
 
     private Integer ownerid;
 
+    private Integer count;
+
     public Long getId() {
         return id;
     }
@@ -71,5 +73,13 @@ public class Crops {
 
     public void setOwnerid(Integer ownerid) {
         this.ownerid = ownerid;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 }

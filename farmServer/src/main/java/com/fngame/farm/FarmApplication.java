@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableCaching
 @ServletComponentScan
 @EnableTransactionManagement
-
 public class FarmApplication {
 
     public static void main(String[] args) {

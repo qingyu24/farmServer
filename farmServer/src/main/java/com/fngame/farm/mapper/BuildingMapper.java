@@ -27,6 +27,4 @@ public interface BuildingMapper {
     int updateByPrimaryKeySelective(Building record);
 
     int updateByPrimaryKey(Building record);
-
-    List<Building> selectByUserid(long userid);
 }

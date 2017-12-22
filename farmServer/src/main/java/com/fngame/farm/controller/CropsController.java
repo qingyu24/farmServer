@@ -38,4 +38,24 @@ public class CropsController extends BaseController implements BaseContorllerInt
 
         return null;
     }
+
+    @Override
+    public ResultInfo get(RequserOrder order, Crops crops) {
+        return null;
+    }
+
+    @RequestMapping("gain")
+    public ResultInfo gain(RequserOrder order, Crops crops) {
+        resultInfo.setOrder(order);
+
+
+        return null;
+    }
+    @RequestMapping("plant")
+    public ResultInfo plant(RequserOrder order, Crops crops) {
+        resultInfo.setOrder(order);
+
+
+        return null;
+    }
 }

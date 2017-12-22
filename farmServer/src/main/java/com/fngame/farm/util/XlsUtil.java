@@ -21,7 +21,7 @@ public class XlsUtil {
         for (File file1 : files) {
             String name = file1.getName();
             if (name.endsWith(".xlsx")) {
-                File file2 = new File("src/main/java/com/fngame/farm/configer/" + name.replace(".xlsx", ".java"));
+                File file2 = new File("configer/" + name.replace(".xlsx", ".java"));
                 if (file2.exists()) file2.delete();
                 file2.createNewFile();
 

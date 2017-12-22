@@ -17,5 +17,5 @@ public interface BaseServiceImpl<T> {
 
     Boolean remove(ResultInfo resultInfo, T t);
 
-
+    Boolean get(ResultInfo resultInfo, T t);
 }

@@ -44,7 +44,7 @@ public class ConfigLoaderManager {
     private ArrayList<StructureUpgrade> StructureUpgradeloader = new ArrayList<StructureUpgrade>(20);
     private ArrayList<Tags> Tagsloader = new ArrayList<Tags>(20);
     private ArrayList<Test> Testloader = new ArrayList<Test>(20);
-   /* private ArrayList<TestActor> TestActorloader = new ArrayList<TestActor>(20);*/
+ private ArrayList<Resp> Resploader = new ArrayList<Resp>(20);
 
 
     public void loaderAll() {
@@ -72,7 +72,7 @@ public class ConfigLoaderManager {
         loades.put("StructureUpgrade", StructureUpgradeloader);
         loades.put("Tags", Tagsloader);
         loades.put("Test", Testloader);
-/*        loades.put("TestActor",TestActorloader);*/
+        loades.put("Resp",Resploader);
 
 
         XlsReader.getInstance().loaderAll(loades);
