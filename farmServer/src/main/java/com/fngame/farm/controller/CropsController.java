@@ -28,7 +28,6 @@ public class CropsController extends BaseController implements BaseContorllerInt
     public ResultInfo modify(RequserOrder order, Crops crops) {
         List getloader = ConfigManager.getInstance().getloader(new Craft());
         resultInfo.setOrder(order);
-
         HashMap<String, Object> data = resultInfo.getData();
         data.put("d",getloader);
         return resultInfo;

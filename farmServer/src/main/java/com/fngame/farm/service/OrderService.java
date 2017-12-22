@@ -39,9 +39,14 @@ public class OrderService implements BaseServiceImpl<UserOrder> {
     public Boolean remove(ResultInfo resultInfo, UserOrder userOrder) {
         orderMapper.deleteByPrimaryKey(userOrder.getId());
         PlayerInfo player = playerManager.getPlayer(userOrder.getUserid());
-        player.getOrders().remove(userOrder);
-        this.addOrder(resultInfo,userOrder);
-        player.UpdatePlayer();
+        boolean remove = player.getOrders().remove(userOrder);
+        System.out.println(remove);
+       if(remove){
+        this.addOrder(resultInfo, userOrder);
+        player.UpdatePlayer();}
+        else{
+           resultInfo.setResult("0001","该订单不存在");
+       }
         return true;
     }
 
@@ -71,7 +76,9 @@ public class OrderService implements BaseServiceImpl<UserOrder> {
         player.getOrders().add(ord);
         player.UpdatePlayer();
         HashMap<String, Object> data = resultInfo.getData();
-        data.put("orders", ord);
+        ArrayList<UserOrder> userOrders = new ArrayList<>(1);
+        userOrders.add(ord);
+        data.put("orders", userOrders);
         return true;
     }
 }

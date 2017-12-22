@@ -4,7 +4,6 @@ import com.fngame.farm.configer.*;
 import com.fngame.farm.model.Animal;
 import com.fngame.farm.model.Building;
 import com.fngame.farm.util.XlsReader;
-import com.sun.scenario.effect.Crop;
 import com.sun.tools.javac.jvm.Items;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +25,7 @@ public class ConfigLoaderManager {
     private ArrayList<Actor> Actorloader = new ArrayList<Actor>(20);
     private ArrayList<AddQueue> AddQueueloader = new ArrayList<AddQueue>(20);
     private ArrayList<Animal> Animalloader = new ArrayList<Animal>(20);
-    private ArrayList<Building> Buildingloader = new ArrayList<Building>(20);
+
     private ArrayList<Car> Carloader = new ArrayList<Car>(20);
     private ArrayList<Craft> Craftloader = new ArrayList<Craft>(20);
     private ArrayList<Crafting> Craftingloader = new ArrayList<Crafting>(20);
@@ -54,7 +53,7 @@ public class ConfigLoaderManager {
         loades.put("Actor", Actorloader);
         loades.put("AddQueue", AddQueueloader);
         loades.put("Animal", Animalloader);
-        loades.put("Building", Buildingloader);
+
         loades.put("Car", Carloader);
         loades.put("Craft", Craftloader);
         loades.put("Crafting", Craftingloader);

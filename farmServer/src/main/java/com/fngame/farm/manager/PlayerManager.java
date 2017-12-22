@@ -1,5 +1,6 @@
 package com.fngame.farm.manager;
 
+import com.fngame.farm.mapper.CropsMapper;
 import com.fngame.farm.model.*;
 import com.fngame.farm.userdate.PlayerInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,10 @@ if(playerManager==null)playerManager=new PlayerManager();
         criteria.andUseridEqualTo(userid);
         List<UserOrder> orders = orderMapper.selectByExample(orderExample);
         playerInfo.setOrders(orders);
+        cropsExample.clear();
+        cropsExample.createCriteria().andUseridEqualTo(userid);
+        List<Crops> crops = cropsMapper.selectByExample(cropsExample);
+        playerInfo.setCrops(crops);
         return playerInfo;
     }
 

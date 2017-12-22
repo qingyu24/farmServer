@@ -2,10 +2,12 @@ package com.fngame.farm.userdate;
 
 import com.fngame.farm.manager.PlayerManager;
 import com.fngame.farm.model.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by qingyu on 2017/12/20.
@@ -81,6 +83,28 @@ public class PlayerInfo {
         this.orders = orders;
     }
 
+    HashMap<String, Object> map = new HashMap<>();
+    private List house_ani = new ArrayList(40);
+    private List hous_crop = new ArrayList(40);
+
+    public Map getWarehouse() {
+        house_ani.clear();
+        hous_crop.clear();
+        for (Animal animal : animals) {
+            if (animal.getWarehouse() == 1) {
+                house_ani.add(animal);
+            }
+        }
+        for (Crops crop : crops) {
+            if (crop.getWarehouse() == 1) {
+                hous_crop.add(crop);
+            }
+        }
+        map.clear();
+        map.put("animals",house_ani);
+        map.put("crops",hous_crop);
+        return map;
+    }
 
 
     public void UpdatePlayer() {

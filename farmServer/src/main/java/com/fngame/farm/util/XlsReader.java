@@ -104,7 +104,7 @@ public class XlsReader {
 
 
     public  void loaderAll(HashMap<String, ArrayList> map) {
-        String path = "src/main/resources/config/%s.xlsx";
+        String path = "config/%s.xlsx";
 
         String Classes = "com.fngame.farm.configer.%s";
         Set set = map.keySet();

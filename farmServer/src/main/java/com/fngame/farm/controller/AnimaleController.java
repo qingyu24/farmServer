@@ -50,5 +50,14 @@ public class AnimaleController extends BaseController implements BaseContorllerI
 
         return resultInfo;
     }
+    // /
+
+    @RequestMapping("reap")
+    public ResultInfo reap(RequserOrder order, Animal animal) {
+        resultInfo.setOrder(order);
+
+        return resultInfo;
+    }
+
 
 }

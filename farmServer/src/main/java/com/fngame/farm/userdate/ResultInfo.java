@@ -56,11 +56,20 @@ public class ResultInfo {
     public void setSub(String sub) {
         this.sub = sub;
         data.put("sub", sub);
+        data.put("sub", sub);
     }
 
     public void setSucess() {
         this.resp_code = "000000";
         this.resp_desc = "操作成功";
+    }
+
+    public String getMain() {
+        return main;
+    }
+
+    public String getSub() {
+        return sub;
     }
 
     public void setOrder(RequserOrder order) {
@@ -71,7 +80,7 @@ public class ResultInfo {
             data.clear();
 
         this.main = order.main;
-        this.sub = order.main;
+        this.sub = order.sub;
     }
 
     @Override
