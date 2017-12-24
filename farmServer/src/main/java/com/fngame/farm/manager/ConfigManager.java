@@ -4,6 +4,7 @@ import com.fngame.farm.configer.Crop;
 import com.fngame.farm.configer.Entity;
 import com.fngame.farm.configer.Order;
 import com.fngame.farm.configer.Resp;
+import com.fngame.farm.model.Animal;
 import com.fngame.farm.model.Building;
 import com.fngame.farm.model.Crops;
 import com.fngame.farm.userdate.PlayerInfo;
@@ -88,5 +89,11 @@ public class ConfigManager {
             }
         }
         return "未知错误2";
+    }
+
+    public Entity getAnimalConfig(Animal animal) {
+
+
+        return null;
     }
 }

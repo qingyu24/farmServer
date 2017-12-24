@@ -23,7 +23,13 @@ public class FriendController implements BaseContorllerInterface<Friend> {
     @Override
     public ResultInfo add(RequserOrder order, Friend friend) {
         resultInfo.setOrder(order);
-        Boolean add = friendService.add(resultInfo, friend);
+        Boolean add = null;
+        try {
+            add = friendService.add(resultInfo, friend);
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultInfo.setfalse();
+        }
         if (add) {
             resultInfo.setSucess();
         }
@@ -37,7 +43,13 @@ public class FriendController implements BaseContorllerInterface<Friend> {
 
     @Override
     public ResultInfo remove(RequserOrder order, Friend friend) {
-        return null;
+        resultInfo.setOrder(order);
+        Boolean add = friendService.remove(resultInfo, friend);
+        if(!add){
+            resultInfo.setfalse();
+        }
+
+        return resultInfo;
     }
 
     @Override
@@ -50,5 +62,14 @@ public class FriendController implements BaseContorllerInterface<Friend> {
         return resultInfo;
     }
 
+    @RequestMapping("agree")
+    public ResultInfo agree(RequserOrder order, Friend friend) {
+        resultInfo.setOrder(order);
+        Boolean aBoolean = friendService.agree(resultInfo, friend);
+        if(!aBoolean){
+            resultInfo.setfalse();
+        }
+        return resultInfo;
+    }
 
 }

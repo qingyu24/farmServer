@@ -15,19 +15,24 @@ import java.util.Collection;
  */
 
 public class SqlList<T> extends ArrayList<T> {
+
+    private String sqlID = "select id from %s order by id desc limit 0,1";
     BeanFactory beanFactory;
+    private T t;
 
     public SqlList(BeanFactory beanFactory) {
         this.beanFactory = beanFactory;
+
     }
+
 
     @Override
     public boolean add(T t) {
         Object mapper = this.getMapper(t);
         Class<?> aClass = mapper.getClass();
         try {
-            Method insertSelective = aClass.getMethod("insertSelective",t.getClass());
-            insertSelective.invoke(mapper,t);
+            Method insertSelective = aClass.getMethod("insertSelective", t.getClass());
+            insertSelective.invoke(mapper, t);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -62,6 +67,17 @@ public class SqlList<T> extends ArrayList<T> {
         return bean;
     }
 
+    public void update(T t) {
+        Object mapper = this.getMapper(t);
+        Class<?> aClass = mapper.getClass();
+        try {
+            Method updateByPrimaryKeySelective = aClass.getMethod("updateByPrimaryKeySelective", t.getClass());
+            updateByPrimaryKeySelective.invoke(mapper, t);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void add(int index, T element) {
 
@@ -73,13 +89,23 @@ public class SqlList<T> extends ArrayList<T> {
 
     @Override
     public T remove(int index) {
+
         return super.remove(index);
     }
 
     @Override
     public boolean remove(Object o) {
+        Object mapper = this.getMapper((T) t);
+        Class<?> aClass = mapper.getClass();
+        try {
+            Method deleteByPrimaryKey = aClass.getMethod("deleteByPrimaryKey", t.getClass());
+            deleteByPrimaryKey.invoke(mapper, t);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return super.remove(o);
     }
+
 
     @Override
     public boolean addAll(Collection<? extends T> c) {

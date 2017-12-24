@@ -19,6 +19,13 @@ public class Crops {
 
     private Integer count;
 
+    private Long lefttime;
+
+    public Long getLefttime() {
+
+        return Long.valueOf(1);
+    }
+
     public Long getId() {
         return id;
     }

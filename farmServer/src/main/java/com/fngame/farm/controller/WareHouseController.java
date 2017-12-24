@@ -77,10 +77,10 @@ public class WareHouseController {
                 break;
             }
         }*/
-        User user = new User();
-        user.setMoney(1);
-    /*    insertSelective.invoke(userMapper,user);*/
-        List<User> newlist = sqlListManager.getNewlist().addAll();
+        Props user = new Props();
+        user.setBaseid(1111);
+
+        List<Props> newlist = sqlListManager.getNewlist();
         newlist.add(user);
         Props props = new Props();
         props.setBaseid(222);

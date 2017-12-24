@@ -3,6 +3,7 @@ package com.fngame.farm.model;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 @Component
 public class AnimalExample {
@@ -463,6 +464,126 @@ public class AnimalExample {
 
         public Criteria andOwneridNotBetween(Integer value1, Integer value2) {
             addCriterion("ownerid not between", value1, value2, "ownerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andFeedtimeIsNull() {
+            addCriterion("feedtime is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFeedtimeIsNotNull() {
+            addCriterion("feedtime is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFeedtimeEqualTo(Date value) {
+            addCriterion("feedtime =", value, "feedtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andFeedtimeNotEqualTo(Date value) {
+            addCriterion("feedtime <>", value, "feedtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andFeedtimeGreaterThan(Date value) {
+            addCriterion("feedtime >", value, "feedtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andFeedtimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("feedtime >=", value, "feedtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andFeedtimeLessThan(Date value) {
+            addCriterion("feedtime <", value, "feedtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andFeedtimeLessThanOrEqualTo(Date value) {
+            addCriterion("feedtime <=", value, "feedtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andFeedtimeIn(List<Date> values) {
+            addCriterion("feedtime in", values, "feedtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andFeedtimeNotIn(List<Date> values) {
+            addCriterion("feedtime not in", values, "feedtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andFeedtimeBetween(Date value1, Date value2) {
+            addCriterion("feedtime between", value1, value2, "feedtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andFeedtimeNotBetween(Date value1, Date value2) {
+            addCriterion("feedtime not between", value1, value2, "feedtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanreapIsNull() {
+            addCriterion("canreap is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanreapIsNotNull() {
+            addCriterion("canreap is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanreapEqualTo(Integer value) {
+            addCriterion("canreap =", value, "canreap");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanreapNotEqualTo(Integer value) {
+            addCriterion("canreap <>", value, "canreap");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanreapGreaterThan(Integer value) {
+            addCriterion("canreap >", value, "canreap");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanreapGreaterThanOrEqualTo(Integer value) {
+            addCriterion("canreap >=", value, "canreap");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanreapLessThan(Integer value) {
+            addCriterion("canreap <", value, "canreap");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanreapLessThanOrEqualTo(Integer value) {
+            addCriterion("canreap <=", value, "canreap");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanreapIn(List<Integer> values) {
+            addCriterion("canreap in", values, "canreap");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanreapNotIn(List<Integer> values) {
+            addCriterion("canreap not in", values, "canreap");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanreapBetween(Integer value1, Integer value2) {
+            addCriterion("canreap between", value1, value2, "canreap");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanreapNotBetween(Integer value1, Integer value2) {
+            addCriterion("canreap not between", value1, value2, "canreap");
             return (Criteria) this;
         }
     }

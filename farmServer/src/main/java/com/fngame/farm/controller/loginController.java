@@ -1,8 +1,11 @@
 package com.fngame.farm.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.fngame.farm.manager.PlayerManager;
 import com.fngame.farm.model.User;
 import com.fngame.farm.service.loginService;
+import com.fngame.farm.userdate.PlayerInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,11 +41,17 @@ public class loginController {
             req.getSession().setAttribute("userid",userByname.getUserid());
 
         } else {
+
             jsonObject.put(resp_code, "0000");
             jsonObject.put(resp_desc, "登录失败，用户不存在");
+
         }
+        PlayerInfo player = playerManager.getPlayer(userByname.getUserid());
+        jsonObject.put("playerinfo",player);
         return jsonObject;
     }
+    @Autowired
+    PlayerManager playerManager;
 
     @RequestMapping("resign")
     public JSONObject resign(User user, Integer type) {

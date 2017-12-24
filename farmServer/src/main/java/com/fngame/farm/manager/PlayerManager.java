@@ -2,9 +2,11 @@ package com.fngame.farm.manager;
 
 import com.fngame.farm.model.*;
 import com.fngame.farm.userdate.PlayerInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,8 +17,9 @@ import java.util.List;
 
 @Component
 public class PlayerManager extends BaseAutowired {
-
+@Autowired
     private static PlayerManager playerManager;
+
 
     public static PlayerManager getInstance() {
         if (playerManager == null) playerManager = new PlayerManager();
@@ -37,7 +40,10 @@ public class PlayerManager extends BaseAutowired {
         buildingExample.createCriteria().andUseridEqualTo(userid);
         List<Building> buildings = buildingMapper.selectByExample(buildingExample);
         playerInfo.setBuildings(buildings);
-        List<Animal> animales = animalMapper.selectByUserid(userid);
+        animalExample.clear();
+        AnimalExample.Criteria criteria2 = animalExample.createCriteria();
+        criteria2.andUseridEqualTo(userid);
+        List<Animal> animales = animalMapper.selectByExample(animalExample);
         playerInfo.setAnimals(animales);
         List<Props> props = propsMapper.selectByUserid(userid);
         playerInfo.setPropss(props);
@@ -54,6 +60,7 @@ public class PlayerManager extends BaseAutowired {
         FriendExample.Criteria criteria1 = friendExample.createCriteria();
         criteria1.andUseridEqualTo(userid);
         List<Friend> friends = friendMapper.selectByExample(friendExample);
+
         playerInfo.setFriends(friends);
 
         return playerInfo;

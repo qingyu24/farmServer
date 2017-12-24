@@ -101,4 +101,9 @@ public class ResultInfo {
                 ", sub='" + sub + '\'' +
                 '}';
     }
+
+    public void setfalse() {
+        this.resp_code = "10005";
+        this.resp_desc = "处理有误";
+    }
 }

@@ -1,5 +1,11 @@
 package com.fngame.farm.model;
 
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
+import java.util.Date;
+@Component
+
 public class Animal {
     private Long id;
 
@@ -12,6 +18,10 @@ public class Animal {
     private Integer warehouse;
 
     private Integer ownerid;
+
+    private Date feedtime;
+
+    private Integer canreap;
 
     public Long getId() {
         return id;
@@ -59,5 +69,21 @@ public class Animal {
 
     public void setOwnerid(Integer ownerid) {
         this.ownerid = ownerid;
+    }
+
+    public Date getFeedtime() {
+        return feedtime;
+    }
+
+    public void setFeedtime(Date feedtime) {
+        this.feedtime = feedtime;
+    }
+
+    public Integer getCanreap() {
+        return canreap;
+    }
+
+    public void setCanreap(Integer canreap) {
+        this.canreap = canreap;
     }
 }

@@ -5,7 +5,7 @@ import com.fngame.farm.model.AnimalExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface AnimalMapper  {
+public interface AnimalMapper {
     int countByExample(AnimalExample example);
 
     int deleteByExample(AnimalExample example);
@@ -28,5 +28,4 @@ public interface AnimalMapper  {
 
     int updateByPrimaryKey(Animal record);
 
-    List<Animal> selectByUserid(long userid);
 }
