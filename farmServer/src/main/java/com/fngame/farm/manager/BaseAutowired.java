@@ -3,7 +3,6 @@ package com.fngame.farm.manager;
 import com.fngame.farm.mapper.*;
 import com.fngame.farm.model.*;
 import com.fngame.farm.userdate.RequserOrder;
-import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -45,16 +44,24 @@ public class BaseAutowired {
     public RequserOrder requserOrder;
 
     @Autowired
-    FriendMapper friendMapper;
+    public FriendMapper friendMapper;
     @Autowired
-    FriendExample friendExample;
-    @Autowired
-    BeanFactory beanFactory;
+    public FriendExample friendExample;
 
-    public void getexample(String simpleName) {
+    @Autowired
+    CraftProduceMapper craftProduceMapper;
+    @Autowired
+    CraftProduceExample craftProduceExample;
+
+@Autowired
+    TeleBoothExample teleBoothExample;
+@Autowired
+    TeleBoothMapper teleBoothMapper;
+
+/*    public void getexample(String simpleName) {
         Object bean = beanFactory.getBean(simpleName + "Example");
         System.out.println(bean.getClass().getSimpleName());
         System.out.println(bean.toString());
 
-    }
+    }*/
 }

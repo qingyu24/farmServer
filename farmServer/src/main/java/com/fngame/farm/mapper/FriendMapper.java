@@ -29,6 +29,4 @@ public interface FriendMapper {
     int updateByPrimaryKey(Friend record);
 
     long getID();
-
-
 }

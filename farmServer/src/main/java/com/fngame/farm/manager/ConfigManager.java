@@ -1,6 +1,6 @@
 package com.fngame.farm.manager;
 
-import com.fngame.farm.configer.Crop;
+import com.fngame.farm.configer.Craft;
 import com.fngame.farm.configer.Entity;
 import com.fngame.farm.configer.Order;
 import com.fngame.farm.configer.Resp;
@@ -67,18 +67,18 @@ public class ConfigManager {
         return list;
     }
 
-    @Cacheable(value = "crop_conf", key = "#crops.baseid")
-    public Crop getCrops(Crops crops) {
-        ArrayList<Crop> list = loades.get(Crop.class.getSimpleName());
-        for (Crop crop : list) {
-            if (crops.getBaseid() == crop.ID) {
+ /*   @Cacheable(value = "Craft_conf", key = "#crops.baseid")
+    public Craft getCraft(Crops crops) {
+        ArrayList<Craft> list = loades.get(Craft.class.getSimpleName());
+        for (Craft crop : list) {
+            if (crops.getBaseid() == crop.ItemID) {
                 return crop;
             }
         }
 
         return null;
     }
-
+*/
     @Cacheable(value = "resp_conf", key = "#resp_code")
     public String getResp(String resp_code) {
         if (resp_code == null) return "未知错误1";
@@ -96,4 +96,16 @@ public class ConfigManager {
 
         return null;
     }
+    @Cacheable(value = "Craft_conf", key = "#buildingid")
+    public Craft getCraft(Integer buildingid) {
+        ArrayList<Craft> arrayList = loades.get(Craft.class.getSimpleName());
+        for (Craft craft : arrayList) {
+            if (craft.PreBuilding == buildingid) {
+                return craft;
+            }
+        }
+
+        return null;
+    }
+
 }

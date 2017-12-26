@@ -13,7 +13,7 @@ import java.util.List;
 public class XlsUtil {
     public static void creatClass() throws IOException {
         //        File file = new File("src/main/java/com/fngame/farm/configer/MahJongConfig.xls");
-        File file = new File("src/main/resources/config/");
+        File file = new File("config/");
 
 
         File[] files = file.listFiles();
@@ -21,7 +21,7 @@ public class XlsUtil {
         for (File file1 : files) {
             String name = file1.getName();
             if (name.endsWith(".xlsx")) {
-                File file2 = new File("configer/" + name.replace(".xlsx", ".java"));
+                File file2 = new File("src/main/java/com/fngame/farm/configer/" + name.replace(".xlsx", ".java"));
                 if (file2.exists()) file2.delete();
                 file2.createNewFile();
 
@@ -35,7 +35,7 @@ public class XlsUtil {
 
   public List<String> getConfigList(){
       ArrayList<String> list = new ArrayList<>();
-      File file = new File("src/main/resources/config/");
+      File file = new File("config/");
 
 
       File[] files = file.listFiles();
@@ -69,16 +69,16 @@ public class XlsUtil {
         XSSFSheet sheet = wb.getSheetAt(0);
 
         //表头那一行
-        XSSFRow titleRow = sheet.getRow(0);
+        XSSFRow titleRow = sheet.getRow(1);
         System.out.println(titleRow.getLastCellNum());
         XSSFCell cell = null;
         writer.write("package com.fngame.farm.configer;");
         writer.newLine();
-        writer.write(String.format("public class %s {", file.getName().replace(".xlsx", "")));
+        writer.write(String.format("public class %managerExample {", file.getName().replace(".xlsx", "")));
         writer.newLine();
         writer.flush();
 
-        for (int i = 0; i < titleRow.getLastCellNum(); i++) {
+        for (int i = 1; i < titleRow.getLastCellNum(); i++) {
             cell = titleRow.getCell(i);
 
             try {
@@ -127,8 +127,8 @@ public class XlsUtil {
 
     public static void getlist(String file) {
         String replace = file.replace(".java", "");
-        String s = "  private static   ArrayList<%s> %sloader=new ArrayList();";
-        String s1 = String.format("  loades.put(\"%s\", %s);", file.replace("loader", ""), file);
+        String s = "  private static   ArrayList<%managerExample> %sloader=new ArrayList();";
+        String s1 = String.format("  loades.put(\"%managerExample\", %managerExample);", file.replace("loader", ""), file);
 
         String format = String.format(s, replace, replace, replace);
         System.out.println(s1);
@@ -137,7 +137,7 @@ public class XlsUtil {
 //生成configManager
     public void readManager() throws Exception {
         List<String> configList = this.getConfigList();
-        File file = new File("src/main/resources/config/managerExample.txt");
+        File file = new File("src/main/resources/config/managerExample");
        File files= new File("src/main/java/com/fngame/farm/manager/ConfigLoaderManager.java");
        if(files.exists())files.delete();
         files.createNewFile();

@@ -46,8 +46,7 @@ public class loginController {
             jsonObject.put(resp_desc, "登录失败，用户不存在");
 
         }
-        PlayerInfo player = playerManager.getPlayer(userByname.getUserid());
-        jsonObject.put("playerinfo",player);
+
         return jsonObject;
     }
     @Autowired

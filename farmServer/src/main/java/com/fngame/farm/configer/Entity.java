@@ -5,10 +5,10 @@ public class Entity {
   public String Display;
   public String Info;
   public Integer Type;
-  public boolean Move;
-  public boolean Flip;
-  public boolean PackUp;
-  public boolean Clear;
+  public Integer Move;
+  public Integer Flip;
+  public Integer PackUp;
+  public Integer Clear;
   public String BuildPrice;
   public Integer BuildTime;
   public Integer BuildLimited;

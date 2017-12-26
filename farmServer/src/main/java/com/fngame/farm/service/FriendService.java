@@ -5,6 +5,7 @@ import com.fngame.farm.manager.PlayerManager;
 import com.fngame.farm.mapper.FriendMapper;
 import com.fngame.farm.model.Friend;
 import com.fngame.farm.model.FriendExample;
+import com.fngame.farm.model.FriendInfo;
 import com.fngame.farm.model.User;
 import com.fngame.farm.userdate.PlayerInfo;
 import com.fngame.farm.userdate.ResultInfo;
@@ -71,9 +72,6 @@ public class FriendService {
         Friend friend = new Friend();
         friend.setUserid(player.getUserid());
         friend.setFriendid(fPlayer.getUserid());
-        friend.setHeadurl(fPlayer.getHeadurl());
-        friend.setNickname(fPlayer.getNickname());
-        friend.setSex(fPlayer.getSex());
         friend.setId(++friendid);
         return friend;
     }
@@ -127,7 +125,7 @@ public class FriendService {
     public Boolean get(ResultInfo resultInfo, Friend friend) {
         Long userid = friend.getUserid();
         PlayerInfo player = PlayerManager.getPlayer(userid);
-        List<Friend> friends = player.getFriends();
+        List<FriendInfo> friends = player.getFriendsInfo();
         HashMap<String, Object> data = resultInfo.getData();
         data.put("friends", friends);
         return true;

@@ -1,6 +1,5 @@
 package com.fngame.farm.util;
 
-import com.fngame.farm.configer.Actor;
 import com.fngame.farm.manager.ConfigManager;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -57,11 +56,13 @@ public class XlsReader {
         FileInputStream fileInputStream = new FileInputStream(file);
         XSSFWorkbook wb = new XSSFWorkbook(fileInputStream);
         XSSFSheet sheet = wb.getSheetAt(0);
-        for (int i = 1; i < sheet.getLastRowNum(); i++) {
+        logger.info("读取文件"+file.getName());
+        for (int i = 2; i < sheet.getLastRowNum(); i++) {
             obj = t.newInstance();
-            XSSFRow row0 = sheet.getRow(0);
+            XSSFRow row0 = sheet.getRow(1);
             XSSFRow row = sheet.getRow(i);
             if (row == null) continue;
+
             for (int j = 0; j < row.getLastCellNum(); j++) {
                 XSSFCell cell0 = row0.getCell(j);
                 String key = cell0.getStringCellValue();
@@ -125,7 +126,7 @@ public class XlsReader {
                     logger.error("配置表不存在：" + next);
                 }
             } catch (ClassNotFoundException e) {
-                System.out.println(Actor.class);
+
                 logger.error("反射失败", e);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();

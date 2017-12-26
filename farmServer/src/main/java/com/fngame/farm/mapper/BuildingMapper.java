@@ -4,7 +4,9 @@ import com.fngame.farm.model.Building;
 import com.fngame.farm.model.BuildingExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
+@Component
 public interface BuildingMapper {
     int countByExample(BuildingExample example);
 

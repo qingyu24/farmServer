@@ -16,7 +16,7 @@ import java.util.Collection;
 
 public class SqlList<T> extends ArrayList<T> {
 
-    private String sqlID = "select id from %s order by id desc limit 0,1";
+    private String sqlID = "select id from %smanagerExample order by id desc limit 0,1";
     BeanFactory beanFactory;
     private T t;
 

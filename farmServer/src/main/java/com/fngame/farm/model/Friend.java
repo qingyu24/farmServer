@@ -9,12 +9,6 @@ public class Friend {
 
     private Integer agree;
 
-    private String nickname;
-
-    private String headurl;
-
-    private Integer sex;
-
     public Long getId() {
         return id;
     }
@@ -47,30 +41,6 @@ public class Friend {
         this.agree = agree;
     }
 
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname == null ? null : nickname.trim();
-    }
-
-    public String getHeadurl() {
-        return headurl;
-    }
-
-    public void setHeadurl(String headurl) {
-        this.headurl = headurl == null ? null : headurl.trim();
-    }
-
-    public Integer getSex() {
-        return sex;
-    }
-
-    public void setSex(Integer sex) {
-        this.sex = sex;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -90,10 +60,10 @@ public class Friend {
     }
 
     public Friend change() {
-        long s=userid;
-        userid=friendid;
-        friendid=s;
+        long s = userid;
+        userid = friendid;
+        friendid = s;
         return this;
-
     }
+
 }

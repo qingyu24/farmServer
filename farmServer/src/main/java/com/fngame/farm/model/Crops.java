@@ -19,12 +19,7 @@ public class Crops {
 
     private Integer count;
 
-    private Long lefttime;
-
-    public Long getLefttime() {
-
-        return Long.valueOf(1);
-    }
+    private Integer isinsale;
 
     public Long getId() {
         return id;
@@ -88,5 +83,13 @@ public class Crops {
 
     public void setCount(Integer count) {
         this.count = count;
+    }
+
+    public Integer getIsinsale() {
+        return isinsale;
+    }
+
+    public void setIsinsale(Integer isinsale) {
+        this.isinsale = isinsale;
     }
 }

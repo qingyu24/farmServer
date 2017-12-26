@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,7 +16,7 @@ import java.util.List;
 
 @Component
 public class PlayerManager extends BaseAutowired {
-@Autowired
+    @Autowired
     private static PlayerManager playerManager;
 
 
@@ -40,28 +39,47 @@ public class PlayerManager extends BaseAutowired {
         buildingExample.createCriteria().andUseridEqualTo(userid);
         List<Building> buildings = buildingMapper.selectByExample(buildingExample);
         playerInfo.setBuildings(buildings);
+
         animalExample.clear();
         AnimalExample.Criteria criteria2 = animalExample.createCriteria();
         criteria2.andUseridEqualTo(userid);
         List<Animal> animales = animalMapper.selectByExample(animalExample);
         playerInfo.setAnimals(animales);
-        List<Props> props = propsMapper.selectByUserid(userid);
+
+        propsExample.clear();
+        PropsExample.Criteria criteria4 = propsExample.createCriteria();
+        criteria4.andUseridEqualTo(userid);
+        List<Props> props = propsMapper.selectByExample(propsExample);
         playerInfo.setPropss(props);
+
         orderExample.clear();
         UserOrderExample.Criteria criteria = orderExample.createCriteria();
         criteria.andUseridEqualTo(userid);
         List<UserOrder> orders = orderMapper.selectByExample(orderExample);
         playerInfo.setOrders(orders);
+
         cropsExample.clear();
         cropsExample.createCriteria().andUseridEqualTo(userid);
         List<Crops> crops = cropsMapper.selectByExample(cropsExample);
         playerInfo.setCrops(crops);
+
         friendExample.clear();
         FriendExample.Criteria criteria1 = friendExample.createCriteria();
         criteria1.andUseridEqualTo(userid);
         List<Friend> friends = friendMapper.selectByExample(friendExample);
-
         playerInfo.setFriends(friends);
+
+        craftProduceExample.clear();
+        CraftProduceExample.Criteria criteria3 = craftProduceExample.createCriteria();
+        criteria3.andUseridEqualTo(userid);
+        List<CraftProduce> craftProduces = craftProduceMapper.selectByExample(craftProduceExample);
+        playerInfo.setCraftProduces(craftProduces);
+
+        teleBoothExample.clear();
+        TeleBoothExample.Criteria criteria5 = teleBoothExample.createCriteria();
+        criteria5.andUseridEqualTo(userid);
+        List<TeleBooth> teleBooths = teleBoothMapper.selectByExample(teleBoothExample);
+        playerInfo.setTeleBooths(teleBooths);
 
         return playerInfo;
     }

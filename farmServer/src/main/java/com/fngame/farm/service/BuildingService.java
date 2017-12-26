@@ -50,11 +50,22 @@ public class BuildingService {
         }
         User user = userMapper.selectByPrimaryKey(building.getUserid());
 
-    /*    if (bco.BuildPrice > user.getMoney()) {
-            resultInfo.setResult("001", "金币不足");
 
+        String[] split = bco.BuildPrice.split("_");
+        if(split.length!=2){
+
+            resultInfo.setResult("0003", "读取配置信息有误");
             return false;
-        }*/
+        }
+
+
+        //对应价格核算  稍后完善
+        Integer s = Integer.valueOf(split[0]);
+        Integer price = Integer.valueOf(split[1]);
+        Integer needprice=0;
+        switch (s){
+/*            case 1:if(user.getMoney()) */
+        }
         buildingExample.clear();
         BuildingExample.Criteria criteria = buildingExample.createCriteria();
         criteria.andUseridEqualTo(building.getUserid());
@@ -92,11 +103,11 @@ public class BuildingService {
             resultInfo.setResult("001", "该类型建筑不存在");
             return false;
         }
-        if (!bco.Move && (building.getXpos() != null || building.getYpos() != null)) {
+        if (bco.Move!=1 && (building.getXpos() != null || building.getYpos() != null)) {
             resultInfo.setResult("00001", "该建筑不能移动");
             return false;
         }
-        if (building.getDir() != null && !bco.Flip) {
+        if (building.getDir() != null && bco.Flip!=1) {
             resultInfo.setResult("00001", "该建筑不能转动");
             return false;
         }
@@ -112,7 +123,7 @@ public class BuildingService {
             resultInfo.setResult("001", "该类型建筑不存在");
             return false;
         }
-        if (bco.Clear) {
+        if (bco.Clear==1) {
             try {
                 int i = BuildingMapper.deleteByPrimaryKey(building.getId());
                 return true;

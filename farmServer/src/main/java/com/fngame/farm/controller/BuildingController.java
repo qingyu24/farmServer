@@ -34,7 +34,7 @@ public class BuildingController extends BaseController implements BaseContorller
         System.out.println(resultInfo.toString());
         if (b) {
             resultInfo.setSucess();
-            resultInfo.getData().put(EResultType.buildinfo.toString(), building);
+            resultInfo.getData().put("buildinfo", building);
         }
         return resultInfo;
     }

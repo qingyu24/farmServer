@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+
 /**
  * Created by qingyu on 2017/12/22.
  */
@@ -23,7 +25,7 @@ public class FriendController implements BaseContorllerInterface<Friend> {
     @Override
     public ResultInfo add(RequserOrder order, Friend friend) {
         resultInfo.setOrder(order);
-        Boolean add = null;
+        Boolean add = true;
         try {
             add = friendService.add(resultInfo, friend);
         } catch (Exception e) {
@@ -45,8 +47,9 @@ public class FriendController implements BaseContorllerInterface<Friend> {
     public ResultInfo remove(RequserOrder order, Friend friend) {
         resultInfo.setOrder(order);
         Boolean add = friendService.remove(resultInfo, friend);
-        if(!add){
+        if (!add) {
             resultInfo.setfalse();
+
         }
 
         return resultInfo;
@@ -66,7 +69,7 @@ public class FriendController implements BaseContorllerInterface<Friend> {
     public ResultInfo agree(RequserOrder order, Friend friend) {
         resultInfo.setOrder(order);
         Boolean aBoolean = friendService.agree(resultInfo, friend);
-        if(!aBoolean){
+        if (!aBoolean) {
             resultInfo.setfalse();
         }
         return resultInfo;

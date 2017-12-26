@@ -13,6 +13,8 @@ public class Props {
 
     private Long ownerid;
 
+    private Integer isinsale;
+
     public Long getId() {
         return id;
     }
@@ -59,5 +61,13 @@ public class Props {
 
     public void setOwnerid(Long ownerid) {
         this.ownerid = ownerid;
+    }
+
+    public Integer getIsinsale() {
+        return isinsale;
+    }
+
+    public void setIsinsale(Integer isinsale) {
+        this.isinsale = isinsale;
     }
 }

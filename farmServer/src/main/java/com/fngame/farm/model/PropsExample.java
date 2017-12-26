@@ -465,6 +465,66 @@ public class PropsExample {
             addCriterion("ownerid not between", value1, value2, "ownerid");
             return (Criteria) this;
         }
+
+        public Criteria andIsinsaleIsNull() {
+            addCriterion("isinsale is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsinsaleIsNotNull() {
+            addCriterion("isinsale is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsinsaleEqualTo(Integer value) {
+            addCriterion("isinsale =", value, "isinsale");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsinsaleNotEqualTo(Integer value) {
+            addCriterion("isinsale <>", value, "isinsale");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsinsaleGreaterThan(Integer value) {
+            addCriterion("isinsale >", value, "isinsale");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsinsaleGreaterThanOrEqualTo(Integer value) {
+            addCriterion("isinsale >=", value, "isinsale");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsinsaleLessThan(Integer value) {
+            addCriterion("isinsale <", value, "isinsale");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsinsaleLessThanOrEqualTo(Integer value) {
+            addCriterion("isinsale <=", value, "isinsale");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsinsaleIn(List<Integer> values) {
+            addCriterion("isinsale in", values, "isinsale");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsinsaleNotIn(List<Integer> values) {
+            addCriterion("isinsale not in", values, "isinsale");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsinsaleBetween(Integer value1, Integer value2) {
+            addCriterion("isinsale between", value1, value2, "isinsale");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsinsaleNotBetween(Integer value1, Integer value2) {
+            addCriterion("isinsale not between", value1, value2, "isinsale");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

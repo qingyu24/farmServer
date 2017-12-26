@@ -1,12 +1,10 @@
 package com.fngame.farm.interceptor;
 
-import groovy.util.logging.Slf4j;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-@Slf4j
 @WebListener
 public class FarmListener implements ServletContextListener {
     @Override

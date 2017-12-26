@@ -1,6 +1,6 @@
 package com.fngame.farm.service;
 
-import com.fngame.farm.configer.Crop;
+import com.fngame.farm.configer.Craft;
 import com.fngame.farm.manager.ConfigManager;
 import com.fngame.farm.manager.PlayerManager;
 import com.fngame.farm.mapper.CropsMapper;
@@ -9,10 +9,12 @@ import com.fngame.farm.model.Crops;
 import com.fngame.farm.userdate.PlayerInfo;
 import com.fngame.farm.userdate.ResultInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by qingyu on 2017/12/22.
  */
+@Service
 public class CropService {
     @Autowired
     PlayerManager playerManager;
@@ -42,16 +44,24 @@ public class CropService {
 
     public Boolean gain(ResultInfo resultInfo, Crops crops) {
         PlayerInfo player = playerManager.getPlayer(crops.getUserid());
-        Crop cof_crop = configManager.getCrops(crops);
-        if(cof_crop==null){resultInfo.setResult("1","该类型不存在"); return false;}
-        if(player==null){
+        Craft cof_crop = configManager.getCraft(crops.getOwnerid());
+        if (cof_crop == null) {
+            resultInfo.setResult("1", "该类型不存在");
+            return false;
+        }
+
+        if (player == null) {
             resultInfo.setResp_code("100001");
         }
-        if(cof_crop.PlantLevel>player.getUser().getLevel()){}
+/*player.getBuildings().get();*/
 
         return null;
     }
+
     public Boolean plant(ResultInfo resultInfo, Crops crops) {
+        Craft craft = configManager.getCraft(crops.getOwnerid());
+
+
         return null;
     }
 }
