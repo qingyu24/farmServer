@@ -15,6 +15,8 @@ public class Props {
 
     private Integer isinsale;
 
+    private Integer price;
+
     public Long getId() {
         return id;
     }
@@ -69,5 +71,13 @@ public class Props {
 
     public void setIsinsale(Integer isinsale) {
         this.isinsale = isinsale;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 }

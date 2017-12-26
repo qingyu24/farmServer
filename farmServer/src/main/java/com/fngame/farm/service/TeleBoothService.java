@@ -1,9 +1,11 @@
 package com.fngame.farm.service;
 
+import com.fngame.farm.manager.PlayerManager;
 import com.fngame.farm.mapper.TeleBoothMapper;
 import com.fngame.farm.model.TeleBooth;
 import com.fngame.farm.model.TeleBoothExample;
 import com.fngame.farm.service.baseService.BaseServiceImpl;
+import com.fngame.farm.userdate.PlayerInfo;
 import com.fngame.farm.userdate.ResultInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,13 +22,17 @@ public class TeleBoothService implements BaseServiceImpl<TeleBooth> {
     TeleBoothMapper teleBoothMapper;
     @Autowired
     TeleBoothExample teleBoothExample;
+    @Autowired
+    PlayerManager playerManager;
 
     @Override
     public Boolean add(ResultInfo resultInfo, TeleBooth teleBooth) {
-        TeleBoothExample.Criteria criteria = teleBoothExample.createCriteria();
-        criteria.andUseridEqualTo(teleBooth.getUserid());
-        List<TeleBooth> teleBooths = teleBoothMapper.selectByExample(teleBoothExample);
+        PlayerInfo player = playerManager.getPlayer(teleBooth.getUserid());
+        List<TeleBooth> teleBooths = player.getTeleBooths();
         if (teleBooths == null || teleBooths.size() == 0) {
+            TeleBooth.getID();
+            teleBooth.setBegintime(new Date());
+            int i = teleBoothMapper.updateByPrimaryKeySelective(teleBooth);
 
         } else if (teleBooths.size() == 1) {
             TeleBooth teleBooth1 = teleBooths.get(0);
@@ -34,7 +40,7 @@ public class TeleBoothService implements BaseServiceImpl<TeleBooth> {
             if (achieve == 1) {
                 teleBooth.setBegintime(new Date());
                 teleBooth.setId(teleBooth1.getId());
-
+                int i = teleBoothMapper.updateByPrimaryKeySelective(teleBooth);
             } else if (achieve == 0) {
 
                 return false;

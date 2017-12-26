@@ -27,4 +27,6 @@ public interface TeleBoothMapper {
     int updateByPrimaryKeySelective(TeleBooth record);
 
     int updateByPrimaryKey(TeleBooth record);
+
+    long getMaxID();
 }
