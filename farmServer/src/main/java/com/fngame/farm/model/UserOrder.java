@@ -2,8 +2,10 @@ package com.fngame.farm.model;
 
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
+
 @Component
-public class UserOrder {
+public class UserOrder implements Serializable{
     public Long id;
 
     public Long userid;

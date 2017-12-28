@@ -19,8 +19,6 @@ public class loginService {
 
 
     public boolean addUser(User user, Integer type) {
-
-
         //根据type 判断是否注册过
         User user1 = null;
         if (type == null) type = 1;

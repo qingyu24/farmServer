@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fngame.farm.mapper.CraftProduceMapper" >
+
+
+    <cache type="com.fngame.farm.configer.baseconfiger.MybatisRedisCache">
+        <property name="eviction" value="LRU" />
+        <property name="flushInterval" value="6000000" />
+        <property name="size" value="1024" />
+        <property name="readOnly" value="false" />
+    </cache>
+
+  <resultMap id="BaseResultMap" type="com.fngame.farm.model.CraftProduce" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="userid" property="userid" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="buildingid" property="buildingid" jdbcType="BIGINT" />
+    <result column="productbaseid" property="productbaseid" jdbcType="INTEGER" />
+    <result column="begintime" property="begintime" jdbcType="TIMESTAMP" />
+    <result column="inproduce" property="inproduce" jdbcType="INTEGER" />
+    <result column="size" property="size" jdbcType="INTEGER" />
+  </resultMap>
+
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, userid, type, buildingid, productbaseid, begintime, inproduce, size
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fngame.farm.model.CraftProduceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from fm_craft
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from fm_craft
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from fm_craft
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fngame.farm.model.CraftProduceExample" >
+    delete from fm_craft
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fngame.farm.model.CraftProduce" >
+    insert into fm_craft (id, userid, type, 
+      buildingid, productbaseid, begintime, 
+      inproduce, size)
+    values (#{id,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, 
+      #{buildingid,jdbcType=BIGINT}, #{productbaseid,jdbcType=INTEGER}, #{begintime,jdbcType=TIMESTAMP}, 
+      #{inproduce,jdbcType=INTEGER}, #{size,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fngame.farm.model.CraftProduce" >
+    insert into fm_craft
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="buildingid != null" >
+        buildingid,
+      </if>
+      <if test="productbaseid != null" >
+        productbaseid,
+      </if>
+      <if test="begintime != null" >
+        begintime,
+      </if>
+      <if test="inproduce != null" >
+        inproduce,
+      </if>
+      <if test="size != null" >
+        size,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="buildingid != null" >
+        #{buildingid,jdbcType=BIGINT},
+      </if>
+      <if test="productbaseid != null" >
+        #{productbaseid,jdbcType=INTEGER},
+      </if>
+      <if test="begintime != null" >
+        #{begintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inproduce != null" >
+        #{inproduce,jdbcType=INTEGER},
+      </if>
+      <if test="size != null" >
+        #{size,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fngame.farm.model.CraftProduceExample" resultType="java.lang.Integer" >
+    select count(*) from fm_craft
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update fm_craft
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userid != null" >
+        userid = #{record.userid,jdbcType=BIGINT},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.buildingid != null" >
+        buildingid = #{record.buildingid,jdbcType=BIGINT},
+      </if>
+      <if test="record.productbaseid != null" >
+        productbaseid = #{record.productbaseid,jdbcType=INTEGER},
+      </if>
+      <if test="record.begintime != null" >
+        begintime = #{record.begintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.inproduce != null" >
+        inproduce = #{record.inproduce,jdbcType=INTEGER},
+      </if>
+      <if test="record.size != null" >
+        size = #{record.size,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update fm_craft
+    set id = #{record.id,jdbcType=BIGINT},
+      userid = #{record.userid,jdbcType=BIGINT},
+      type = #{record.type,jdbcType=INTEGER},
+      buildingid = #{record.buildingid,jdbcType=BIGINT},
+      productbaseid = #{record.productbaseid,jdbcType=INTEGER},
+      begintime = #{record.begintime,jdbcType=TIMESTAMP},
+      inproduce = #{record.inproduce,jdbcType=INTEGER},
+      size = #{record.size,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fngame.farm.model.CraftProduce" >
+    update fm_craft
+    <set >
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="buildingid != null" >
+        buildingid = #{buildingid,jdbcType=BIGINT},
+      </if>
+      <if test="productbaseid != null" >
+        productbaseid = #{productbaseid,jdbcType=INTEGER},
+      </if>
+      <if test="begintime != null" >
+        begintime = #{begintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inproduce != null" >
+        inproduce = #{inproduce,jdbcType=INTEGER},
+      </if>
+      <if test="size != null" >
+        size = #{size,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fngame.farm.model.CraftProduce" >
+    update fm_craft
+    set userid = #{userid,jdbcType=BIGINT},
+      type = #{type,jdbcType=INTEGER},
+      buildingid = #{buildingid,jdbcType=BIGINT},
+      productbaseid = #{productbaseid,jdbcType=INTEGER},
+      begintime = #{begintime,jdbcType=TIMESTAMP},
+      inproduce = #{inproduce,jdbcType=INTEGER},
+      size = #{size,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

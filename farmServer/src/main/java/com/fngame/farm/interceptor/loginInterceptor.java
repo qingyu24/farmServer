@@ -14,7 +14,7 @@ public class loginInterceptor extends HandlerInterceptorAdapter {
     public loginInterceptor() {
         super();
     }
-    private static String secret="";
+    private static String secret="123";
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         System.out.println("请求前");

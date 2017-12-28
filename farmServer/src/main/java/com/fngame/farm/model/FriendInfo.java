@@ -3,9 +3,11 @@ package com.fngame.farm.model;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
+
 @Component
 @Scope("prototype")
-public class FriendInfo {
+public class FriendInfo implements Serializable{
     private Long userid;
 
     private Long friendid;
@@ -16,6 +18,14 @@ public class FriendInfo {
 
     private Integer level;
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     private String headurl;
 
     private Integer sex;
@@ -23,6 +33,8 @@ public class FriendInfo {
     private String dest;
 
     private Integer agree;
+
+    private User user;
 
     public Long getUserid() {
         return userid;

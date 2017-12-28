@@ -1,8 +1,10 @@
 package com.fngame.farm.model;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
-
+@Component
 public class PropsExample {
     protected String orderByClause;
 

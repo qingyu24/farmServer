@@ -12,7 +12,8 @@ import org.springframework.stereotype.Component;
 public class SqlListManager {
     @Autowired
     BeanFactory beanFactory;
-  public SqlList getNewlist(){
-      return new SqlList(beanFactory);
-  }
+
+    public SqlList getNewlist() {
+        return new SqlList(beanFactory);
+    }
 }

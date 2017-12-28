@@ -3,9 +3,10 @@ package com.fngame.farm.model;
 import com.fngame.farm.mapper.TeleBoothMapper;
 import com.fngame.farm.util.BeanTools;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class TeleBooth {
+public class TeleBooth implements Serializable {
     private Long id;
 
     private Long userid;
@@ -23,6 +24,8 @@ public class TeleBooth {
     private Integer achieve;
 
     private static long maxID;
+
+
 
     private  long getMaxID() {
         if (maxID == 0) {
@@ -51,6 +54,10 @@ public class TeleBooth {
         this.id = this.getMaxID();
     }
 
+    public void setId(long id) {
+
+        this.id = id;
+    }
     public Long getUserid() {
         return userid;
     }

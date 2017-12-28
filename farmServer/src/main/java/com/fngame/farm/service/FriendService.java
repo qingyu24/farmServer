@@ -125,7 +125,7 @@ public class FriendService {
     public Boolean get(ResultInfo resultInfo, Friend friend) {
         Long userid = friend.getUserid();
         PlayerInfo player = PlayerManager.getPlayer(userid);
-        List<FriendInfo> friends = player.getFriendsInfo();
+        List<FriendInfo> friends = player.getFriendList();
         HashMap<String, Object> data = resultInfo.getData();
         data.put("friends", friends);
         return true;

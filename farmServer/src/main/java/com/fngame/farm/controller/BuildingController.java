@@ -41,7 +41,7 @@ public class BuildingController extends BaseController implements BaseContorller
 
 
     @RequestMapping("modify")
-    public ResultInfo modify(RequserOrder order, Building building) {
+    public ResultInfo modify(RequserOrder order, Building building ) {
         resultInfo.setOrder(order);
         Boolean modify = BuildingService.modify(resultInfo, building);
         if (modify) resultInfo.setSucess();

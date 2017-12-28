@@ -22,7 +22,7 @@ public class XlsUtil {
             String name = file1.getName();
             if (name.endsWith(".xlsx")) {
                 File file2 = new File("src/main/java/com/fngame/farm/configer/" + name.replace(".xlsx", ".java"));
-                if (file2.exists()) file2.delete();
+                if (file2.exists()) continue;/*file2.delete()*/;
                 file2.createNewFile();
 
                 FileWriter writer = new FileWriter(file2, true);
@@ -74,7 +74,7 @@ public class XlsUtil {
         XSSFCell cell = null;
         writer.write("package com.fngame.farm.configer;");
         writer.newLine();
-        writer.write(String.format("public class %managerExample {", file.getName().replace(".xlsx", "")));
+        writer.write(String.format("public class %s {", file.getName().replace(".xlsx", "")));
         writer.newLine();
         writer.flush();
 

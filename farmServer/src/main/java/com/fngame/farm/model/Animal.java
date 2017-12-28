@@ -3,10 +3,11 @@ package com.fngame.farm.model;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import java.io.Serializable;
 import java.util.Date;
 @Component
 
-public class Animal {
+public class Animal implements Serializable{
     private Long id;
 
     private Integer baseid;

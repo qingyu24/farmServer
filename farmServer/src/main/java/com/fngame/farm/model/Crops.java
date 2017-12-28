@@ -1,8 +1,9 @@
 package com.fngame.farm.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Crops {
+public class Crops extends Goods implements Serializable{
     private Long id;
 
     private Long userid;

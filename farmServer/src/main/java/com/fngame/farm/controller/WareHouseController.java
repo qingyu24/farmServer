@@ -1,3 +1,4 @@
+/*
 package com.fngame.farm.controller;
 
 import com.fngame.farm.manager.PlayerManager;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.List;
 
+*/
 /**
  * Created by qingyu on 2017/12/21.
- */
+ *//*
+
 @RestController
 @RequestMapping("warhouse")
 public class WareHouseController {
@@ -24,7 +27,7 @@ public class WareHouseController {
     @Autowired
     ResultInfo resultInfo;
 
-    @ResponseBody
+
     @RequestMapping("get")
     public ResultInfo getHouser(RequserOrder order, long userid) {
         resultInfo.setOrder(order);
@@ -40,3 +43,4 @@ public class WareHouseController {
 
 
 }
+*/

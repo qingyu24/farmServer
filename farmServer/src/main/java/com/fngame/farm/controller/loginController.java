@@ -53,9 +53,8 @@ public class loginController {
     PlayerManager playerManager;
 
     @RequestMapping("resign")
-    public JSONObject resign(User user, Integer type) {
+    public JSONObject Register(User user, Integer type) {
         user.setRegtime(new Date());
-
         boolean b = loginService.addUser(user, type);
         if (b) {
             jsonObject.clear();

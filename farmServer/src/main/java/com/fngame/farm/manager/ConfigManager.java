@@ -83,6 +83,7 @@ public class ConfigManager {
     public String getResp(String resp_code) {
         if (resp_code == null) return "未知错误1";
         ArrayList<Resp> arrayList = loades.get(Resp.class.getSimpleName());
+        if(arrayList==null)return "配置信息有误";
         for (Resp resp : arrayList) {
             if (resp_code.equals(resp.resp_code)) {
                 return resp.resp_desc;
@@ -90,6 +91,10 @@ public class ConfigManager {
         }
         return "未知错误2";
     }
+
+
+
+
 
     public Entity getAnimalConfig(Animal animal) {
 

@@ -7,7 +7,7 @@ public enum EFriendType {
     APPLY,//发起请求
     AGREE,//同意
     WAIT,//待同意
-    Nearby;//附近的人
+    Nearby;//附近的人p
 
     public int ID() {
         switch (this) {

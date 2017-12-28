@@ -1,8 +1,9 @@
 package com.fngame.farm.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Building {
+public class Building implements Serializable {
     private Long id;
 
     private Long userid;

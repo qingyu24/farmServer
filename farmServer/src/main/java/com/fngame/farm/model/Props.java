@@ -1,6 +1,8 @@
 package com.fngame.farm.model;
 
-public class Props {
+import java.io.Serializable;
+
+public class Props extends Goods implements Serializable{
     private Long id;
 
     private Long userid;

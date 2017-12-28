@@ -1,9 +1,11 @@
 package com.fngame.farm.model;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+@Component
 public class CropsExample {
     protected String orderByClause;
 

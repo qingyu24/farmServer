@@ -25,15 +25,10 @@ public class PlayerManager extends BaseAutowired {
         return playerManager;
     }
 */
-    @Cacheable(value = "player", key = "#userid")
-    public PlayerInfo getPlayer(long userid) {
-        PlayerInfo playerInfo = new PlayerInfo();
+    /*@Cacheable(value = "player",keyGenerator = "keyGenerator")*/
+    public PlayerInfo getPlayer(Long userid) {
+        PlayerInfo playerInfo = new PlayerInfo(userid);
 
-        userExample.clear();
-        userExample.createCriteria().andUseridEqualTo(userid);
-
-        List<User> users = userMapper.selectByExample(userExample);
-        if (users.size() > 0) playerInfo.setUser(users.get(0));
 
         buildingExample.clear();
         buildingExample.createCriteria().andUseridEqualTo(userid);
@@ -62,24 +57,6 @@ public class PlayerManager extends BaseAutowired {
         cropsExample.createCriteria().andUseridEqualTo(userid);
         List<Crops> crops = cropsMapper.selectByExample(cropsExample);
         playerInfo.setCrops(crops);
-
-        friendExample.clear();
-        FriendExample.Criteria criteria1 = friendExample.createCriteria();
-        criteria1.andUseridEqualTo(userid);
-        List<Friend> friends = friendMapper.selectByExample(friendExample);
-        playerInfo.setFriends(friends);
-
-        craftProduceExample.clear();
-        CraftProduceExample.Criteria criteria3 = craftProduceExample.createCriteria();
-        criteria3.andUseridEqualTo(userid);
-        List<CraftProduce> craftProduces = craftProduceMapper.selectByExample(craftProduceExample);
-        playerInfo.setCraftProduces(craftProduces);
-
-        teleBoothExample.clear();
-        TeleBoothExample.Criteria criteria5 = teleBoothExample.createCriteria();
-        criteria5.andUseridEqualTo(userid);
-        List<TeleBooth> teleBooths = teleBoothMapper.selectByExample(teleBoothExample);
-        playerInfo.setTeleBooths(teleBooths);
 
         return playerInfo;
     }

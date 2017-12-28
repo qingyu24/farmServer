@@ -1,6 +1,8 @@
 package com.fngame.farm.model;
 
-public class Friend {
+import java.io.Serializable;
+
+public class Friend implements Serializable {
     private Long id;
 
     private Long userid;

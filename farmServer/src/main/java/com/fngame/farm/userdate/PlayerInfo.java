@@ -2,12 +2,13 @@ package com.fngame.farm.userdate;
 
 import com.fngame.farm.manager.BaseAutowired;
 import com.fngame.farm.manager.PlayerManager;
-import com.fngame.farm.mapper.FriendInfoMapper;
+import com.fngame.farm.mapper.*;
 import com.fngame.farm.model.*;
 import com.fngame.farm.util.BeanTools;
 import com.fngame.farm.util.DBList;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
  * Created by qingyu on 2017/12/20.
  */
 @Component
-public class PlayerInfo extends BaseAutowired {
+public class PlayerInfo implements Serializable{
     private long id;
     private User user;
     private List<Building> buildings;
@@ -25,78 +26,70 @@ public class PlayerInfo extends BaseAutowired {
     private List<UserOrder> orders;
     private List<Props> propss;
     private DBList<Friend> Friends;
-    private List<FriendInfo> FriendsInfo;
     private List<CraftProduce> craftProduces;
     private List<TeleBooth> teleBooths;
 
+    public PlayerInfo(long userID){
+        id = userID;
+    }
 
-
-    public List<FriendInfo> getFriendsInfo() {
+    //获取好友的列表;
+    public List<FriendInfo> getFriendList() {
 
         FriendInfoMapper friendInfoMapper = (FriendInfoMapper) BeanTools.getBean(FriendInfoMapper.class);
         FriendInfoExample friendInfoExample = (FriendInfoExample) BeanTools.getBean(FriendInfoExample.class);
-        if (Friends.isChange()) {
-            Friends.setChange(false);
-            friendInfoExample.clear();
-            FriendInfoExample.Criteria criteria3 = friendInfoExample.createCriteria();
-            criteria3.andUseridEqualTo(this.getId());
-            List<FriendInfo> friendInfos = friendInfoMapper.selectByExample(friendInfoExample);
-            this.setFriendsInfo(friendInfos);
-        }
-        return FriendsInfo;
+        friendInfoExample.clear();
+        FriendInfoExample.Criteria criteria3 = friendInfoExample.createCriteria();
+        criteria3.andUseridEqualTo(this.getId());
+        List<FriendInfo> list = friendInfoMapper.selectByExample(friendInfoExample);
+        return list;
     }
+
+    //获取电话亭的数据列表;
     public List<TeleBooth> getTeleBooths() {
+        TeleBoothMapper mapper = (TeleBoothMapper) BeanTools.getBean(TeleBoothMapper.class);
+        TeleBoothExample tel = new TeleBoothExample();
+        tel.clear();
+        TeleBoothExample.Criteria criteria5 = tel.createCriteria();
+        criteria5.andUseridEqualTo(this.getId());
+        List<TeleBooth> teleBooths = mapper.selectByExample(tel);
         return teleBooths;
     }
 
-    public void setTeleBooths(List<TeleBooth> teleBooths) {
-        this.teleBooths = teleBooths;
-    }
-
-    public void setFriendsInfo(List<FriendInfo> friendsInfo) {
-        FriendsInfo = friendsInfo;
-    }
-
-
+    //获取用户的ID
     public long getId() {
-
-        if (user != null) {
-            id = user.getUserid();
-        } else id = 0;
         return id;
     }
 
+    //?
     public List<CraftProduce> getCraftProduces() {
+
+        CraftProduceMapper mapper = (CraftProduceMapper) BeanTools.getBean(CraftProduceMapper.class);
+        CraftProduceExample exp = new CraftProduceExample();
+        exp.clear();
+        CraftProduceExample.Criteria criteria3 = exp.createCriteria();
+        criteria3.andUseridEqualTo(getId());
+        List<CraftProduce> craftProduces = mapper.selectByExample(exp);
         return craftProduces;
     }
 
-    public void setCraftProduces(List<CraftProduce> craftProduces) {
-        this.craftProduces = craftProduces;
-    }
-
     public List<Friend> getFriends() {
-
-        return (List) Friends;
-    }
-
-    public void setFriends(List<Friend> Friends) {
-        if (this.Friends == null)
-            this.Friends = new DBList();
-
-        this.Friends.clear();
-        this.Friends.addAll(Friends);
-    }
-
-    public void setId(long id) {
-        this.id = id;
+        FriendMapper mapper = (FriendMapper) BeanTools.getBean(FriendMapper.class);
+        FriendExample exp = new FriendExample();
+        exp.clear();
+        FriendExample.Criteria criteria1 = exp.createCriteria();
+        criteria1.andUseridEqualTo(getId());
+        List<Friend> friends = mapper.selectByExample(exp);
+        return friends;
     }
 
     public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+        UserMapper mapper = (UserMapper) BeanTools.getBean(UserMapper.class);
+        UserExample exp = new UserExample();
+        exp.clear();
+        exp.createCriteria().andUseridEqualTo(getId());
+        List<User> users = mapper.selectByExample(exp);
+        return users.isEmpty() ? null : users.get(0);
     }
 
     public List<Props> getPropss() {
@@ -183,8 +176,35 @@ public class PlayerInfo extends BaseAutowired {
 
 
     public void UpdatePlayer() {
+        PlayerManager bean = (PlayerManager) BeanTools.getBean(PlayerManager.class);
+        bean.UpdatePlayer(this);
+    }
 
-        PlayerManager.getInstance().UpdatePlayer(this);
+    public Props getonProps(Integer baseid) {
+        List<Props> propss = this.getPropss();
+        if(propss==null)return  null;
+        for (Props props : propss) {
+            if(props.getBaseid()==baseid)return props;
+        }
+    return null;
+    }
+
+    public Crops getOneCrops(Integer baseid) {
+        List<Crops> cropss = this.getCrops();
+        if(cropss==null)return  null;
+        for (Crops crops : cropss) {
+            if(crops.getBaseid()==baseid)return crops;
+        }
+        return null;
+    }
+
+    public Crops getOneGoods(Integer baseid) {
+        List<Crops> cropss = this.getCrops();
+        if(cropss==null)return  null;
+        for (Crops crops : cropss) {
+            if(crops.getBaseid()==baseid)return crops;
+        }
+        return null;
     }
 
 }

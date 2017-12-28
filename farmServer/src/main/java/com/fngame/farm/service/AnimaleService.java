@@ -17,6 +17,8 @@ import java.util.List;
 public class AnimaleService implements BaseServiceImpl<Animal> {
     @Autowired
     ConfigManager configManager;
+    @Autowired
+    PlayerManager playerManager;
     @Override
     public Boolean add(ResultInfo resultInfo, Animal animal) {
         return null;
@@ -39,7 +41,7 @@ public class AnimaleService implements BaseServiceImpl<Animal> {
 
     public boolean feed(ResultInfo resultInfo, Animal animal, Props props) {
         Entity bco = configManager.getAnimalConfig(animal);
-        PlayerInfo player = PlayerManager.getInstance().getPlayer(animal.getUserid());
+        PlayerInfo player = playerManager.getPlayer(animal.getUserid());
         List<Props> propss = player.getPropss();
         for (Props propss1 : propss) {
             if(propss1.getId()==props.getId()){

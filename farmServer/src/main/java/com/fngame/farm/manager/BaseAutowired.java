@@ -54,9 +54,9 @@ public class BaseAutowired {
     CraftProduceExample craftProduceExample;
 
 @Autowired
-    TeleBoothExample teleBoothExample;
+    protected TeleBoothExample teleBoothExample;
 @Autowired
-    TeleBoothMapper teleBoothMapper;
+    protected TeleBoothMapper teleBoothMapper;
 
 /*    public void getexample(String simpleName) {
         Object bean = beanFactory.getBean(simpleName + "Example");
