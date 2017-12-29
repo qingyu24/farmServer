@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 @Component
 public class UserExample {
     protected String orderByClause;
@@ -1327,63 +1328,113 @@ public class UserExample {
             return (Criteria) this;
         }
 
-        public Criteria andPropsLevelEqualTo(String value) {
+        public Criteria andPropsLevelEqualTo(Integer value) {
             addCriterion("props_level =", value, "propsLevel");
             return (Criteria) this;
         }
 
-        public Criteria andPropsLevelNotEqualTo(String value) {
+        public Criteria andPropsLevelNotEqualTo(Integer value) {
             addCriterion("props_level <>", value, "propsLevel");
             return (Criteria) this;
         }
 
-        public Criteria andPropsLevelGreaterThan(String value) {
+        public Criteria andPropsLevelGreaterThan(Integer value) {
             addCriterion("props_level >", value, "propsLevel");
             return (Criteria) this;
         }
 
-        public Criteria andPropsLevelGreaterThanOrEqualTo(String value) {
+        public Criteria andPropsLevelGreaterThanOrEqualTo(Integer value) {
             addCriterion("props_level >=", value, "propsLevel");
             return (Criteria) this;
         }
 
-        public Criteria andPropsLevelLessThan(String value) {
+        public Criteria andPropsLevelLessThan(Integer value) {
             addCriterion("props_level <", value, "propsLevel");
             return (Criteria) this;
         }
 
-        public Criteria andPropsLevelLessThanOrEqualTo(String value) {
+        public Criteria andPropsLevelLessThanOrEqualTo(Integer value) {
             addCriterion("props_level <=", value, "propsLevel");
             return (Criteria) this;
         }
 
-        public Criteria andPropsLevelLike(String value) {
-            addCriterion("props_level like", value, "propsLevel");
-            return (Criteria) this;
-        }
-
-        public Criteria andPropsLevelNotLike(String value) {
-            addCriterion("props_level not like", value, "propsLevel");
-            return (Criteria) this;
-        }
-
-        public Criteria andPropsLevelIn(List<String> values) {
+        public Criteria andPropsLevelIn(List<Integer> values) {
             addCriterion("props_level in", values, "propsLevel");
             return (Criteria) this;
         }
 
-        public Criteria andPropsLevelNotIn(List<String> values) {
+        public Criteria andPropsLevelNotIn(List<Integer> values) {
             addCriterion("props_level not in", values, "propsLevel");
             return (Criteria) this;
         }
 
-        public Criteria andPropsLevelBetween(String value1, String value2) {
+        public Criteria andPropsLevelBetween(Integer value1, Integer value2) {
             addCriterion("props_level between", value1, value2, "propsLevel");
             return (Criteria) this;
         }
 
-        public Criteria andPropsLevelNotBetween(String value1, String value2) {
+        public Criteria andPropsLevelNotBetween(Integer value1, Integer value2) {
             addCriterion("props_level not between", value1, value2, "propsLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andMarketCapacityIsNull() {
+            addCriterion("market_capacity is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMarketCapacityIsNotNull() {
+            addCriterion("market_capacity is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMarketCapacityEqualTo(Integer value) {
+            addCriterion("market_capacity =", value, "marketCapacity");
+            return (Criteria) this;
+        }
+
+        public Criteria andMarketCapacityNotEqualTo(Integer value) {
+            addCriterion("market_capacity <>", value, "marketCapacity");
+            return (Criteria) this;
+        }
+
+        public Criteria andMarketCapacityGreaterThan(Integer value) {
+            addCriterion("market_capacity >", value, "marketCapacity");
+            return (Criteria) this;
+        }
+
+        public Criteria andMarketCapacityGreaterThanOrEqualTo(Integer value) {
+            addCriterion("market_capacity >=", value, "marketCapacity");
+            return (Criteria) this;
+        }
+
+        public Criteria andMarketCapacityLessThan(Integer value) {
+            addCriterion("market_capacity <", value, "marketCapacity");
+            return (Criteria) this;
+        }
+
+        public Criteria andMarketCapacityLessThanOrEqualTo(Integer value) {
+            addCriterion("market_capacity <=", value, "marketCapacity");
+            return (Criteria) this;
+        }
+
+        public Criteria andMarketCapacityIn(List<Integer> values) {
+            addCriterion("market_capacity in", values, "marketCapacity");
+            return (Criteria) this;
+        }
+
+        public Criteria andMarketCapacityNotIn(List<Integer> values) {
+            addCriterion("market_capacity not in", values, "marketCapacity");
+            return (Criteria) this;
+        }
+
+        public Criteria andMarketCapacityBetween(Integer value1, Integer value2) {
+            addCriterion("market_capacity between", value1, value2, "marketCapacity");
+            return (Criteria) this;
+        }
+
+        public Criteria andMarketCapacityNotBetween(Integer value1, Integer value2) {
+            addCriterion("market_capacity not between", value1, value2, "marketCapacity");
             return (Criteria) this;
         }
     }

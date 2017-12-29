@@ -66,9 +66,15 @@ public class XlsReader {
             for (int j = 0; j < row.getLastCellNum(); j++) {
                 XSSFCell cell0 = row0.getCell(j);
                 String key = cell0.getStringCellValue();
-                Field field = t.getField(key);
-
+                Field field;
+                try {
+                     field = t.getField(key);
+                }catch (Exception e){
+                    e.printStackTrace();
+                    continue;
+                }
                 XSSFCell cell = row.getCell(j);
+
                 try {
                     switch (field.getGenericType().toString()) {
 

@@ -1,10 +1,7 @@
 package com.fngame.farm.model;
-
-import org.springframework.stereotype.Component;
-
 import java.io.Serializable;
 import java.util.Date;
-@Component
+
 public class User implements Serializable {
     private Long userid;
 
@@ -44,7 +41,9 @@ public class User implements Serializable {
 
     private Integer granaryLevel;
 
-    private String propsLevel;
+    private Integer propsLevel;
+
+    private Integer marketCapacity;
 
     public Long getUserid() {
         return userid;
@@ -198,11 +197,19 @@ public class User implements Serializable {
         this.granaryLevel = granaryLevel;
     }
 
-    public String getPropsLevel() {
+    public Integer getPropsLevel() {
         return propsLevel;
     }
 
-    public void setPropsLevel(String propsLevel) {
-        this.propsLevel = propsLevel == null ? null : propsLevel.trim();
+    public void setPropsLevel(Integer propsLevel) {
+        this.propsLevel = propsLevel;
+    }
+
+    public Integer getMarketCapacity() {
+        return marketCapacity;
+    }
+
+    public void setMarketCapacity(Integer marketCapacity) {
+        this.marketCapacity = marketCapacity;
     }
 }

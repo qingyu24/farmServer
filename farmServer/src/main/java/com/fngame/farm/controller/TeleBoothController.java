@@ -10,25 +10,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Created by qingyu on 2017/12/26 /17:02
+ * The type Tele booth controller.
  */
-
 @RestController
 @RequestMapping("telebooth")
 public class TeleBoothController implements BaseContorllerInterface<TeleBooth> {
 
+    /**
+     * The Tele booth service.
+     */
     @Autowired
     TeleBoothService teleBoothService;
 
+    /**
+     * The Result info.
+     */
     @Autowired
     ResultInfo resultInfo;
 
+    //添加订单
     @Override
     public ResultInfo add(RequserOrder order, TeleBooth teleBooth) {
 
         Boolean add = teleBoothService.add(resultInfo, teleBooth);
         if (add) {
-            resultInfo.setSucess();
+            resultInfo.setSucess(true);
         }
         return resultInfo;
     }
@@ -47,22 +53,43 @@ public class TeleBoothController implements BaseContorllerInterface<TeleBooth> {
     @Override
     public ResultInfo get(RequserOrder order, TeleBooth teleBooth) {
 
-        teleBoothService.get(resultInfo,teleBooth);
+        Boolean aBoolean = teleBoothService.get(resultInfo, teleBooth);
+        if (aBoolean) {
+            resultInfo.setSucess(true);
+        }
         return resultInfo;
     }
+
+    /**
+     * Achieve result info.
+     * 玩家点击确认收订单货物
+     *
+     * @param order     the order
+     * @param teleBooth the tele booth
+     * @return the result info
+     */
     @RequestMapping("achieve")
     public ResultInfo achieve(RequserOrder order, TeleBooth teleBooth) {
 
         Boolean add = teleBoothService.achieve(resultInfo, teleBooth);
-        if(add)resultInfo.setSucess();
+        if (add) resultInfo.setSucess(true);
 
         return resultInfo;
     }
+
+    /**
+     * Sell result info.
+     * 好友售卖货物
+     *
+     * @param order     the order
+     * @param teleBooth the tele booth
+     * @return the result info
+     */
     @RequestMapping("sell")
     public ResultInfo sell(RequserOrder order, TeleBooth teleBooth) {
 
         Boolean add = teleBoothService.sell(resultInfo, teleBooth);
-
+        resultInfo.setSucess(add);
         return resultInfo;
     }
-    }
+}

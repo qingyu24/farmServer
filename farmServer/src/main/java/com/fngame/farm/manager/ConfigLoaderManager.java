@@ -1,11 +1,16 @@
 package com.fngame.farm.manager;
 
 import com.fngame.farm.configer.*;
+import com.fngame.farm.model.Animal;
+import com.fngame.farm.model.Building;
 import com.fngame.farm.util.XlsReader;
+import com.sun.scenario.effect.Crop;
+import com.sun.tools.javac.jvm.Items;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Component
 public class ConfigLoaderManager {
@@ -25,31 +30,33 @@ public class ConfigLoaderManager {
     private ArrayList<Item> Itemloader = new ArrayList<Item>(20);
     private ArrayList<Order> Orderloader = new ArrayList<Order>(20);
     private ArrayList<Pets> Petsloader = new ArrayList<Pets>(20);
+    private ArrayList<Resp> Resploader = new ArrayList<Resp>(20);
     private ArrayList<skill> skillloader = new ArrayList<skill>(20);
     private ArrayList<Tags> Tagsloader = new ArrayList<Tags>(20);
-    // private ArrayList<TagsDec> TagsDecloader = new ArrayList<TagsDec>(20);
-    //   private ArrayList<~$TagsDec> ~$TagsDecloader = new ArrayList<~$TagsDec>(20);
+    private ArrayList<TagsDec> TagsDecloader = new ArrayList<TagsDec>(20);
+
+
 
 
     public void loaderAll() {
 
         loades.clear();
-        loades.put("Cars", Carsloader);
-        loades.put("Craft", Craftloader);
-        loades.put("Entity", Entityloader);
-        loades.put("Item", Itemloader);
-        loades.put("Order", Orderloader);
-        loades.put("Pets", Petsloader);
-        loades.put("skill", skillloader);
-        loades.put("Tags", Tagsloader);
-/*        loades.put("TagsDec",TagsDecloader);*/
-      /*  loades.put("~$TagsDec",~$TagsDecloader);*/
+        loades.put("Cars",Carsloader);
+        loades.put("Craft",Craftloader);
+        loades.put("Entity",Entityloader);
+        loades.put("Item",Itemloader);
+        loades.put("Order",Orderloader);
+        loades.put("Pets",Petsloader);
+        loades.put("Resp",Resploader);
+        loades.put("skill",skillloader);
+        loades.put("Tags",Tagsloader);
+        loades.put("TagsDec",TagsDecloader);
+
 
 
         XlsReader.getInstance().loaderAll(loades);
     }
-
-    public HashMap<String, ArrayList> getLoaders() {
+  public HashMap<String,ArrayList> getLoaders() {
         return loades;
     }
 

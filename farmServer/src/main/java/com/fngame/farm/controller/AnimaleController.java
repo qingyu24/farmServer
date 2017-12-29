@@ -2,8 +2,6 @@ package com.fngame.farm.controller;
 
 import com.fngame.farm.controller.base.BaseContorllerInterface;
 import com.fngame.farm.controller.base.BaseController;
-import com.fngame.farm.etypes.EResultType;
-import com.fngame.farm.manager.ConfigManager;
 import com.fngame.farm.model.Animal;
 import com.fngame.farm.model.Props;
 import com.fngame.farm.service.AnimaleService;
@@ -31,7 +29,7 @@ public class AnimaleController extends BaseController implements BaseContorllerI
         }
         System.out.println(resultInfo.toString());
         if (b) {
-            resultInfo.setSucess();
+            resultInfo.setSucess(true);
         }
         return resultInfo;
 
@@ -61,8 +59,6 @@ public class AnimaleController extends BaseController implements BaseContorllerI
     public ResultInfo feed(RequserOrder order, Animal animal, Props props) {
         resultInfo.setOrder(order);
         animaleService.feed(resultInfo,animal,props);
-
-
 
         return resultInfo;
     }

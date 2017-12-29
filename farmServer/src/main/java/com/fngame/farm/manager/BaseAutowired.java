@@ -53,15 +53,19 @@ public class BaseAutowired {
     @Autowired
     CraftProduceExample craftProduceExample;
 
-@Autowired
+    @Autowired
     protected TeleBoothExample teleBoothExample;
-@Autowired
+    @Autowired
     protected TeleBoothMapper teleBoothMapper;
 
-/*    public void getexample(String simpleName) {
-        Object bean = beanFactory.getBean(simpleName + "Example");
-        System.out.println(bean.getClass().getSimpleName());
-        System.out.println(bean.toString());
+    /*    public void getexample(String simpleName) {
+            Object bean = beanFactory.getBean(simpleName + "Example");
+            System.out.println(bean.getClass().getSimpleName());
+            System.out.println(bean.toString());
 
-    }*/
+        }*/
+    @Autowired
+    protected PetDataExample petDataExample;
+    @Autowired
+    protected PetDataMapper petDataMapper;
 }

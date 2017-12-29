@@ -6,6 +6,8 @@ import com.fngame.farm.mapper.PropsMapper;
 import com.fngame.farm.model.*;
 import com.fngame.farm.userdate.PlayerInfo;
 import com.fngame.farm.userdate.ResultInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,14 +25,15 @@ public class StreetMarketService {
 
     @Autowired
     PropsMapper propsMapper;
+    Logger logger = LoggerFactory.getLogger(this.getClass());
     /*
     * 根据玩家id获取所有上架物品
      */
     public List<Goods> getGoodsByUserId(ResultInfo resultInfo,Long userid){
         PlayerInfo playerInfo = PlayerManager.getPlayer(userid);
         List<Goods> goodsList = new ArrayList<Goods>();
-        List<Crops> crops = playerInfo.insalCrops();
-        List<Props> props = playerInfo.insalProps();
+        List<Crops> crops = playerInfo.getSellingCrops();
+        List<Props> props = playerInfo.getSellingProps();
         HashMap<String, Object> data =resultInfo.getData();
         goodsList.addAll(crops);
         goodsList.addAll(props);
@@ -42,6 +45,7 @@ public class StreetMarketService {
     * 根据玩家id获得好友列表
     * */
     public List<FriendInfo> getFriendsByUserId(ResultInfo resultInfo,Long userid){
+
         PlayerInfo playerInfo = PlayerManager.getPlayer(userid);
         List<FriendInfo> friendInfoList=playerInfo.getFriendList();
         HashMap<String, Object> data =resultInfo.getData();
@@ -75,7 +79,7 @@ public class StreetMarketService {
     /*
     * 物品上架
     * */
-    public boolean addGoods(ResultInfo resultInfo,Long userid,Long id,Integer number,Integer price,Integer flag){
+    public boolean addGoods(ResultInfo resultInfo,Long userid,Long id,Integer number,Integer price,Integer stallnumber,Integer flag){
         PlayerInfo playerInfo = PlayerManager.getPlayer(userid);
         List<Goods> goodslist= new ArrayList<Goods>();
         if(flag.intValue()==0){
@@ -92,15 +96,21 @@ public class StreetMarketService {
                         Crops crops = (Crops)goods;
                         crops.setIsinsale(number);
                         crops.setPrice(price);
+
+                        crops.setStallnumber(stallnumber);
+
+
                         cropsMapper.updateByPrimaryKeySelective(crops);
 
                     }else{
                         Props props=(Props)goods;
                         props.setIsinsale(number);
                         props.setPrice(price);
+
+                        props.setStallnumber(stallnumber);
                         propsMapper.updateByPrimaryKeySelective(props);
                     }
-                    resultInfo.setSucess();
+                    resultInfo.setSucess(true);
                 }else{
                     resultInfo.setfalse();
                     return false;
@@ -137,7 +147,7 @@ public class StreetMarketService {
     /*
     * 物品下架
     * */
-    public boolean removeGoods(ResultInfo resultInfo,Long userid,Long id,Integer number,Integer price,Integer flag){
+    public boolean removeGoods(ResultInfo resultInfo,Long userid,Long id,Integer number,Integer price,Integer stallnumber,Integer flag){
         PlayerInfo playerInfo = PlayerManager.getPlayer(userid);
         List<Goods> goodslist= new ArrayList<Goods>();
         if(flag.intValue()==0){
@@ -152,19 +162,26 @@ public class StreetMarketService {
                 if(flag.intValue()==0){
                     Crops crops = (Crops)goods;
                     crops.setIsinsale(isinsale-num);
-                    crops.setPrice(price);
+                    if((isinsale-num)==0){
+                        crops.setPrice(0);
+                        crops.setStallnumber(0);
+                    }else{
+                        crops.setPrice(price);
+                    }
+
                     cropsMapper.updateByPrimaryKeySelective(crops);
                 }else{
                     Props props = (Props)goods;
                     props.setIsinsale(isinsale-num);
                     if((isinsale-num)==0){
                         props.setPrice(0);
+                        props.setStallnumber(0);
                     }else{
                         props.setPrice(price);
                     }
                     propsMapper.updateByPrimaryKeySelective(props);
                 }
-                resultInfo.setSucess();
+                resultInfo.setSucess(true);
             }else{
                 resultInfo.setfalse();
                 return false;
@@ -172,8 +189,5 @@ public class StreetMarketService {
         }
         return true;
     }
-
-
-
 
 }

@@ -2,7 +2,7 @@ package com.fngame.farm.model;
 
 import java.io.Serializable;
 
-public class Props extends Goods implements Serializable{
+public class Props extends Goods implements Serializable {
     private Long id;
 
     private Long userid;
@@ -18,6 +18,10 @@ public class Props extends Goods implements Serializable{
     private Integer isinsale;
 
     private Integer price;
+
+    private Integer isselloff;
+
+    private Integer stallnumber;
 
     public Long getId() {
         return id;
@@ -81,5 +85,21 @@ public class Props extends Goods implements Serializable{
 
     public void setPrice(Integer price) {
         this.price = price;
+    }
+
+    public Integer getIsselloff() {
+        return isselloff;
+    }
+
+    public void setIsselloff(Integer isselloff) {
+        this.isselloff = isselloff;
+    }
+
+    public Integer getStallnumber() {
+        return stallnumber;
+    }
+
+    public void setStallnumber(Integer stallnumber) {
+        this.stallnumber = stallnumber;
     }
 }

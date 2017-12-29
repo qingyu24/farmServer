@@ -4,8 +4,6 @@ import com.fngame.farm.model.User;
 import com.fngame.farm.model.UserExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
-
 
 public interface UserMapper {
     int countByExample(UserExample example);

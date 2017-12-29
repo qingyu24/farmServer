@@ -19,9 +19,9 @@ public class ResultInfo {
     private HashMap<String, Object> data;
 
 
-
     @Autowired
     ConfigManager configManager;
+
     public String getResp_code() {
         return resp_code;
     }
@@ -29,7 +29,7 @@ public class ResultInfo {
     public void setResp_code(String resp_code) {
         this.resp_code = resp_code;
         String resp = configManager.getResp(resp_code);
-        this.resp_desc=resp;
+        this.resp_desc = resp;
     }
 
     public String getResp_desc() {
@@ -46,7 +46,7 @@ public class ResultInfo {
     }
 
     public HashMap<String, Object> getData() {
-        if(data==null)data=new HashMap<>();
+        if (data == null) data = new HashMap<>();
         return data;
     }
 
@@ -67,9 +67,11 @@ public class ResultInfo {
         data.put("sub", sub);
     }
 
-    public void setSucess() {
-        this.resp_code = "000000";
-        this.resp_desc = "操作成功";
+    public void setSucess(boolean issucess) {
+        if (issucess) {
+            this.resp_code = "000000";
+            this.resp_desc = "操作成功";
+        }
     }
 
     public String getMain() {
@@ -103,7 +105,7 @@ public class ResultInfo {
     }
 
     public void setfalse() {
-        this.resp_code = "10005";
+        this.resp_code = "999999";
         this.resp_desc = "处理有误";
     }
 }

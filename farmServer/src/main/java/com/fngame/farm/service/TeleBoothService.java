@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -22,18 +23,42 @@ import java.util.List;
  * Created by qingyu on 2017/12/26 /17:26
  */
 @Service
+@Transactional
 public class TeleBoothService {
+    /**
+     * The Tele booth mapper.
+     */
     @Autowired
     TeleBoothMapper teleBoothMapper;
+    /**
+     * The Tele booth example.
+     */
     @Autowired
     TeleBoothExample teleBoothExample;
+    /**
+     * The Player manager.
+     */
     @Autowired
     PlayerManager playerManager;
 
 
+    /**
+     * 添加新的订单.
+     *
+     * @param resultInfo the result info
+     * @param teleBooth  the tele booth
+     * @return the boolean
+     */
+
     public Boolean add(ResultInfo resultInfo, TeleBooth teleBooth) {
         PlayerInfo player = playerManager.getPlayer(teleBooth.getUserid());
         List<TeleBooth> teleBooths = player.getTeleBooths();
+
+        Integer money = player.getUser().getMoney();
+        if (money < teleBooth.getMoney()) {
+            resultInfo.setResp_code("700003");
+            return false;
+        }
         if (teleBooths == null || teleBooths.size() == 0) {
             teleBooth.setBegintime(new Date());
             teleBoothMapper.insertSelective(teleBooth);
@@ -41,23 +66,20 @@ public class TeleBoothService {
         } else if (teleBooths.size() == 1) {
             TeleBooth teleBooth1 = teleBooths.get(0);
             Integer achieve = teleBooth1.getAchieve();
-            if (achieve == 1) {
+            if (achieve == 1||teleBooth1.getLefttime()==0) {
                 teleBooth.setBegintime(new Date());
                 teleBooth.setId(teleBooth1.getId());
-                int i = teleBoothMapper.updateByPrimaryKeySelective(teleBooth);
-            } else if (achieve == 0) {
-                resultInfo.setResp_code("00001");
+                teleBoothMapper.updateByPrimaryKeySelective(teleBooth);
+            } else if (achieve == 0) {//
+                resultInfo.setResp_code("700002");
                 return false;
             }
         } else {
+            resultInfo.setfalse();
+            return false;
+        }
 
-            return false;
-        }
-        Integer money = player.getUser().getMoney();
-        if (money < teleBooth.getMoney()) {
-            resultInfo.setResp_desc("111111");
-            return false;
-        }
+        teleBooth.setAchieve(0);
         User user = player.getUser();
         user.setMoney(money - teleBooth.getMoney());
         UserMapper bean = (UserMapper) BeanTools.getBean(UserMapper.class);
@@ -68,53 +90,84 @@ public class TeleBoothService {
     }
 
 
+    /**
+     * Modify boolean.
+     *
+     * @param resultInfo the result info
+     * @param teleBooth  the tele booth
+     * @return the boolean
+     */
     public Boolean modify(ResultInfo resultInfo, TeleBooth teleBooth) {
         return null;
     }
 
 
+    /**
+     * Remove boolean.
+     *
+     * @param resultInfo the result info
+     * @param teleBooth  the tele booth
+     * @return the boolean
+     */
     public Boolean remove(ResultInfo resultInfo, TeleBooth teleBooth) {
 
 
         return null;
     }
 
+    /**
+     * Get boolean.
+     *
+     * @param resultInfo the result info
+     * @param teleBooth  the tele booth
+     * @return the boolean
+     */
     @Transactional
 
     public Boolean get(ResultInfo resultInfo, TeleBooth teleBooth) {
-        teleBooth = teleBoothMapper.selectByPrimaryKey(teleBooth.getId());
+        PlayerInfo player = playerManager.getPlayer(teleBooth.getUserid());
+        List<TeleBooth> teleBooths = player.getTeleBooths();
+        if (teleBooths == null) {
+            teleBooths = new ArrayList<TeleBooth>();
+        }
         HashMap<String, Object> data = resultInfo.getData();
-        data.put("telebooth",teleBooth);
+        data.put("telebooth", teleBooths);
         return true;
     }
 
+    /**
+     * Sell boolean.
+     *
+     * @param resultInfo the result info
+     * @param teleBooth  the tele booth
+     * @return the boolean
+     */
     public Boolean sell(ResultInfo resultInfo, TeleBooth teleBooth) {
         teleBooth = teleBoothMapper.selectByPrimaryKey(teleBooth.getId());
         if (teleBooth == null) {
-            resultInfo.setResp_code("1111");
+            resultInfo.setResp_code("700001");
             return false;
         }
         if (teleBooth.getAchieve() == 1) {//订单已达成
-            resultInfo.setResp_code("22222");
+            resultInfo.setResp_code("700004");
             return false;
         }
         PlayerInfo player = playerManager.getPlayer(teleBooth.getUserid());
         Integer type = teleBooth.getType();
-        Integer baseid = teleBooth.getBaseid();
 
         Goods good = player.getOneGoods(teleBooth.getBaseid());
 
         if (good == null) {
-            resultInfo.setfalse();
+            resultInfo.setResp_code("700005");
             return false;
         }
         Integer count = good.getCount();
         if (count < teleBooth.getCount()) {
-            resultInfo.setResp_code("33333");
+            resultInfo.setResp_code("700005");
             return false;
         }
         good.setCount(count - teleBooth.getCount());
-        this.updateGood(good,type);
+        this.updateGood(good, type);
         Integer money = player.getUser().getMoney();
 
         UserMapper bean = (UserMapper) BeanTools.getBean(UserMapper.class);
@@ -125,33 +178,40 @@ public class TeleBoothService {
         return true;
     }
 
+    /**
+     * Achieve boolean.
+     *
+     * @param resultInfo the result info
+     * @param teleBooth  the tele booth
+     * @return the boolean
+     */
     public Boolean achieve(ResultInfo resultInfo, TeleBooth teleBooth) {
         PlayerInfo player = playerManager.getPlayer(teleBooth.getUserid());
         Integer type = teleBooth.getType();
-        Integer baseid = teleBooth.getBaseid();
 
         Goods good = player.getOneGoods(teleBooth.getBaseid());
 
         if (good == null) {
-            resultInfo.setfalse();
+            resultInfo.setResp_code("700005");
             return false;
         }
 
         good.setCount(teleBooth.getCount() + teleBooth.getCount());
-        this.updateGood(good,type);
+        this.updateGood(good, type);
 
         return true;
     }
 
 
-
-   private void updateGood(Goods good,Integer type){
-       if (type == EItemType.CROP.ID()) {
-           CropsMapper bean = (CropsMapper) BeanTools.getBean(CropsMapper.class);
-           bean.updateByPrimaryKeySelective((Crops) good);
-       } else if (type == EItemType.PROPS.ID()) {
-           PropsMapper bean = (PropsMapper) BeanTools.getBean(Props.class);
-           bean.updateByPrimaryKeySelective((Props) good);
-       }
+    private void updateGood(Goods good, Integer type) {
+        if (type == EItemType.CROP.ID()) {
+            CropsMapper bean = (CropsMapper) BeanTools.getBean(CropsMapper.class);
+            bean.updateByPrimaryKeySelective((Crops) good);
+        } else if (type == EItemType.PROPS.ID()) {
+            PropsMapper bean = (PropsMapper) BeanTools.getBean(Props.class);
+            bean.updateByPrimaryKeySelective((Props) good);
+        }
     }
+
+
 }

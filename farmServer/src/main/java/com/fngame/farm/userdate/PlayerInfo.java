@@ -5,32 +5,27 @@ import com.fngame.farm.manager.PlayerManager;
 import com.fngame.farm.mapper.*;
 import com.fngame.farm.model.*;
 import com.fngame.farm.util.BeanTools;
-import com.fngame.farm.util.DBList;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by qingyu on 2017/12/20.
  */
 @Component
-public class PlayerInfo implements Serializable{
+@Scope("prototype")
+public class PlayerInfo extends BaseAutowired implements Serializable {
     private long id;
-    private User user;
-    private List<Building> buildings;
-    private List<Animal> animals;
-    private List<Crops> crops;
-    private List<UserOrder> orders;
-    private List<Props> propss;
-    private DBList<Friend> Friends;
-    private List<CraftProduce> craftProduces;
-    private List<TeleBooth> teleBooths;
 
-    public PlayerInfo(long userID){
+    public PlayerInfo(long userID) {
         id = userID;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     //获取好友的列表;
@@ -93,85 +88,90 @@ public class PlayerInfo implements Serializable{
     }
 
     public List<Props> getPropss() {
-        return propss;
+        PropsMapper mapper = (PropsMapper) BeanTools.getBean(PropsMapper.class);
+        PropsExample exp = new PropsExample();
+        exp.clear();
+        PropsExample.Criteria criteria4 = exp.createCriteria();
+        criteria4.andUseridEqualTo(getId());
+        List<Props> props = mapper.selectByExample(exp);
+        return props;
     }
 
-    public void setPropss(List<Props> propss) {
-        this.propss = propss;
-    }
 
     public List<Building> getBuildings() {
+        BuildingMapper mapper = (BuildingMapper) BeanTools.getBean(BuildingMapper.class);
+        BuildingExample exp = new BuildingExample();
+        exp.clear();
+        exp.createCriteria().andUseridEqualTo(getId());
+        List<Building> buildings = mapper.selectByExample(exp);
         return buildings;
     }
 
-    public void setBuildings(List<Building> buildings) {
-        this.buildings = buildings;
-    }
-
     public List<Animal> getAnimals() {
+        AnimalMapper mapper = (AnimalMapper) BeanTools.getBean(AnimalMapper.class);
+        AnimalExample exp = new AnimalExample();
+        exp.clear();
+        AnimalExample.Criteria criteria2 = exp.createCriteria();
+        criteria2.andUseridEqualTo(getId());
+        List<Animal> animals = mapper.selectByExample(exp);
         return animals;
     }
 
-    public void setAnimals(List<Animal> animals) {
-        this.animals = animals;
-    }
-
     public List<Crops> getCrops() {
+        CropsMapper mapper = (CropsMapper) BeanTools.getBean(CropsMapper.class);
+        CropsExample exp = new CropsExample();
+        exp.clear();
+        exp.createCriteria().andUseridEqualTo(getId());
+        exp.createCriteria().andWarehouseEqualTo(1);
+        List<Crops> crops = mapper.selectByExample(exp);
         return crops;
     }
 
-    public void setCrops(List<Crops> crops) {
-        this.crops = crops;
-    }
-
     public List<UserOrder> getOrders() {
+        UserOrderMapper mapper = (UserOrderMapper) BeanTools.getBean(UserOrderMapper.class);
+        UserOrderExample exp = new UserOrderExample();
+        exp.clear();
+        UserOrderExample.Criteria criteria = exp.createCriteria();
+        criteria.andUseridEqualTo(getId());
+        List<UserOrder> orders = mapper.selectByExample(exp);
         return orders;
     }
 
-    public void setOrders(List<UserOrder> orders) {
-        this.orders = orders;
-    }
 
-    HashMap<String, Object> map = new HashMap<>();
-
-    private List hous_crop = new ArrayList();
-
-    public List getWarehouse() {
-
-        hous_crop.clear();
-        for (Crops crop : crops) {
-            if (crop.getWarehouse() == 1) {
-                hous_crop.add(crop);
-            }
-        }
-        return hous_crop;
-    }
+ /*   public List getWarehouse() {
+        CropsMapper  mapper = (CropsMapper) BeanTools.getBean(CropsMapper.class);
+        CropsExample exp = new CropsExample();
+        exp.clear();
+        exp.createCriteria().andUseridEqualTo(getId());
+        exp.createCriteria().andWarehouseEqualTo(1);
+        List<Crops> crops = mapper.selectByExample(exp);
+        return crops;
+    }*/
 
     private List<Props> s_props;
 
-    public List<Props> insalProps() {
-        if (s_props == null) s_props = new ArrayList<Props>(10);
-        s_props.clear();
-        for (Props props : this.propss) {
-            if (props.getIsinsale() > 0) {
-                s_props.add(props);
-            }
-        }
-        return s_props;
+    public List<Props> getSellingProps() {
+        PropsMapper mapper = (PropsMapper) BeanTools.getBean(PropsMapper.class);
+        PropsExample exp = new PropsExample();
+        exp.clear();
+        PropsExample.Criteria criteria4 = exp.createCriteria();
+        criteria4.andUseridEqualTo(getId());
+        criteria4.andIsinsaleGreaterThan(0);
+        List<Props> props = mapper.selectByExample(exp);
+        return props;
     }
 
 
     private List<Crops> s_crops;
 
-    public List<Crops> insalCrops() {
-        if (s_crops == null) s_crops = new ArrayList<Crops>(10);
-        s_crops.clear();
-        for (Crops crops : this.crops) {
-            if (crops.getIsinsale() > 0) {
-                s_crops.add(crops);
-            }
-        }
-        return s_crops;
+    public List<Crops> getSellingCrops() {
+        CropsMapper mapper = (CropsMapper) BeanTools.getBean(CropsMapper.class);
+        CropsExample exp = new CropsExample();
+        exp.clear();
+        exp.createCriteria().andUseridEqualTo(getId());
+        exp.createCriteria().andIsinsaleGreaterThan(0);
+        List<Crops> crops = mapper.selectByExample(exp);
+        return crops;
     }
 
 
@@ -180,31 +180,49 @@ public class PlayerInfo implements Serializable{
         bean.UpdatePlayer(this);
     }
 
-    public Props getonProps(Integer baseid) {
-        List<Props> propss = this.getPropss();
-        if(propss==null)return  null;
-        for (Props props : propss) {
-            if(props.getBaseid()==baseid)return props;
-        }
-    return null;
+    public Props getPropByBaseId(Integer baseid) {
+        PropsMapper mapper = (PropsMapper) BeanTools.getBean(PropsMapper.class);
+        PropsExample exp = new PropsExample();
+        exp.clear();
+        PropsExample.Criteria criteria4 = exp.createCriteria();
+        criteria4.andUseridEqualTo(getId());
+        criteria4.andBaseidEqualTo(baseid);
+        List<Props> props = mapper.selectByExample(exp);
+        return props.isEmpty() ? null : props.get(0);
     }
 
-    public Crops getOneCrops(Integer baseid) {
-        List<Crops> cropss = this.getCrops();
-        if(cropss==null)return  null;
-        for (Crops crops : cropss) {
-            if(crops.getBaseid()==baseid)return crops;
-        }
-        return null;
+    public Crops getCropByBaseId(Integer baseid) {
+        CropsMapper mapper = (CropsMapper) BeanTools.getBean(CropsMapper.class);
+        CropsExample exp = new CropsExample();
+        exp.clear();
+        exp.createCriteria().andUseridEqualTo(getId());
+        exp.createCriteria().andBaseidEqualTo(baseid);
+        List<Crops> crops = mapper.selectByExample(exp);
+        return crops.isEmpty() ? null : crops.get(0);
     }
 
-    public Crops getOneGoods(Integer baseid) {
-        List<Crops> cropss = this.getCrops();
-        if(cropss==null)return  null;
-        for (Crops crops : cropss) {
-            if(crops.getBaseid()==baseid)return crops;
+    public Goods getOneGoods(Integer baseid) {
+        Crops cropss = this.getCropByBaseId(baseid);
+        if (cropss == null) {
+            return this.getPropByBaseId(baseid);
         }
-        return null;
+        return cropss;
     }
 
+    public List<PetData> getPets() {
+        PetDataMapper bean = (PetDataMapper) BeanTools.getBean(PetDataMapper.class);
+        PetDataExample pe = new PetDataExample();
+        pe.clear();
+        pe.createCriteria().andUseridEqualTo(getId());
+        List<PetData> petData = bean.selectByExample(pe);
+        return petData == null ? new ArrayList<PetData>(0) : petData;
+    }
+
+    public void addPet(PetData petData) {
+        petDataMapper.insertSelective(petData);
+    }
+
+    public void updatePet(PetData petData) {
+        petDataMapper.updateByPrimaryKeySelective(petData);
+    }
 }

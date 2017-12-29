@@ -23,14 +23,14 @@ public class StreetMarketController {
     private ResultInfo resultInfo;
 
     /*
-    * 根据id获取上架物品
+    * 根据用户id获取上架物品
     * */
     @GetMapping(value="/getgoods")
     public ResultInfo getGoodsByUserId(RequserOrder requsetOrder, @RequestParam("userid") Long userid){
         resultInfo.setOrder(requsetOrder);
         List<Goods> list= streetMarketService.getGoodsByUserId(resultInfo,userid);
         if(list!=null){
-            resultInfo.setSucess();
+            resultInfo.setSucess(true);
         }
         return resultInfo;
     }
@@ -44,16 +44,18 @@ public class StreetMarketController {
                                    @RequestParam("id") Long id,
                                    @RequestParam("number") Integer number,
                                    @RequestParam("price") Integer price,
+                                   @RequestParam("stallnumber") Integer stallnumber,
                                    @RequestParam("flag") Integer flag){
         resultInfo.setOrder(requsetOrder);
-        Boolean agree=streetMarketService.addGoods(resultInfo,userid,id,number,price,flag);
+        System.out.println(stallnumber);
+        Boolean agree=streetMarketService.addGoods(resultInfo,userid,id,number,price,stallnumber,flag);
 /*        if(flag.intValue()==0){
             agree = streetMarketService.addCrops(resultInfo,userid,id,number,price);
         }else{
             agree = streetMarketService.addCrops(resultInfo,userid,id,number,price);
         }*/
         if(agree){
-            resultInfo.setSucess();
+            resultInfo.setSucess(true);
         }
 
         return resultInfo;
@@ -62,17 +64,18 @@ public class StreetMarketController {
     /*
      *物品下架
      */
-    @GetMapping(value="/goodsdownshelf")
+    @GetMapping(value = "/goodsdownshelf")
     public ResultInfo goodsDownShelf(RequserOrder requsetOrder,
-                                   @RequestParam("userid") Long userid,
-                                   @RequestParam("id") Long id,
-                                   @RequestParam("number") Integer number,
-                                   @RequestParam("price") Integer price,
-                                     @RequestParam("flag") Integer flag){
+                                     @RequestParam("userid") Long userid,
+                                     @RequestParam("id") Long id,
+                                     @RequestParam("number") Integer number,
+                                     @RequestParam("price") Integer price,
+                                     @RequestParam("stallnumber") Integer stallnumber,
+                                     @RequestParam("flag") Integer flag) {
         resultInfo.setOrder(requsetOrder);
-        Boolean agree=streetMarketService.removeGoods(resultInfo,userid,id,number,price,flag);
-        if(agree){
-            resultInfo.setSucess();
+        Boolean agree = streetMarketService.removeGoods(resultInfo, userid, id, number, price,stallnumber,flag);
+        if (agree) {
+            resultInfo.setSucess(true);
         }
         return resultInfo;
     }

@@ -2,9 +2,6 @@ package com.example.demo;
 
 import com.fngame.farm.FarmApplication;
 import com.fngame.farm.manager.PlayerManager;
-import com.fngame.farm.mapper.FriendMapper;
-import com.fngame.farm.model.Friend;
-import com.fngame.farm.userdate.PlayerInfo;
 import com.fngame.farm.util.BeanTools;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,11 +16,13 @@ public class DemoApplicationTests {
     PlayerManager playerManager;
 	@Test
 	public void contextLoads() {
-        PlayerInfo player = playerManager.getPlayer((long) 33);
+/*   *//*     PlayerInfo player = playerManager.getPlayer((long) 33);
         FriendMapper bean = (FriendMapper) BeanTools.getBean(FriendMapper.class);
         Friend friend = bean.selectByPrimaryKey((long) 10003);
         System.out.println(friend.toString());
-        System.out.println(player);
+        System.out.println(player);*//*
+        StoreConfig bean = (StoreConfig) BeanTools.getBean(StoreConfig.class);
+        System.out.println(bean.toString());*/
     }
 
 }

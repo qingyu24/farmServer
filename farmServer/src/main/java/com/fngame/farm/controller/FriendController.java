@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-
 /**
  * Created by qingyu on 2017/12/22.
  */
@@ -33,7 +31,7 @@ public class FriendController implements BaseContorllerInterface<Friend> {
             resultInfo.setfalse();
         }
         if (add) {
-            resultInfo.setSucess();
+            resultInfo.setSucess(true);
         }
         return resultInfo;
     }
@@ -60,7 +58,7 @@ public class FriendController implements BaseContorllerInterface<Friend> {
         resultInfo.setOrder(order);
         Boolean aBoolean = friendService.get(resultInfo, friend);
         if (aBoolean) {
-            resultInfo.setSucess();
+            resultInfo.setSucess(true);
         }
         return resultInfo;
     }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 @Component
 public class CropsExample {
     protected String orderByClause;
@@ -714,6 +715,126 @@ public class CropsExample {
 
         public Criteria andPriceNotBetween(Integer value1, Integer value2) {
             addCriterion("price not between", value1, value2, "price");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsselloffIsNull() {
+            addCriterion("isselloff is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsselloffIsNotNull() {
+            addCriterion("isselloff is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsselloffEqualTo(Integer value) {
+            addCriterion("isselloff =", value, "isselloff");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsselloffNotEqualTo(Integer value) {
+            addCriterion("isselloff <>", value, "isselloff");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsselloffGreaterThan(Integer value) {
+            addCriterion("isselloff >", value, "isselloff");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsselloffGreaterThanOrEqualTo(Integer value) {
+            addCriterion("isselloff >=", value, "isselloff");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsselloffLessThan(Integer value) {
+            addCriterion("isselloff <", value, "isselloff");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsselloffLessThanOrEqualTo(Integer value) {
+            addCriterion("isselloff <=", value, "isselloff");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsselloffIn(List<Integer> values) {
+            addCriterion("isselloff in", values, "isselloff");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsselloffNotIn(List<Integer> values) {
+            addCriterion("isselloff not in", values, "isselloff");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsselloffBetween(Integer value1, Integer value2) {
+            addCriterion("isselloff between", value1, value2, "isselloff");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsselloffNotBetween(Integer value1, Integer value2) {
+            addCriterion("isselloff not between", value1, value2, "isselloff");
+            return (Criteria) this;
+        }
+
+        public Criteria andStallnumberIsNull() {
+            addCriterion("stallnumber is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStallnumberIsNotNull() {
+            addCriterion("stallnumber is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStallnumberEqualTo(Integer value) {
+            addCriterion("stallnumber =", value, "stallnumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andStallnumberNotEqualTo(Integer value) {
+            addCriterion("stallnumber <>", value, "stallnumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andStallnumberGreaterThan(Integer value) {
+            addCriterion("stallnumber >", value, "stallnumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andStallnumberGreaterThanOrEqualTo(Integer value) {
+            addCriterion("stallnumber >=", value, "stallnumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andStallnumberLessThan(Integer value) {
+            addCriterion("stallnumber <", value, "stallnumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andStallnumberLessThanOrEqualTo(Integer value) {
+            addCriterion("stallnumber <=", value, "stallnumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andStallnumberIn(List<Integer> values) {
+            addCriterion("stallnumber in", values, "stallnumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andStallnumberNotIn(List<Integer> values) {
+            addCriterion("stallnumber not in", values, "stallnumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andStallnumberBetween(Integer value1, Integer value2) {
+            addCriterion("stallnumber between", value1, value2, "stallnumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andStallnumberNotBetween(Integer value1, Integer value2) {
+            addCriterion("stallnumber not between", value1, value2, "stallnumber");
             return (Criteria) this;
         }
     }

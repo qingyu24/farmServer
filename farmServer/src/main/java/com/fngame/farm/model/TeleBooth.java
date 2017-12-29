@@ -25,9 +25,20 @@ public class TeleBooth implements Serializable {
 
     private static long maxID;
 
+    private Long lefttime;
 
+    public Long getLefttime() {
+        long begintime = this.getBegintime().getTime() + 6 * 60 * 1000 - System.currentTimeMillis();
+        long leftTime = Math.max(begintime, 0);
+        this.setLefttime(leftTime);
+        return lefttime;
+    }
 
-    private  long getMaxID() {
+    public void setLefttime(Long lefttime) {
+        this.lefttime = lefttime;
+    }
+
+    private long getMaxID() {
         if (maxID == 0) {
             TeleBoothMapper bean = (TeleBoothMapper) BeanTools.getBean(TeleBoothMapper.class);
 
@@ -42,7 +53,7 @@ public class TeleBooth implements Serializable {
     }
 
     public TeleBooth() {
-        this.id=this.getMaxID();
+        this.id = this.getMaxID();
     }
 
     public Long getId() {
@@ -58,6 +69,7 @@ public class TeleBooth implements Serializable {
 
         this.id = id;
     }
+
     public Long getUserid() {
         return userid;
     }

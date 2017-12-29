@@ -2,7 +2,6 @@ package com.fngame.farm.controller;
 
 import com.fngame.farm.controller.base.BaseContorllerInterface;
 import com.fngame.farm.controller.base.BaseController;
-import com.fngame.farm.etypes.EResultType;
 import com.fngame.farm.model.Building;
 import com.fngame.farm.service.BuildingService;
 import com.fngame.farm.userdate.RequserOrder;
@@ -33,7 +32,7 @@ public class BuildingController extends BaseController implements BaseContorller
         }
         System.out.println(resultInfo.toString());
         if (b) {
-            resultInfo.setSucess();
+            resultInfo.setSucess(true);
             resultInfo.getData().put("buildinfo", building);
         }
         return resultInfo;
@@ -44,7 +43,7 @@ public class BuildingController extends BaseController implements BaseContorller
     public ResultInfo modify(RequserOrder order, Building building ) {
         resultInfo.setOrder(order);
         Boolean modify = BuildingService.modify(resultInfo, building);
-        if (modify) resultInfo.setSucess();
+        if (modify) resultInfo.setSucess(true);
         else {
             resultInfo.setResult("111", "建筑物移动失败");
         }
@@ -56,7 +55,7 @@ public class BuildingController extends BaseController implements BaseContorller
     public ResultInfo remove(RequserOrder order, Building building) {
         resultInfo.setOrder(order);
         Boolean remove = BuildingService.remove(resultInfo, building);
-        if (remove) resultInfo.setSucess();
+        if (remove) resultInfo.setSucess(true);
         else {
             resultInfo.setResult("111", "删除建筑物失败");
         }
