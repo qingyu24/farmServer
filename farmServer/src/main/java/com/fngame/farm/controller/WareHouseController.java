@@ -23,6 +23,7 @@ public class WareHouseController {
 
     @RequestMapping("get")
     public ResultInfo getHouser(RequserOrder order, long userid) {
+
         resultInfo.setOrder(order);
         PlayerInfo player = playerManager.getPlayer(userid);
         List granary = player.getCrops();

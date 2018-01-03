@@ -210,8 +210,16 @@ public class PetService implements BaseServiceImpl<PetData> {
         PlayerInfo player = playerManager.getPlayer(PetData.getUserid());
     //todo 获取成熟的列表
         List<CraftProduce> craftProduces = player.getCraftProduces();
-   /*     craftProduces.get();*/
 
+        for (CraftProduce craftProduce : craftProduces) {
+            Integer size = craftProduce.getSize();
+            if (size>2){
+                int v = (int) (Math.random() * (size-1))+1;
+                craftProduce.setSize(size-v);
+                PetData.setPropsid(craftProduce.getProductbaseid());
+                PetData.setPropscount(v);
+            }
+        }
 
         return true;
 

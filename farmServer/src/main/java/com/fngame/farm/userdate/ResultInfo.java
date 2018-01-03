@@ -86,8 +86,9 @@ public class ResultInfo {
         resp_code = null;
 
         resp_desc = null;
-        if (data != null)
-            data.clear();
+        this.main = null;
+        this.sub = null;
+        if (data != null) data.clear();
 
         this.main = order.main;
         this.sub = order.sub;
@@ -95,13 +96,7 @@ public class ResultInfo {
 
     @Override
     public String toString() {
-        return "ResultInfo{" +
-                "resp_code='" + resp_code + '\'' +
-                ", resp_desc='" + resp_desc + '\'' +
-                ", data=" + data +
-                ", main='" + main + '\'' +
-                ", sub='" + sub + '\'' +
-                '}';
+        return "ResultInfo{" + "resp_code='" + resp_code + '\'' + ", resp_desc='" + resp_desc + '\'' + ", data=" + data + ", main='" + main + '\'' + ", sub='" + sub + '\'' + '}';
     }
 
     public void setfalse() {

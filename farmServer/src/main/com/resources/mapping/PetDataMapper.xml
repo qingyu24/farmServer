@@ -117,11 +117,11 @@
   <insert id="insert" parameterType="com.fngame.farm.model.PetData" >
     insert into fm_pet (id, userid, baseid, 
       status, begintime, targetid, 
-      skillstatus, propsid, skillid,
+      skillstatus, propsid, skillid, 
       propscount)
     values (#{id,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{baseid,jdbcType=INTEGER}, 
       #{status,jdbcType=INTEGER}, #{begintime,jdbcType=TIMESTAMP}, #{targetid,jdbcType=BIGINT}, 
-      #{skillstatus,jdbcType=INTEGER}, #{propsid,jdbcType=INTEGER}, #{skillid,jdbcType=INTEGER},
+      #{skillstatus,jdbcType=INTEGER}, #{propsid,jdbcType=INTEGER}, #{skillid,jdbcType=INTEGER}, 
       #{propscount,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.fngame.farm.model.PetData" >

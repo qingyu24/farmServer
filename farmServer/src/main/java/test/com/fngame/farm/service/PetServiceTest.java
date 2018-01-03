@@ -1,4 +1,4 @@
-package test.com.fngame.farm.service; 
+package com.fngame.farm.service;
 
 import org.junit.Test; 
 import org.junit.Before; 
@@ -39,9 +39,11 @@ public void testAdd() throws Exception {
 @Test
 public void testModify() throws Exception { 
 //TODO: Test goes here...
-    Long s=232l;
-    Long fsf=232l;
-    System.out.println(s==fsf);
+int sds=10;
+    for (int i = 0; i < 100; i++) {
+        int v = (int) (Math.random() * 10);
+        System.out.println(v);
+    }
 } 
 
 /** 

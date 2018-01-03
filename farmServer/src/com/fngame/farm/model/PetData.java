@@ -1,15 +1,8 @@
 package com.fngame.farm.model;
 
-import com.fngame.farm.configer.Pets;
-import com.fngame.farm.configer.skill;
-import com.fngame.farm.service.PetService;
-import com.fngame.farm.util.BeanTools;
-import org.springframework.stereotype.Component;
-
-import java.io.Serializable;
 import java.util.Date;
 
-public class PetData implements Serializable{
+public class PetData implements s{
     private Long id;
 
     private Long userid;
@@ -29,26 +22,6 @@ public class PetData implements Serializable{
     private Integer skillid;
 
     private Integer propscount;
-
-    private Integer gettype;
-
-    private Long lefttime;
-
-    public Integer getGettype() {
-        return gettype;
-    }
-
-    public void setGettype(Integer gettype) {
-        this.gettype = gettype;
-    }
-
-    public Long getLefttime() {
-        return lefttime;
-    }
-
-    public void setLefttime(Long lefttime) {
-        this.lefttime = lefttime;
-    }
 
     public Long getId() {
         return id;
