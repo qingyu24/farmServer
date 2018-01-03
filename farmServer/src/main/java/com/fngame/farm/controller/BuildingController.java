@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/building")
 public class BuildingController extends BaseController implements BaseContorllerInterface<Building> {
-        
+
 
     @Autowired
     BuildingService BuildingService;
@@ -40,7 +40,7 @@ public class BuildingController extends BaseController implements BaseContorller
 
 
     @RequestMapping("modify")
-    public ResultInfo modify(RequserOrder order, Building building ) {
+    public ResultInfo modify(RequserOrder order, Building building) {
         resultInfo.setOrder(order);
         Boolean modify = BuildingService.modify(resultInfo, building);
         if (modify) resultInfo.setSucess(true);

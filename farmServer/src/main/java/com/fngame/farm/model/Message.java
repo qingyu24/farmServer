@@ -1,13 +1,18 @@
 package com.fngame.farm.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Message implements Serializable {
     private Long msgid;
 
     private Long carinfoid;
 
-    private Long userid;
+    private Long fromUserid;
+
+    private Long toUserid;
+
+    private Date date;
 
     private String content;
 
@@ -27,12 +32,28 @@ public class Message implements Serializable {
         this.carinfoid = carinfoid;
     }
 
-    public Long getUserid() {
-        return userid;
+    public Long getFromUserid() {
+        return fromUserid;
     }
 
-    public void setUserid(Long userid) {
-        this.userid = userid;
+    public void setFromUserid(Long fromUserid) {
+        this.fromUserid = fromUserid;
+    }
+
+    public Long getToUserid() {
+        return toUserid;
+    }
+
+    public void setToUserid(Long toUserid) {
+        this.toUserid = toUserid;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getContent() {

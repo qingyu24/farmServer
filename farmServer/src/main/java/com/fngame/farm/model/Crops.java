@@ -1,32 +1,19 @@
 package com.fngame.farm.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
-public class Crops extends Goods implements Serializable {
+public class Crops  extends Goods implements Serializable {
     private Long id;
 
     private Long userid;
 
     private Integer baseid;
 
-    private Date startTime;
+    private Short status;
 
-    private String status;
-
-    private Integer warehouse;
-
-    private Integer ownerid;
+    private Integer targetId;
 
     private Integer count;
-
-    private Integer isinsale;
-
-    private Integer price;
-
-    private Integer isselloff;
-
-    private Integer stallnumber;
 
     public Long getId() {
         return id;
@@ -52,36 +39,20 @@ public class Crops extends Goods implements Serializable {
         this.baseid = baseid;
     }
 
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    public String getStatus() {
+    public Short getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
+    public void setStatus(Short status) {
+        this.status = status;
     }
 
-    public Integer getWarehouse() {
-        return warehouse;
+    public Integer getTargetId() {
+        return targetId;
     }
 
-    public void setWarehouse(Integer warehouse) {
-        this.warehouse = warehouse;
-    }
-
-    public Integer getOwnerid() {
-        return ownerid;
-    }
-
-    public void setOwnerid(Integer ownerid) {
-        this.ownerid = ownerid;
+    public void setTargetId(Integer targetId) {
+        this.targetId = targetId;
     }
 
     public Integer getCount() {
@@ -90,37 +61,5 @@ public class Crops extends Goods implements Serializable {
 
     public void setCount(Integer count) {
         this.count = count;
-    }
-
-    public Integer getIsinsale() {
-        return isinsale;
-    }
-
-    public void setIsinsale(Integer isinsale) {
-        this.isinsale = isinsale;
-    }
-
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
-
-    public Integer getIsselloff() {
-        return isselloff;
-    }
-
-    public void setIsselloff(Integer isselloff) {
-        this.isselloff = isselloff;
-    }
-
-    public Integer getStallnumber() {
-        return stallnumber;
-    }
-
-    public void setStallnumber(Integer stallnumber) {
-        this.stallnumber = stallnumber;
     }
 }

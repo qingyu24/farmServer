@@ -1,5 +1,7 @@
 package com.fngame.farm.configer;
 public class Pets {
+
+  public Integer PetID;
   public Integer Prefab;
   public Integer Display;
   public Integer Info;

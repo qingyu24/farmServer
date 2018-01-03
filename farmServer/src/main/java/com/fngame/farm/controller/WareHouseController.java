@@ -1,4 +1,3 @@
-/*
 package com.fngame.farm.controller;
 
 import com.fngame.farm.manager.PlayerManager;
@@ -8,16 +7,10 @@ import com.fngame.farm.userdate.RequserOrder;
 import com.fngame.farm.userdate.ResultInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.List;
-
-*/
-/**
- * Created by qingyu on 2017/12/21.
- *//*
 
 @RestController
 @RequestMapping("warhouse")
@@ -32,15 +25,14 @@ public class WareHouseController {
     public ResultInfo getHouser(RequserOrder order, long userid) {
         resultInfo.setOrder(order);
         PlayerInfo player = playerManager.getPlayer(userid);
-        List granary = player.getWarehouse();
+        List granary = player.getCrops();
         List<Props> propss = player.getPropss();
         HashMap<String, Object> data = resultInfo.getData();
         data.put("granary", granary);
         data.put("props", propss);
-        resultInfo.setSucess();
+        resultInfo.setSucess(true);
         return resultInfo;
     }
 
 
 }
-*/

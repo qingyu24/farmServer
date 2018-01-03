@@ -47,12 +47,14 @@ public class TeleBoothController implements BaseContorllerInterface<TeleBooth> {
 
     @Override
     public ResultInfo remove(RequserOrder order, TeleBooth teleBooth) {
+        resultInfo.setOrder(order);
+        teleBoothService.remove(resultInfo,teleBooth);
         return null;
     }
 
     @Override
     public ResultInfo get(RequserOrder order, TeleBooth teleBooth) {
-
+        resultInfo.setOrder(order);
         Boolean aBoolean = teleBoothService.get(resultInfo, teleBooth);
         if (aBoolean) {
             resultInfo.setSucess(true);
@@ -70,7 +72,7 @@ public class TeleBoothController implements BaseContorllerInterface<TeleBooth> {
      */
     @RequestMapping("achieve")
     public ResultInfo achieve(RequserOrder order, TeleBooth teleBooth) {
-
+        resultInfo.setOrder(order);
         Boolean add = teleBoothService.achieve(resultInfo, teleBooth);
         if (add) resultInfo.setSucess(true);
 
@@ -87,7 +89,7 @@ public class TeleBoothController implements BaseContorllerInterface<TeleBooth> {
      */
     @RequestMapping("sell")
     public ResultInfo sell(RequserOrder order, TeleBooth teleBooth) {
-
+        resultInfo.setOrder(order);
         Boolean add = teleBoothService.sell(resultInfo, teleBooth);
         resultInfo.setSucess(add);
         return resultInfo;

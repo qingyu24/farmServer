@@ -1,9 +1,11 @@
 package com.fngame.farm.configer;
 public class skill {
-  public Integer Display;
-  public Integer Info;
+
+  public Integer SkillID;
+  public String Display;
+  public String Info;
   public Integer Type;
   public Integer CostTime;
-  public Integer Range;
-  public Integer Price;
+  public String Range;
+  public String Price;
 }

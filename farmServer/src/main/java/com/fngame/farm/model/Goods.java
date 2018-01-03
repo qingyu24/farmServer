@@ -12,14 +12,9 @@ public class Goods implements Serializable{
 
     private Integer baseid;
 
-    private Integer warehouse;
 
     private Integer count;
 
-
-    private Integer isinsale;
-
-    private Integer price;
 
     public Long getId() {
         return id;
@@ -27,6 +22,14 @@ public class Goods implements Serializable{
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Long userid) {
+        this.userid = userid;
     }
 
     public Integer getBaseid() {
@@ -37,13 +40,6 @@ public class Goods implements Serializable{
         this.baseid = baseid;
     }
 
-    public Integer getWarehouse() {
-        return warehouse;
-    }
-
-    public void setWarehouse(Integer warehouse) {
-        this.warehouse = warehouse;
-    }
 
     public Integer getCount() {
         return count;
@@ -54,20 +50,4 @@ public class Goods implements Serializable{
     }
 
 
-
-    public Integer getIsinsale() {
-        return isinsale;
-    }
-
-    public void setIsinsale(Integer isinsale) {
-        this.isinsale = isinsale;
-    }
-
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
 }

@@ -7,8 +7,9 @@ package com.fngame.farm.util;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.lang.reflect.Proxy;
 
-public class RedisUtil extends Thread {
+public class RedisUtil extends Thread  {
     @Override
     public void run() {
         this.runbat();
@@ -34,6 +35,7 @@ public class RedisUtil extends Thread {
             e.printStackTrace();
         }
         logger.info("redis已经启动，本次启动失败");
+
     }
 
 }

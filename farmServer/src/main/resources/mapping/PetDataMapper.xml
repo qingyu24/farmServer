@@ -19,6 +19,7 @@
     <result column="targetid" property="targetid" jdbcType="BIGINT" />
     <result column="skillstatus" property="skillstatus" jdbcType="INTEGER" />
     <result column="propsid" property="propsid" jdbcType="INTEGER" />
+    <result column="skillid" property="skillid" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -79,7 +80,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, userid, baseid, status, begintime, targetid, skillstatus, propsid
+    id, userid, baseid, status, begintime, targetid, skillstatus, propsid, skillid
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fngame.farm.model.PetDataExample" >
     select
@@ -115,10 +116,12 @@
   <insert id="insert" parameterType="com.fngame.farm.model.PetData" >
     insert into fm_pet (id, userid, baseid, 
       status, begintime, targetid, 
-      skillstatus, propsid)
+      skillstatus, propsid, skillid
+      )
     values (#{id,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{baseid,jdbcType=INTEGER}, 
       #{status,jdbcType=INTEGER}, #{begintime,jdbcType=TIMESTAMP}, #{targetid,jdbcType=BIGINT}, 
-      #{skillstatus,jdbcType=INTEGER}, #{propsid,jdbcType=INTEGER})
+      #{skillstatus,jdbcType=INTEGER}, #{propsid,jdbcType=INTEGER}, #{skillid,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.fngame.farm.model.PetData" >
     insert into fm_pet
@@ -147,6 +150,9 @@
       <if test="propsid != null" >
         propsid,
       </if>
+      <if test="skillid != null" >
+        skillid,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -172,6 +178,9 @@
       </if>
       <if test="propsid != null" >
         #{propsid,jdbcType=INTEGER},
+      </if>
+      <if test="skillid != null" >
+        #{skillid,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -208,6 +217,9 @@
       <if test="record.propsid != null" >
         propsid = #{record.propsid,jdbcType=INTEGER},
       </if>
+      <if test="record.skillid != null" >
+        skillid = #{record.skillid,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -222,7 +234,8 @@
       begintime = #{record.begintime,jdbcType=TIMESTAMP},
       targetid = #{record.targetid,jdbcType=BIGINT},
       skillstatus = #{record.skillstatus,jdbcType=INTEGER},
-      propsid = #{record.propsid,jdbcType=INTEGER}
+      propsid = #{record.propsid,jdbcType=INTEGER},
+      skillid = #{record.skillid,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -251,6 +264,9 @@
       <if test="propsid != null" >
         propsid = #{propsid,jdbcType=INTEGER},
       </if>
+      <if test="skillid != null" >
+        skillid = #{skillid,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -262,7 +278,8 @@
       begintime = #{begintime,jdbcType=TIMESTAMP},
       targetid = #{targetid,jdbcType=BIGINT},
       skillstatus = #{skillstatus,jdbcType=INTEGER},
-      propsid = #{propsid,jdbcType=INTEGER}
+      propsid = #{propsid,jdbcType=INTEGER},
+      skillid = #{skillid,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

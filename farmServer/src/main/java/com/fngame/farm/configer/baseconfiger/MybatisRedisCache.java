@@ -51,7 +51,7 @@ public class MybatisRedisCache implements Cache {
     public void putObject(Object key, Object value) {
         if (value != null) {
             // 向Redis中添加数据，有效时间是2天
-            redisTemplate.opsForValue().set(key.toString(), value, 2, TimeUnit.DAYS);
+            redisTemplate.opsForValue().set(key.toString(), value, 2, TimeUnit.HOURS);
         }
     }
 
@@ -63,7 +63,8 @@ public class MybatisRedisCache implements Cache {
                 return obj;
             }
         } catch (Exception e) {
-            logger.error("redis ");
+
+            logger.error("mybatis从缓存获取数据异常 :"+e.toString());
         }
         return null;
     }

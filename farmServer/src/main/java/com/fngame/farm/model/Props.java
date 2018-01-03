@@ -2,7 +2,7 @@ package com.fngame.farm.model;
 
 import java.io.Serializable;
 
-public class Props extends Goods implements Serializable {
+public class Props  extends Goods implements Serializable {
     private Long id;
 
     private Long userid;
@@ -11,17 +11,7 @@ public class Props extends Goods implements Serializable {
 
     private Integer count;
 
-    private Integer warehouse;
-
-    private Long ownerid;
-
-    private Integer isinsale;
-
-    private Integer price;
-
-    private Integer isselloff;
-
-    private Integer stallnumber;
+    private Long targetId;
 
     public Long getId() {
         return id;
@@ -55,51 +45,11 @@ public class Props extends Goods implements Serializable {
         this.count = count;
     }
 
-    public Integer getWarehouse() {
-        return warehouse;
+    public Long getTargetId() {
+        return targetId;
     }
 
-    public void setWarehouse(Integer warehouse) {
-        this.warehouse = warehouse;
-    }
-
-    public Long getOwnerid() {
-        return ownerid;
-    }
-
-    public void setOwnerid(Long ownerid) {
-        this.ownerid = ownerid;
-    }
-
-    public Integer getIsinsale() {
-        return isinsale;
-    }
-
-    public void setIsinsale(Integer isinsale) {
-        this.isinsale = isinsale;
-    }
-
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
-
-    public Integer getIsselloff() {
-        return isselloff;
-    }
-
-    public void setIsselloff(Integer isselloff) {
-        this.isselloff = isselloff;
-    }
-
-    public Integer getStallnumber() {
-        return stallnumber;
-    }
-
-    public void setStallnumber(Integer stallnumber) {
-        this.stallnumber = stallnumber;
+    public void setTargetId(Long targetId) {
+        this.targetId = targetId;
     }
 }

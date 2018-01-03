@@ -586,6 +586,66 @@ public class PetDataExample {
             addCriterion("propsid not between", value1, value2, "propsid");
             return (Criteria) this;
         }
+
+        public Criteria andSkillidIsNull() {
+            addCriterion("skillid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkillidIsNotNull() {
+            addCriterion("skillid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkillidEqualTo(Integer value) {
+            addCriterion("skillid =", value, "skillid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkillidNotEqualTo(Integer value) {
+            addCriterion("skillid <>", value, "skillid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkillidGreaterThan(Integer value) {
+            addCriterion("skillid >", value, "skillid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkillidGreaterThanOrEqualTo(Integer value) {
+            addCriterion("skillid >=", value, "skillid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkillidLessThan(Integer value) {
+            addCriterion("skillid <", value, "skillid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkillidLessThanOrEqualTo(Integer value) {
+            addCriterion("skillid <=", value, "skillid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkillidIn(List<Integer> values) {
+            addCriterion("skillid in", values, "skillid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkillidNotIn(List<Integer> values) {
+            addCriterion("skillid not in", values, "skillid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkillidBetween(Integer value1, Integer value2) {
+            addCriterion("skillid between", value1, value2, "skillid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkillidNotBetween(Integer value1, Integer value2) {
+            addCriterion("skillid not between", value1, value2, "skillid");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

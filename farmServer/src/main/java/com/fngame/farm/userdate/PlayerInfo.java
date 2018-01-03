@@ -20,9 +20,6 @@ import java.util.List;
 public class PlayerInfo extends BaseAutowired implements Serializable {
     private long id;
 
-    public PlayerInfo(long userID) {
-        id = userID;
-    }
 
     public void setId(long id) {
         this.id = id;
@@ -87,6 +84,7 @@ public class PlayerInfo extends BaseAutowired implements Serializable {
         return users.isEmpty() ? null : users.get(0);
     }
 
+
     public List<Props> getPropss() {
         PropsMapper mapper = (PropsMapper) BeanTools.getBean(PropsMapper.class);
         PropsExample exp = new PropsExample();
@@ -107,6 +105,15 @@ public class PlayerInfo extends BaseAutowired implements Serializable {
         return buildings;
     }
 
+    public Building getBuildingByID(Long buildId) {
+        BuildingMapper mapper = (BuildingMapper) BeanTools.getBean(BuildingMapper.class);
+        BuildingExample exp = new BuildingExample();
+        exp.clear();
+        exp.createCriteria().andUseridEqualTo(getId()).andIdEqualTo(buildId);
+        List<Building> buildings = mapper.selectByExample(exp);
+        return buildings.isEmpty() ? null : buildings.get(0);
+    }
+
     public List<Animal> getAnimals() {
         AnimalMapper mapper = (AnimalMapper) BeanTools.getBean(AnimalMapper.class);
         AnimalExample exp = new AnimalExample();
@@ -122,9 +129,16 @@ public class PlayerInfo extends BaseAutowired implements Serializable {
         CropsExample exp = new CropsExample();
         exp.clear();
         exp.createCriteria().andUseridEqualTo(getId());
-        exp.createCriteria().andWarehouseEqualTo(1);
         List<Crops> crops = mapper.selectByExample(exp);
         return crops;
+    }
+
+    public Crops getCropByID(Long cropId) {
+        CropsMapper mapper = (CropsMapper) BeanTools.getBean(CropsMapper.class);
+        CropsExample exp = new CropsExample();
+        exp.createCriteria().andIdEqualTo(cropId);
+        List<Crops> crops = mapper.selectByExample(exp);
+        return crops.isEmpty() ? null : crops.get(0);
     }
 
     public List<UserOrder> getOrders() {
@@ -137,6 +151,101 @@ public class PlayerInfo extends BaseAutowired implements Serializable {
         return orders;
     }
 
+    /*
+    * 根据用户id获取所有已上架物品
+    * */
+    public List<StreetMarket> getStreetMarketInfoByUserId(Long userid) {
+        StreetMarketMapper mapper = (StreetMarketMapper) BeanTools.getBean(StreetMarketMapper.class);
+        StreetMarketExample exp = new StreetMarketExample();
+        exp.clear();
+        exp.createCriteria().andUseridEqualTo(userid);
+        List<StreetMarket> streetMarketList = mapper.selectByExample(exp);
+        return streetMarketList;
+    }
+
+    /*
+    * 根据streetmarket id获取单行数据
+    * */
+    public StreetMarket getOneStreetMarketInfo(Long id) {
+        StreetMarketMapper mapper = (StreetMarketMapper) BeanTools.getBean(StreetMarketMapper.class);
+        StreetMarketExample exp = new StreetMarketExample();
+        exp.clear();
+        exp.createCriteria().andIdIsNotNull().andIdEqualTo(id);
+        StreetMarket streetMarket = mapper.selectByPrimaryKey(id);
+        return streetMarket;
+    }
+
+    /*
+    *物品上架在streetmarket表中新增数据
+    * */
+    public boolean addStreetMarketGoods(StreetMarket streetMarket) {
+        StreetMarketMapper mapper = (StreetMarketMapper) BeanTools.getBean(StreetMarketMapper.class);
+        StreetMarketExample exp = new StreetMarketExample();
+        exp.clear();
+        int row = mapper.insertSelective(streetMarket);
+        return row > 0;
+    }
+
+    /*
+    * 更新streetmarket表中的数据（在购买地摊物品时更改物品状态）
+    * */
+    public boolean updateStreetMarketGoods(StreetMarket streetMarket) {
+        StreetMarketMapper mapper = (StreetMarketMapper) BeanTools.getBean(StreetMarketMapper.class);
+        StreetMarketExample exp = new StreetMarketExample();
+        exp.clear();
+        int row = mapper.updateByPrimaryKeySelective(streetMarket);
+        return row > 0;
+    }
+
+    /*
+    * 物品上架后在crops表或grops表中更新count值
+    * */
+
+    public boolean updateGoodsCountNumber(Goods goods, Integer flag) {
+        int row;
+        if (flag == 0) {
+            Crops crop = (Crops) goods;
+            row = cropsMapper.updateByPrimaryKeySelective(crop);
+        } else {
+            Props prop = (Props) goods;
+            row = propsMapper.updateByPrimaryKeySelective(prop);
+        }
+        return row > 0;
+    }
+
+    /*
+    * 添加购买物品：购买物品后，当玩家没有该物品信息，需要新增数据
+    * */
+    public boolean addBuyGoods(Goods goods, Integer flag) {
+        int row;
+        if (flag == 0) {
+            Crops crop = (Crops) goods;
+            row = cropsMapper.insertSelective(crop);
+        } else {
+            Props prop = (Props) goods;
+            row = propsMapper.insertSelective(prop);
+        }
+        return row > 0;
+    }
+
+    /*
+    * 物品下架后删除streetmarket表中数据
+    * */
+    public boolean deleteStreetMarketGoods(Long id) {
+        StreetMarketMapper mapper = (StreetMarketMapper) BeanTools.getBean(StreetMarketMapper.class);
+        StreetMarketExample exp = new StreetMarketExample();
+        exp.clear();
+        int row = mapper.deleteByPrimaryKey(id);
+        return row > 0;
+    }
+
+    /*
+    * 更新玩家数据:购买物品后玩家的金钱数增减
+    * */
+    public boolean updateUser(User user) {
+        int row = userMapper.updateByPrimaryKeySelective(user);
+        return row > 0;
+    }
 
  /*   public List getWarehouse() {
         CropsMapper  mapper = (CropsMapper) BeanTools.getBean(CropsMapper.class);
@@ -154,9 +263,7 @@ public class PlayerInfo extends BaseAutowired implements Serializable {
         PropsMapper mapper = (PropsMapper) BeanTools.getBean(PropsMapper.class);
         PropsExample exp = new PropsExample();
         exp.clear();
-        PropsExample.Criteria criteria4 = exp.createCriteria();
-        criteria4.andUseridEqualTo(getId());
-        criteria4.andIsinsaleGreaterThan(0);
+        exp.createCriteria().andUseridEqualTo(getId());
         List<Props> props = mapper.selectByExample(exp);
         return props;
     }
@@ -169,9 +276,11 @@ public class PlayerInfo extends BaseAutowired implements Serializable {
         CropsExample exp = new CropsExample();
         exp.clear();
         exp.createCriteria().andUseridEqualTo(getId());
-        exp.createCriteria().andIsinsaleGreaterThan(0);
         List<Crops> crops = mapper.selectByExample(exp);
         return crops;
+    }
+
+    private void andUseridEqualTo(long id) {
     }
 
 
@@ -187,6 +296,9 @@ public class PlayerInfo extends BaseAutowired implements Serializable {
         PropsExample.Criteria criteria4 = exp.createCriteria();
         criteria4.andUseridEqualTo(getId());
         criteria4.andBaseidEqualTo(baseid);
+        criteria4.andUseridEqualTo(getId());
+        criteria4.andBaseidEqualTo(baseid);
+        criteria4.andUseridEqualTo(getId()).andBaseidEqualTo(baseid);
         List<Props> props = mapper.selectByExample(exp);
         return props.isEmpty() ? null : props.get(0);
     }
@@ -195,8 +307,7 @@ public class PlayerInfo extends BaseAutowired implements Serializable {
         CropsMapper mapper = (CropsMapper) BeanTools.getBean(CropsMapper.class);
         CropsExample exp = new CropsExample();
         exp.clear();
-        exp.createCriteria().andUseridEqualTo(getId());
-        exp.createCriteria().andBaseidEqualTo(baseid);
+        exp.createCriteria().andUseridEqualTo(getId()).andBaseidEqualTo(baseid);
         List<Crops> crops = mapper.selectByExample(exp);
         return crops.isEmpty() ? null : crops.get(0);
     }
@@ -224,5 +335,24 @@ public class PlayerInfo extends BaseAutowired implements Serializable {
 
     public void updatePet(PetData petData) {
         petDataMapper.updateByPrimaryKeySelective(petData);
+    }
+
+    public void removeTeleBOOth(TeleBooth booth) {
+        teleBoothMapper.deleteByPrimaryKey(booth.getId());
+    }
+
+    public PetData getPet(Long id) {
+        List<PetData> pets = this.getPets();
+        for (PetData pet : pets) {
+            if (pet.getId().longValue() == id.longValue()) {
+                return pet;
+            }
+        }
+        return null;
+    }
+
+
+    public void addBuilding(Building building) {
+        buildingMapper.insertSelective(building);
     }
 }

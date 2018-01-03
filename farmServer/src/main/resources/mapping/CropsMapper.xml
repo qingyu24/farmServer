@@ -11,15 +11,9 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="userid" property="userid" jdbcType="BIGINT" />
     <result column="baseid" property="baseid" jdbcType="INTEGER" />
-    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
-    <result column="status" property="status" jdbcType="VARCHAR" />
-    <result column="warehouse" property="warehouse" jdbcType="INTEGER" />
-    <result column="ownerid" property="ownerid" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="SMALLINT" />
+    <result column="target_id" property="targetId" jdbcType="INTEGER" />
     <result column="count" property="count" jdbcType="INTEGER" />
-    <result column="isinsale" property="isinsale" jdbcType="INTEGER" />
-    <result column="price" property="price" jdbcType="INTEGER" />
-    <result column="isselloff" property="isselloff" jdbcType="INTEGER" />
-    <result column="stallnumber" property="stallnumber" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -80,8 +74,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, userid, baseid, start_time, status, warehouse, ownerid, count, isinsale, price, 
-    isselloff, stallnumber
+    id, userid, baseid, status, target_id, count
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fngame.farm.model.CropsExample" >
     select
@@ -116,14 +109,10 @@
   </delete>
   <insert id="insert" parameterType="com.fngame.farm.model.Crops" >
     insert into fm_crops (id, userid, baseid, 
-      start_time, status, warehouse, 
-      ownerid, count, isinsale, 
-      price, isselloff, stallnumber
+      status, target_id, count
       )
     values (#{id,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{baseid,jdbcType=INTEGER}, 
-      #{startTime,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}, #{warehouse,jdbcType=INTEGER}, 
-      #{ownerid,jdbcType=INTEGER}, #{count,jdbcType=INTEGER}, #{isinsale,jdbcType=INTEGER}, 
-      #{price,jdbcType=INTEGER}, #{isselloff,jdbcType=INTEGER}, #{stallnumber,jdbcType=INTEGER}
+      #{status,jdbcType=SMALLINT}, #{targetId,jdbcType=INTEGER}, #{count,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.fngame.farm.model.Crops" >
@@ -138,32 +127,14 @@
       <if test="baseid != null" >
         baseid,
       </if>
-      <if test="startTime != null" >
-        start_time,
-      </if>
       <if test="status != null" >
         status,
       </if>
-      <if test="warehouse != null" >
-        warehouse,
-      </if>
-      <if test="ownerid != null" >
-        ownerid,
+      <if test="targetId != null" >
+        target_id,
       </if>
       <if test="count != null" >
         count,
-      </if>
-      <if test="isinsale != null" >
-        isinsale,
-      </if>
-      <if test="price != null" >
-        price,
-      </if>
-      <if test="isselloff != null" >
-        isselloff,
-      </if>
-      <if test="stallnumber != null" >
-        stallnumber,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -176,32 +147,14 @@
       <if test="baseid != null" >
         #{baseid,jdbcType=INTEGER},
       </if>
-      <if test="startTime != null" >
-        #{startTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="status != null" >
-        #{status,jdbcType=VARCHAR},
+        #{status,jdbcType=SMALLINT},
       </if>
-      <if test="warehouse != null" >
-        #{warehouse,jdbcType=INTEGER},
-      </if>
-      <if test="ownerid != null" >
-        #{ownerid,jdbcType=INTEGER},
+      <if test="targetId != null" >
+        #{targetId,jdbcType=INTEGER},
       </if>
       <if test="count != null" >
         #{count,jdbcType=INTEGER},
-      </if>
-      <if test="isinsale != null" >
-        #{isinsale,jdbcType=INTEGER},
-      </if>
-      <if test="price != null" >
-        #{price,jdbcType=INTEGER},
-      </if>
-      <if test="isselloff != null" >
-        #{isselloff,jdbcType=INTEGER},
-      </if>
-      <if test="stallnumber != null" >
-        #{stallnumber,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -223,32 +176,14 @@
       <if test="record.baseid != null" >
         baseid = #{record.baseid,jdbcType=INTEGER},
       </if>
-      <if test="record.startTime != null" >
-        start_time = #{record.startTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="record.status != null" >
-        status = #{record.status,jdbcType=VARCHAR},
+        status = #{record.status,jdbcType=SMALLINT},
       </if>
-      <if test="record.warehouse != null" >
-        warehouse = #{record.warehouse,jdbcType=INTEGER},
-      </if>
-      <if test="record.ownerid != null" >
-        ownerid = #{record.ownerid,jdbcType=INTEGER},
+      <if test="record.targetId != null" >
+        target_id = #{record.targetId,jdbcType=INTEGER},
       </if>
       <if test="record.count != null" >
         count = #{record.count,jdbcType=INTEGER},
-      </if>
-      <if test="record.isinsale != null" >
-        isinsale = #{record.isinsale,jdbcType=INTEGER},
-      </if>
-      <if test="record.price != null" >
-        price = #{record.price,jdbcType=INTEGER},
-      </if>
-      <if test="record.isselloff != null" >
-        isselloff = #{record.isselloff,jdbcType=INTEGER},
-      </if>
-      <if test="record.stallnumber != null" >
-        stallnumber = #{record.stallnumber,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -260,15 +195,9 @@
     set id = #{record.id,jdbcType=BIGINT},
       userid = #{record.userid,jdbcType=BIGINT},
       baseid = #{record.baseid,jdbcType=INTEGER},
-      start_time = #{record.startTime,jdbcType=TIMESTAMP},
-      status = #{record.status,jdbcType=VARCHAR},
-      warehouse = #{record.warehouse,jdbcType=INTEGER},
-      ownerid = #{record.ownerid,jdbcType=INTEGER},
-      count = #{record.count,jdbcType=INTEGER},
-      isinsale = #{record.isinsale,jdbcType=INTEGER},
-      price = #{record.price,jdbcType=INTEGER},
-      isselloff = #{record.isselloff,jdbcType=INTEGER},
-      stallnumber = #{record.stallnumber,jdbcType=INTEGER}
+      status = #{record.status,jdbcType=SMALLINT},
+      target_id = #{record.targetId,jdbcType=INTEGER},
+      count = #{record.count,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -282,32 +211,14 @@
       <if test="baseid != null" >
         baseid = #{baseid,jdbcType=INTEGER},
       </if>
-      <if test="startTime != null" >
-        start_time = #{startTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="status != null" >
-        status = #{status,jdbcType=VARCHAR},
+        status = #{status,jdbcType=SMALLINT},
       </if>
-      <if test="warehouse != null" >
-        warehouse = #{warehouse,jdbcType=INTEGER},
-      </if>
-      <if test="ownerid != null" >
-        ownerid = #{ownerid,jdbcType=INTEGER},
+      <if test="targetId != null" >
+        target_id = #{targetId,jdbcType=INTEGER},
       </if>
       <if test="count != null" >
         count = #{count,jdbcType=INTEGER},
-      </if>
-      <if test="isinsale != null" >
-        isinsale = #{isinsale,jdbcType=INTEGER},
-      </if>
-      <if test="price != null" >
-        price = #{price,jdbcType=INTEGER},
-      </if>
-      <if test="isselloff != null" >
-        isselloff = #{isselloff,jdbcType=INTEGER},
-      </if>
-      <if test="stallnumber != null" >
-        stallnumber = #{stallnumber,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -316,15 +227,9 @@
     update fm_crops
     set userid = #{userid,jdbcType=BIGINT},
       baseid = #{baseid,jdbcType=INTEGER},
-      start_time = #{startTime,jdbcType=TIMESTAMP},
-      status = #{status,jdbcType=VARCHAR},
-      warehouse = #{warehouse,jdbcType=INTEGER},
-      ownerid = #{ownerid,jdbcType=INTEGER},
-      count = #{count,jdbcType=INTEGER},
-      isinsale = #{isinsale,jdbcType=INTEGER},
-      price = #{price,jdbcType=INTEGER},
-      isselloff = #{isselloff,jdbcType=INTEGER},
-      stallnumber = #{stallnumber,jdbcType=INTEGER}
+      status = #{status,jdbcType=SMALLINT},
+      target_id = #{targetId,jdbcType=INTEGER},
+      count = #{count,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

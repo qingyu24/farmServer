@@ -3,7 +3,9 @@ package com.fngame.farm.model;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
 @Component
 public class MessageExample {
     protected String orderByClause;
@@ -226,133 +228,183 @@ public class MessageExample {
             return (Criteria) this;
         }
 
-        public Criteria andUseridIsNull() {
-            addCriterion("userid is null");
+        public Criteria andFromUseridIsNull() {
+            addCriterion("from_userid is null");
             return (Criteria) this;
         }
 
-        public Criteria andUseridIsNotNull() {
-            addCriterion("userid is not null");
+        public Criteria andFromUseridIsNotNull() {
+            addCriterion("from_userid is not null");
             return (Criteria) this;
         }
 
-        public Criteria andUseridEqualTo(Long value) {
-            addCriterion("userid =", value, "userid");
+        public Criteria andFromUseridEqualTo(Long value) {
+            addCriterion("from_userid =", value, "fromUserid");
             return (Criteria) this;
         }
 
-        public Criteria andUseridNotEqualTo(Long value) {
-            addCriterion("userid <>", value, "userid");
+        public Criteria andFromUseridNotEqualTo(Long value) {
+            addCriterion("from_userid <>", value, "fromUserid");
             return (Criteria) this;
         }
 
-        public Criteria andUseridGreaterThan(Long value) {
-            addCriterion("userid >", value, "userid");
+        public Criteria andFromUseridGreaterThan(Long value) {
+            addCriterion("from_userid >", value, "fromUserid");
             return (Criteria) this;
         }
 
-        public Criteria andUseridGreaterThanOrEqualTo(Long value) {
-            addCriterion("userid >=", value, "userid");
+        public Criteria andFromUseridGreaterThanOrEqualTo(Long value) {
+            addCriterion("from_userid >=", value, "fromUserid");
             return (Criteria) this;
         }
 
-        public Criteria andUseridLessThan(Long value) {
-            addCriterion("userid <", value, "userid");
+        public Criteria andFromUseridLessThan(Long value) {
+            addCriterion("from_userid <", value, "fromUserid");
             return (Criteria) this;
         }
 
-        public Criteria andUseridLessThanOrEqualTo(Long value) {
-            addCriterion("userid <=", value, "userid");
+        public Criteria andFromUseridLessThanOrEqualTo(Long value) {
+            addCriterion("from_userid <=", value, "fromUserid");
             return (Criteria) this;
         }
 
-        public Criteria andUseridIn(List<Long> values) {
-            addCriterion("userid in", values, "userid");
+        public Criteria andFromUseridIn(List<Long> values) {
+            addCriterion("from_userid in", values, "fromUserid");
             return (Criteria) this;
         }
 
-        public Criteria andUseridNotIn(List<Long> values) {
-            addCriterion("userid not in", values, "userid");
+        public Criteria andFromUseridNotIn(List<Long> values) {
+            addCriterion("from_userid not in", values, "fromUserid");
             return (Criteria) this;
         }
 
-        public Criteria andUseridBetween(Long value1, Long value2) {
-            addCriterion("userid between", value1, value2, "userid");
+        public Criteria andFromUseridBetween(Long value1, Long value2) {
+            addCriterion("from_userid between", value1, value2, "fromUserid");
             return (Criteria) this;
         }
 
-        public Criteria andUseridNotBetween(Long value1, Long value2) {
-            addCriterion("userid not between", value1, value2, "userid");
+        public Criteria andFromUseridNotBetween(Long value1, Long value2) {
+            addCriterion("from_userid not between", value1, value2, "fromUserid");
             return (Criteria) this;
         }
 
-        public Criteria andContentIsNull() {
-            addCriterion("content is null");
+        public Criteria andToUseridIsNull() {
+            addCriterion("to_userid is null");
             return (Criteria) this;
         }
 
-        public Criteria andContentIsNotNull() {
-            addCriterion("content is not null");
+        public Criteria andToUseridIsNotNull() {
+            addCriterion("to_userid is not null");
             return (Criteria) this;
         }
 
-        public Criteria andContentEqualTo(String value) {
-            addCriterion("content =", value, "content");
+        public Criteria andToUseridEqualTo(Long value) {
+            addCriterion("to_userid =", value, "toUserid");
             return (Criteria) this;
         }
 
-        public Criteria andContentNotEqualTo(String value) {
-            addCriterion("content <>", value, "content");
+        public Criteria andToUseridNotEqualTo(Long value) {
+            addCriterion("to_userid <>", value, "toUserid");
             return (Criteria) this;
         }
 
-        public Criteria andContentGreaterThan(String value) {
-            addCriterion("content >", value, "content");
+        public Criteria andToUseridGreaterThan(Long value) {
+            addCriterion("to_userid >", value, "toUserid");
             return (Criteria) this;
         }
 
-        public Criteria andContentGreaterThanOrEqualTo(String value) {
-            addCriterion("content >=", value, "content");
+        public Criteria andToUseridGreaterThanOrEqualTo(Long value) {
+            addCriterion("to_userid >=", value, "toUserid");
             return (Criteria) this;
         }
 
-        public Criteria andContentLessThan(String value) {
-            addCriterion("content <", value, "content");
+        public Criteria andToUseridLessThan(Long value) {
+            addCriterion("to_userid <", value, "toUserid");
             return (Criteria) this;
         }
 
-        public Criteria andContentLessThanOrEqualTo(String value) {
-            addCriterion("content <=", value, "content");
+        public Criteria andToUseridLessThanOrEqualTo(Long value) {
+            addCriterion("to_userid <=", value, "toUserid");
             return (Criteria) this;
         }
 
-        public Criteria andContentLike(String value) {
-            addCriterion("content like", value, "content");
+        public Criteria andToUseridIn(List<Long> values) {
+            addCriterion("to_userid in", values, "toUserid");
             return (Criteria) this;
         }
 
-        public Criteria andContentNotLike(String value) {
-            addCriterion("content not like", value, "content");
+        public Criteria andToUseridNotIn(List<Long> values) {
+            addCriterion("to_userid not in", values, "toUserid");
             return (Criteria) this;
         }
 
-        public Criteria andContentIn(List<String> values) {
-            addCriterion("content in", values, "content");
+        public Criteria andToUseridBetween(Long value1, Long value2) {
+            addCriterion("to_userid between", value1, value2, "toUserid");
             return (Criteria) this;
         }
 
-        public Criteria andContentNotIn(List<String> values) {
-            addCriterion("content not in", values, "content");
+        public Criteria andToUseridNotBetween(Long value1, Long value2) {
+            addCriterion("to_userid not between", value1, value2, "toUserid");
             return (Criteria) this;
         }
 
-        public Criteria andContentBetween(String value1, String value2) {
-            addCriterion("content between", value1, value2, "content");
+        public Criteria andDateIsNull() {
+            addCriterion("date is null");
             return (Criteria) this;
         }
 
-        public Criteria andContentNotBetween(String value1, String value2) {
-            addCriterion("content not between", value1, value2, "content");
+        public Criteria andDateIsNotNull() {
+            addCriterion("date is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateEqualTo(Date value) {
+            addCriterion("date =", value, "date");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateNotEqualTo(Date value) {
+            addCriterion("date <>", value, "date");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateGreaterThan(Date value) {
+            addCriterion("date >", value, "date");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateGreaterThanOrEqualTo(Date value) {
+            addCriterion("date >=", value, "date");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateLessThan(Date value) {
+            addCriterion("date <", value, "date");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateLessThanOrEqualTo(Date value) {
+            addCriterion("date <=", value, "date");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateIn(List<Date> values) {
+            addCriterion("date in", values, "date");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateNotIn(List<Date> values) {
+            addCriterion("date not in", values, "date");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateBetween(Date value1, Date value2) {
+            addCriterion("date between", value1, value2, "date");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateNotBetween(Date value1, Date value2) {
+            addCriterion("date not between", value1, value2, "date");
             return (Criteria) this;
         }
     }

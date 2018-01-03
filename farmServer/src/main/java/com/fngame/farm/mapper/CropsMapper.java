@@ -4,7 +4,9 @@ import com.fngame.farm.model.Crops;
 import com.fngame.farm.model.CropsExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
+@Component
 public interface CropsMapper {
     int countByExample(CropsExample example);
 

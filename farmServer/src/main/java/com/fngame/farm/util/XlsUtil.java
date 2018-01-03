@@ -78,7 +78,7 @@ public class XlsUtil {
         writer.newLine();
         writer.flush();
 
-        for (int i = 1; i < titleRow.getLastCellNum(); i++) {
+        for (int i = 0; i < titleRow.getLastCellNum(); i++) {
             cell = titleRow.getCell(i);
 
             try {

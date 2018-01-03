@@ -14,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by qingyu on 2017/12/26 /17:26
@@ -66,7 +63,7 @@ public class TeleBoothService {
         } else if (teleBooths.size() == 1) {
             TeleBooth teleBooth1 = teleBooths.get(0);
             Integer achieve = teleBooth1.getAchieve();
-            if (achieve == 1||teleBooth1.getLefttime()==0) {
+            if (achieve == 1 || teleBooth1.getLefttime() == 0) {
                 teleBooth.setBegintime(new Date());
                 teleBooth.setId(teleBooth1.getId());
                 teleBoothMapper.updateByPrimaryKeySelective(teleBooth);
@@ -110,9 +107,21 @@ public class TeleBoothService {
      * @return the boolean
      */
     public Boolean remove(ResultInfo resultInfo, TeleBooth teleBooth) {
+        PlayerInfo player = playerManager.getPlayer(teleBooth.getUserid());
+        List<TeleBooth> teleBooths = player.getTeleBooths();
+        for (TeleBooth booth : teleBooths) {
+            if (booth.getId() == teleBooth.getId()) {
+                player.removeTeleBOOth(booth);
+                teleBooth = booth;
+            }
+        }
+        HashMap<String, Object> data = resultInfo.getData();
+        ArrayList<TeleBooth> objects = new ArrayList<>(1);
+        objects.add(teleBooth);
+        data.put("telebooth", objects);
+        return true;
 
 
-        return null;
     }
 
     /**
@@ -129,6 +138,7 @@ public class TeleBoothService {
         List<TeleBooth> teleBooths = player.getTeleBooths();
         if (teleBooths == null) {
             teleBooths = new ArrayList<TeleBooth>();
+
         }
         HashMap<String, Object> data = resultInfo.getData();
         data.put("telebooth", teleBooths);
@@ -188,19 +198,32 @@ public class TeleBoothService {
     public Boolean achieve(ResultInfo resultInfo, TeleBooth teleBooth) {
         PlayerInfo player = playerManager.getPlayer(teleBooth.getUserid());
         Integer type = teleBooth.getType();
-
+        List<TeleBooth> teleBooths = player.getTeleBooths();
+        TeleBooth dbTel = null;
+        for (TeleBooth booth : teleBooths) {
+            if (booth.getId().longValue() == teleBooth.getId().longValue()) {
+                dbTel = booth;
+            }
+        }
         Goods good = player.getOneGoods(teleBooth.getBaseid());
 
         if (good == null) {
             resultInfo.setResp_code("700005");
             return false;
         }
+        if (dbTel == null) {
+            resultInfo.setResp_code("700001");
+            return false;
+        }
 
-        good.setCount(teleBooth.getCount() + teleBooth.getCount());
+        if (dbTel.getAchieve() != 1)
+        player.removeTeleBOOth(dbTel);
+        good.setCount(good.getCount() + dbTel.getCount());
         this.updateGood(good, type);
 
         return true;
     }
+
 
 
     private void updateGood(Goods good, Integer type) {

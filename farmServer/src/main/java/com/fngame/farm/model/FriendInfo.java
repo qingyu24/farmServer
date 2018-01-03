@@ -4,6 +4,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.PriorityQueue;
 
 @Component
 @Scope("prototype")
@@ -106,5 +109,6 @@ public class FriendInfo implements Serializable{
 
     public void setAgree(Integer agree) {
         this.agree = agree;
+
     }
 }

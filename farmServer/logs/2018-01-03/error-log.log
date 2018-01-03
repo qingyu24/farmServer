@@ -1,0 +1,30 @@
+2018-01-03 17:30:00.271 [http-nio-1111-exec-2] ERROR com.fngame.farm.configer.baseconfiger.MybatisRedisCache - mybatis从缓存获取数据异常 
+2018-01-03 17:30:04.431 [http-nio-1111-exec-3] ERROR com.fngame.farm.configer.baseconfiger.MybatisRedisCache - mybatis从缓存获取数据异常 
+2018-01-03 17:30:06.543 [http-nio-1111-exec-4] ERROR com.fngame.farm.configer.baseconfiger.MybatisRedisCache - mybatis从缓存获取数据异常 
+2018-01-03 17:30:08.359 [http-nio-1111-exec-5] ERROR com.fngame.farm.configer.baseconfiger.MybatisRedisCache - mybatis从缓存获取数据异常 
+2018-01-03 17:30:10.096 [http-nio-1111-exec-6] ERROR com.fngame.farm.configer.baseconfiger.MybatisRedisCache - mybatis从缓存获取数据异常 
+2018-01-03 17:30:14.949 [http-nio-1111-exec-7] ERROR com.fngame.farm.configer.baseconfiger.MybatisRedisCache - mybatis从缓存获取数据异常 
+2018-01-03 17:30:20.793 [http-nio-1111-exec-8] ERROR com.fngame.farm.configer.baseconfiger.MybatisRedisCache - mybatis从缓存获取数据异常 
+2018-01-03 17:38:00.627 [http-nio-1111-exec-1] ERROR com.fngame.farm.configer.baseconfiger.MybatisRedisCache - mybatis从缓存获取数据异常 :-1658071439:3234441070:com.fngame.farm.mapper.TeleBoothMapper.selectByExample:0:2147483647:select
+     
+    'true' as QUERYID,
+     
+    id, userid, type, baseid, begintime, count, money, achieve
+   
+    from fm_telebooth
+     
+       
+     WHERE (  userid = ? ):33:SqlSessionFactoryBean
+2018-01-03 17:38:40.061 [http-nio-1111-exec-3] ERROR com.fngame.farm.configer.baseconfiger.MybatisRedisCache - mybatis从缓存获取数据异常 :-1658071439:3234441070:com.fngame.farm.mapper.TeleBoothMapper.selectByExample:0:2147483647:select
+     
+    'true' as QUERYID,
+     
+    id, userid, type, baseid, begintime, count, money, achieve
+   
+    from fm_telebooth
+     
+       
+     WHERE (  userid = ? ):33:SqlSessionFactoryBean
+2018-01-03 17:50:56.356 [http-nio-1111-exec-3] ERROR com.fngame.farm.configer.baseconfiger.MybatisRedisCache - mybatis从缓存获取数据异常 :org.springframework.data.redis.serializer.SerializationException: Could not read JSON: Unrecognized field "maxID" (class com.fngame.farm.model.TeleBooth), not marked as ignorable (9 known properties: "money", "achieve", "lefttime", "userid", "type", "id", "baseid", "count", "begintime"])
+ at [Source: [B@58d37261; line: 1, column: 211] (through reference chain: java.util.ArrayList[0]->com.fngame.farm.model.TeleBooth["maxID"]); nested exception is com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException: Unrecognized field "maxID" (class com.fngame.farm.model.TeleBooth), not marked as ignorable (9 known properties: "money", "achieve", "lefttime", "userid", "type", "id", "baseid", "count", "begintime"])
+ at [Source: [B@58d37261; line: 1, column: 211] (through reference chain: java.util.ArrayList[0]->com.fngame.farm.model.TeleBooth["maxID"])

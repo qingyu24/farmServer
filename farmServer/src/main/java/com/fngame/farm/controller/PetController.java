@@ -23,7 +23,9 @@ public class PetController implements BaseContorllerInterface<PetData> {
     PetService petService;
 
     @Override
-    public ResultInfo add(RequserOrder order, PetData petData) { return null; }
+    public ResultInfo add(RequserOrder order, PetData petData) {
+        return null;
+    }
 
     @RequestMapping("getnew")
     public ResultInfo getnew(RequserOrder order, PetData petData) {
@@ -48,16 +50,23 @@ public class PetController implements BaseContorllerInterface<PetData> {
 
     @Override
     public ResultInfo get(RequserOrder order, PetData petData) {
-        return null;
-    }
-
-    @RequestMapping("activity")
-    public ResultInfo activity (RequserOrder order, PetData petData) {
-        resultInfo.setOrder(order);
-        petService.activity(resultInfo,petData);
+        Boolean aBoolean = petService.get(resultInfo, petData);
+        resultInfo.setSucess(aBoolean);
         return resultInfo;
     }
 
+    @RequestMapping("activity")
+    public ResultInfo activity(RequserOrder order, PetData petData) {
+        resultInfo.setOrder(order);
+        petService.activity(resultInfo, petData);
+        return resultInfo;
+    }
 
+    @RequestMapping("petHarvest")
+    public ResultInfo petHarvest(RequserOrder order, PetData petData) {
+        resultInfo.setOrder(order);
+        petService.petharvest(resultInfo, petData);
+        return resultInfo;
+    }
 
 }

@@ -94,10 +94,16 @@ public class ConfigManager {
 
         return null;
     }
-public Pets getPetsConfig(Pets pets){
+  /*  @Cacheable(value = "Pets_conf", key = "#pets")*/
+    public Pets getPetsConfig(Integer pets) {
+        ArrayList<Pets> arrayList = loades.get(Pets.class.getSimpleName());
+        for (Pets o : arrayList) {
+            if (o.PetID == pets)
+                return o;
+        }
 
         return null;
-}
+    }
 
 
     @Cacheable(value = "Craft_conf", key = "#buildingid")
@@ -111,4 +117,14 @@ public Pets getPetsConfig(Pets pets){
         return null;
     }
 
+    @Cacheable(value = "skill_conf", key = "#skillstatus")
+    public skill getSkill(Integer skilid) {
+        ArrayList<skill> arrayList = loades.get(skill.class.getSimpleName());
+        for (skill skills : arrayList) {
+            if (skills.SkillID == skilid) {
+                return skills;
+            }
+        }
+        return null;
+    }
 }

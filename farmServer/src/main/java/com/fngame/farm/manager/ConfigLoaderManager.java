@@ -1,16 +1,11 @@
 package com.fngame.farm.manager;
 
 import com.fngame.farm.configer.*;
-import com.fngame.farm.model.Animal;
-import com.fngame.farm.model.Building;
 import com.fngame.farm.util.XlsReader;
-import com.sun.scenario.effect.Crop;
-import com.sun.tools.javac.jvm.Items;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 @Component
 public class ConfigLoaderManager {

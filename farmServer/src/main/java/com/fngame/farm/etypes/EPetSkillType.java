@@ -24,9 +24,9 @@ public enum EPetSkillType {
      */
     public int ID(){
         switch (this){
-            case SEARCH: return  1;
-            case STEAL:return 2;
-            case TRICK:return 3;
+            case SEARCH: return  0;
+            case STEAL:return 1;
+            case TRICK:return 2;
 
         }
 

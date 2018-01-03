@@ -1,11 +1,14 @@
+/*
 package com.fngame.farm.controller;
 
 import com.fngame.farm.configer.Craft;
 import com.fngame.farm.controller.base.BaseContorllerInterface;
 import com.fngame.farm.controller.base.BaseController;
 import com.fngame.farm.manager.ConfigManager;
+import com.fngame.farm.manager.PlayerManager;
 import com.fngame.farm.model.Crops;
 import com.fngame.farm.service.CropService;
+import com.fngame.farm.userdate.PlayerInfo;
 import com.fngame.farm.userdate.RequserOrder;
 import com.fngame.farm.userdate.ResultInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +22,26 @@ import java.util.List;
 @RequestMapping("crops")
 public class CropsController extends BaseController implements BaseContorllerInterface<Crops> {
 
-
+    @Autowired
+    PlayerManager PlayerManager;
     @Autowired
     CropService cropService;
 
+    //种植农作物
     @Override
     public ResultInfo add(RequserOrder order, Crops crops) {
         resultInfo.setOrder(order);
+        Long userId = crops.getUserid();//所属用户的id;
+       // crops.getId();//存在于背包内的id；
+       // crops.getOwnerid(); //目标农田的id
+        PlayerInfo playerInfo = PlayerManager.getPlayer(userId);
+        if (null == playerInfo){
+            //返回玩家不存在的错误;
+        }
+        Crops crop = playerInfo.getCropByID(crops.getId());
+        if(null == crop){
+            //农作物种子不存在的错误;
+        }
 
         return resultInfo;
     }
@@ -53,7 +69,6 @@ public class CropsController extends BaseController implements BaseContorllerInt
     @RequestMapping("gain")
     public ResultInfo gain(RequserOrder order, Crops crops) {
         resultInfo.setOrder(order);
-
         cropService.gain(resultInfo, crops);
         return null;
     }
@@ -66,3 +81,4 @@ public class CropsController extends BaseController implements BaseContorllerInt
         return null;
     }
 }
+*/

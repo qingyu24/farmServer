@@ -14,14 +14,15 @@ public class loginInterceptor extends HandlerInterceptorAdapter {
     public loginInterceptor() {
         super();
     }
-    private static String secret="123";
+
+    private static String secret = "123";
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println("请求前");
         StringBuilder sb = new StringBuilder();
         Map map = new HashMap();
-        Enumeration pNames=request.getParameterNames();
-        while (pNames.hasMoreElements()){
+        Enumeration pNames = request.getParameterNames();
+        while (pNames.hasMoreElements()) {
             String paramName = (String) pNames.nextElement();
             String paramValue = request.getParameter(paramName);
             map.put(paramName, paramValue);
@@ -29,7 +30,7 @@ public class loginInterceptor extends HandlerInterceptorAdapter {
         String ret = getSignData(map);
 
 /*        return Verify(ret, request.getParameter("sign"));*/
-return true;
+        return true;
     }
 
     @Override
@@ -50,31 +51,28 @@ return true;
 
     }
 
-    private boolean Verify(String data, String sign){
+    private boolean Verify(String data, String sign) {
         String mySign = new MD5().getMD5ofStr(data);
-        if (mySign.equals(sign)){
+        if (mySign.equals(sign)) {
             return true;
         }
         return false;
     }
-    
-    private String getSignData(Map<String, String> params)
-   {
-     StringBuffer content = new StringBuffer();
-     List keys = new ArrayList(params.keySet());
-     Collections.sort(keys);
-     for (int i = 0; i < keys.size(); i++) {
-       String key = (String)keys.get(i);
-       if ((!"sign".equals(key)) && (!"sign_type".equals(key)))
-       {
-         String value = (String)params.get(key);
-         if (value != null)
-           content.append(new StringBuilder().append(i == 0 ? "" : "&").append(key).append("=").append(value).toString());
-         else
-           content.append(new StringBuilder().append(i == 0 ? "" : "&").append(key).append("=").toString());
-       }
-     }
-     content.append(secret);
-     return content.toString();
-   }
+
+    private String getSignData(Map<String, String> params) {
+        StringBuffer content = new StringBuffer();
+        List keys = new ArrayList(params.keySet());
+        Collections.sort(keys);
+        for (int i = 0; i < keys.size(); i++) {
+            String key = (String) keys.get(i);
+            if ((!"sign".equals(key)) && (!"sign_type".equals(key))) {
+                String value = (String) params.get(key);
+                if (value != null)
+                    content.append(new StringBuilder().append(i == 0 ? "" : "&").append(key).append("=").append(value).toString());
+                else content.append(new StringBuilder().append(i == 0 ? "" : "&").append(key).append("=").toString());
+            }
+        }
+        content.append(secret);
+        return content.toString();
+    }
 }
