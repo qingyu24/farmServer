@@ -66,11 +66,12 @@ public class OrderController implements BaseContorllerInterface<UserOrder> {
         resultInfo.setOrder(order);
 
         if (achieve == 1) {//完成订单给予奖励
-            orderService.remove(resultInfo, userOrder);
+            orderService.adhieve(resultInfo, userOrder);
         } else {//删除订单
             orderService.remove(resultInfo, userOrder);
 
         }
         return resultInfo;
     }
+
 }

@@ -1,26 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fngame.farm.mapper.PetDataMapper" >
-
-
-    <cache type="com.fngame.farm.configer.baseconfiger.MybatisRedisCache">
-        <property name="eviction" value="LRU" />
-        <property name="flushInterval" value="6000000" />
-        <property name="size" value="1024" />
-        <property name="readOnly" value="false" />
-    </cache>
-
-  <resultMap id="BaseResultMap" type="com.fngame.farm.model.PetData" >
+<mapper namespace="com.fngame.farm.mapper.PropsMapper" >
+  <resultMap id="BaseResultMap" type="com.fngame.farm.model.Props" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="userid" property="userid" jdbcType="BIGINT" />
     <result column="baseid" property="baseid" jdbcType="INTEGER" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="target_id" property="targetId" jdbcType="BIGINT" />
     <result column="status" property="status" jdbcType="INTEGER" />
-    <result column="begintime" property="begintime" jdbcType="TIMESTAMP" />
-    <result column="targetid" property="targetid" jdbcType="BIGINT" />
-    <result column="skillstatus" property="skillstatus" jdbcType="INTEGER" />
-    <result column="propsid" property="propsid" jdbcType="INTEGER" />
-    <result column="skillid" property="skillid" jdbcType="INTEGER" />
-    <result column="propscount" property="propscount" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -81,16 +69,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, userid, baseid, status, begintime, targetid, skillstatus, propsid, skillid, propscount
+    id, userid, baseid, count, target_id, status, type
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fngame.farm.model.PetDataExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fngame.farm.model.PropsExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     'true' as QUERYID,
     <include refid="Base_Column_List" />
-    from fm_pet
+    from fm_props
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -101,31 +89,29 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from fm_pet
+    from fm_props
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from fm_pet
+    delete from fm_props
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.fngame.farm.model.PetDataExample" >
-    delete from fm_pet
+  <delete id="deleteByExample" parameterType="com.fngame.farm.model.PropsExample" >
+    delete from fm_props
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.fngame.farm.model.PetData" >
-    insert into fm_pet (id, userid, baseid, 
-      status, begintime, targetid, 
-      skillstatus, propsid, skillid, 
-      propscount)
+  <insert id="insert" parameterType="com.fngame.farm.model.Props" >
+    insert into fm_props (id, userid, baseid, 
+      count, target_id, status, 
+      type)
     values (#{id,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{baseid,jdbcType=INTEGER}, 
-      #{status,jdbcType=INTEGER}, #{begintime,jdbcType=TIMESTAMP}, #{targetid,jdbcType=BIGINT}, 
-      #{skillstatus,jdbcType=INTEGER}, #{propsid,jdbcType=INTEGER}, #{skillid,jdbcType=INTEGER}, 
-      #{propscount,jdbcType=INTEGER})
+      #{count,jdbcType=INTEGER}, #{targetId,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, 
+      #{type,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.fngame.farm.model.PetData" >
-    insert into fm_pet
+  <insert id="insertSelective" parameterType="com.fngame.farm.model.Props" >
+    insert into fm_props
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -136,26 +122,17 @@
       <if test="baseid != null" >
         baseid,
       </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="targetId != null" >
+        target_id,
+      </if>
       <if test="status != null" >
         status,
       </if>
-      <if test="begintime != null" >
-        begintime,
-      </if>
-      <if test="targetid != null" >
-        targetid,
-      </if>
-      <if test="skillstatus != null" >
-        skillstatus,
-      </if>
-      <if test="propsid != null" >
-        propsid,
-      </if>
-      <if test="skillid != null" >
-        skillid,
-      </if>
-      <if test="propscount != null" >
-        propscount,
+      <if test="type != null" >
+        type,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -168,37 +145,28 @@
       <if test="baseid != null" >
         #{baseid,jdbcType=INTEGER},
       </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="targetId != null" >
+        #{targetId,jdbcType=BIGINT},
+      </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
       </if>
-      <if test="begintime != null" >
-        #{begintime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="targetid != null" >
-        #{targetid,jdbcType=BIGINT},
-      </if>
-      <if test="skillstatus != null" >
-        #{skillstatus,jdbcType=INTEGER},
-      </if>
-      <if test="propsid != null" >
-        #{propsid,jdbcType=INTEGER},
-      </if>
-      <if test="skillid != null" >
-        #{skillid,jdbcType=INTEGER},
-      </if>
-      <if test="propscount != null" >
-        #{propscount,jdbcType=INTEGER},
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.fngame.farm.model.PetDataExample" resultType="java.lang.Integer" >
-    select count(*) from fm_pet
+  <select id="countByExample" parameterType="com.fngame.farm.model.PropsExample" resultType="java.lang.Integer" >
+    select count(*) from fm_props
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update fm_pet
+    update fm_props
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=BIGINT},
@@ -209,26 +177,17 @@
       <if test="record.baseid != null" >
         baseid = #{record.baseid,jdbcType=INTEGER},
       </if>
+      <if test="record.count != null" >
+        count = #{record.count,jdbcType=INTEGER},
+      </if>
+      <if test="record.targetId != null" >
+        target_id = #{record.targetId,jdbcType=BIGINT},
+      </if>
       <if test="record.status != null" >
         status = #{record.status,jdbcType=INTEGER},
       </if>
-      <if test="record.begintime != null" >
-        begintime = #{record.begintime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.targetid != null" >
-        targetid = #{record.targetid,jdbcType=BIGINT},
-      </if>
-      <if test="record.skillstatus != null" >
-        skillstatus = #{record.skillstatus,jdbcType=INTEGER},
-      </if>
-      <if test="record.propsid != null" >
-        propsid = #{record.propsid,jdbcType=INTEGER},
-      </if>
-      <if test="record.skillid != null" >
-        skillid = #{record.skillid,jdbcType=INTEGER},
-      </if>
-      <if test="record.propscount != null" >
-        propscount = #{record.propscount,jdbcType=INTEGER},
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -236,23 +195,20 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update fm_pet
+    update fm_props
     set id = #{record.id,jdbcType=BIGINT},
       userid = #{record.userid,jdbcType=BIGINT},
       baseid = #{record.baseid,jdbcType=INTEGER},
+      count = #{record.count,jdbcType=INTEGER},
+      target_id = #{record.targetId,jdbcType=BIGINT},
       status = #{record.status,jdbcType=INTEGER},
-      begintime = #{record.begintime,jdbcType=TIMESTAMP},
-      targetid = #{record.targetid,jdbcType=BIGINT},
-      skillstatus = #{record.skillstatus,jdbcType=INTEGER},
-      propsid = #{record.propsid,jdbcType=INTEGER},
-      skillid = #{record.skillid,jdbcType=INTEGER},
-      propscount = #{record.propscount,jdbcType=INTEGER}
+      type = #{record.type,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fngame.farm.model.PetData" >
-    update fm_pet
+  <update id="updateByPrimaryKeySelective" parameterType="com.fngame.farm.model.Props" >
+    update fm_props
     <set >
       <if test="userid != null" >
         userid = #{userid,jdbcType=BIGINT},
@@ -260,41 +216,29 @@
       <if test="baseid != null" >
         baseid = #{baseid,jdbcType=INTEGER},
       </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="targetId != null" >
+        target_id = #{targetId,jdbcType=BIGINT},
+      </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
       </if>
-      <if test="begintime != null" >
-        begintime = #{begintime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="targetid != null" >
-        targetid = #{targetid,jdbcType=BIGINT},
-      </if>
-      <if test="skillstatus != null" >
-        skillstatus = #{skillstatus,jdbcType=INTEGER},
-      </if>
-      <if test="propsid != null" >
-        propsid = #{propsid,jdbcType=INTEGER},
-      </if>
-      <if test="skillid != null" >
-        skillid = #{skillid,jdbcType=INTEGER},
-      </if>
-      <if test="propscount != null" >
-        propscount = #{propscount,jdbcType=INTEGER},
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.fngame.farm.model.PetData" >
-    update fm_pet
+  <update id="updateByPrimaryKey" parameterType="com.fngame.farm.model.Props" >
+    update fm_props
     set userid = #{userid,jdbcType=BIGINT},
       baseid = #{baseid,jdbcType=INTEGER},
+      count = #{count,jdbcType=INTEGER},
+      target_id = #{targetId,jdbcType=BIGINT},
       status = #{status,jdbcType=INTEGER},
-      begintime = #{begintime,jdbcType=TIMESTAMP},
-      targetid = #{targetid,jdbcType=BIGINT},
-      skillstatus = #{skillstatus,jdbcType=INTEGER},
-      propsid = #{propsid,jdbcType=INTEGER},
-      skillid = #{skillid,jdbcType=INTEGER},
-      propscount = #{propscount,jdbcType=INTEGER}
+      type = #{type,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -30,11 +31,21 @@ import java.util.List;
  * The type Pet service.
  */
 @Service
+@Transactional
 public class PetService implements BaseServiceImpl<PetData> {
 
+    /**
+     * The Logger.
+     */
     Logger logger = LoggerFactory.getLogger(this.getClass());
+    /**
+     * The Player manager.
+     */
     @Autowired
     PlayerManager playerManager;
+    /**
+     * The Config manager.
+     */
     @Resource
     ConfigManager configManager;
 
@@ -45,16 +56,21 @@ public class PetService implements BaseServiceImpl<PetData> {
         List<PetData> pets = player.getPets();
         if (pets.size() >= 30) {
             resultInfo.setResp_code("111002");
+            return false;
         }
-        if (gettype == EPetGetType.GIFT.ID()) {
             for (PetData pet : pets) {
                 Integer gettype1 = pet.getGettype();
-                if (gettype1 == EPetGetType.GIFT.ID()) {
+                if (gettype == EPetGetType.GIFT.ID()&&gettype1 == EPetGetType.GIFT.ID()) {
                     resultInfo.setResp_code("111001");
                     return false;
                 }
+                if(pet.getBaseid().intValue()==PetData.getBaseid().intValue()){
+                    resultInfo.setResp_code("110015");
+                    return false;
+                }
             }
-        } else if (gettype == EPetGetType.GOLD.ID()) {
+
+        if (gettype == EPetGetType.GOLD.ID()) {
             Integer money = player.getUser().getMoney();
             if (money >= PetData.getBaseid()) ;//判断金币是否足够
         } else if (gettype == EPetGetType.PROPS.ID()) {//判断道具是否足够 并减掉
@@ -103,6 +119,13 @@ public class PetService implements BaseServiceImpl<PetData> {
     }
 
 
+    /**
+     * Activity boolean.
+     *
+     * @param resultInfo the result info
+     * @param PetData    the pet data
+     * @return the boolean
+     */
     public boolean activity(ResultInfo resultInfo, PetData PetData) {
         PlayerInfo player = playerManager.getPlayer(PetData.getUserid());
         List<PetData> pets = player.getPets();
@@ -152,16 +175,15 @@ public class PetService implements BaseServiceImpl<PetData> {
             }
             user.setMoney(money - price);
             player.updateUser(user);
-
             //开始释放技能
             boolean trick = true;
             //开始执行技能
             if (PetData.getSkillstatus() == EPetSkillType.TRICK.ID()) {
                 trick = this.trick(resultInfo, DBPetData, PetData);
             } else if (PetData.getSkillstatus() == EPetSkillType.SEARCH.ID()) {
-                trick = this.search(resultInfo, DBPetData, PetData.getSkillid(), PetData.getPropsid());
+                trick = this.search(resultInfo, DBPetData, skill, PetData.getPropsid());
             } else if (PetData.getSkillstatus() == EPetSkillType.STEAL.ID()) {
-                trick = this.steal(resultInfo, DBPetData, PetData.getSkillid());
+                trick = this.steal(resultInfo, DBPetData, skill);
             } else {
                 resultInfo.setfalse();
             }
@@ -173,12 +195,15 @@ public class PetService implements BaseServiceImpl<PetData> {
 
         DBPetData.setStatus(PetData.getStatus());
         player.updatePet(PetData);
+        ArrayList<com.fngame.farm.model.PetData> petData = new ArrayList<>();
+        petData.add(DBPetData);
+        resultInfo.getData().put("pets",petData);
         return true;
     }
 
-    private boolean search(ResultInfo resultInfo, PetData PetData, Integer skillid, Integer propsid) {
-
-        PetData.setSkillid(skillid);
+    private boolean search(ResultInfo resultInfo, PetData PetData, skill skill, Integer propsid) {
+        PetData.setPropscount(this.getRomdomSize(skill));
+        PetData.setSkillid(skill.SkillID);
         PetData.setStatus(EPetStatueType.SKILING.ID());
         PetData.setStatus(EPetSkillType.SEARCH.ID());
         PetData.setBegintime(new Date());
@@ -206,26 +231,47 @@ public class PetService implements BaseServiceImpl<PetData> {
 
     }
 
-    private boolean steal(ResultInfo resultInfo, PetData PetData, Integer skillid) {
+    private int getRomdomSize(skill skill) {
+        String[] split = skill.Range.split("_");
+        int min = Integer.parseInt(split[0]);
+        int max = Integer.parseInt(split[1]);
+        int v = (int) Math.random() * (max - min + 1) + min;
+        return v;
+    }
+
+    private boolean steal(ResultInfo resultInfo, PetData PetData, skill skill) {
         PlayerInfo player = playerManager.getPlayer(PetData.getUserid());
-    //todo 获取成熟的列表
-        List<CraftProduce> craftProduces = player.getCraftProduces();
+        PlayerInfo tarplayer = playerManager.getPlayer(PetData.getTargetid());
+        //todo 获取成熟的列表
+        List<CraftProduce> craftProduces = tarplayer.getCraftProduces();
+        String[] split = skill.Range.split("_");
+        int min = Integer.parseInt(split[0]);
+        int max = Integer.parseInt(split[1]);
 
         for (CraftProduce craftProduce : craftProduces) {
             Integer size = craftProduce.getSize();
-            if (size>2){
-                int v = (int) (Math.random() * (size-1))+1;
-                craftProduce.setSize(size-v);
+
+            if (size > min) {
+                max = Math.min(max, size);
+                int count = (int) (Math.random() * (max - min) + min);
+                craftProduce.setSize(size - count);
                 PetData.setPropsid(craftProduce.getProductbaseid());
-                PetData.setPropscount(v);
+                PetData.setPropscount(count);
+                player.updatePet(PetData);
+                tarplayer.updateCraft(craftProduce);
             }
         }
-
-        return true;
-
+        resultInfo.setResp_code("110012");
+        return false;
     }
 
 
+    /**
+     * Gets lefttime.所有作物的倒计时
+     *
+     * @param petData the pet data
+     * @return the lefttime
+     */
     public long getLefttime(PetData petData) {
         long lefttime = 0;
         long skillCD = 0;
@@ -261,12 +307,26 @@ public class PetService implements BaseServiceImpl<PetData> {
         return lefttime;
     }
 
+    /**
+     * Update.
+     *
+     * @param petData the pet data
+     */
     public void update(PetData petData) {
         PlayerManager manager = (PlayerManager) BeanTools.getBean(PlayerManager.class);
         PlayerInfo player = manager.getPlayer(petData.getUserid());
         player.updatePet(petData);
     }
 
+
+    /**
+     * Petharvest boolean.
+     * 玩家点击确认 返回收获产物
+     *
+     * @param resultInfo the result info
+     * @param petData    the pet data
+     * @return the boolean
+     */
     public boolean petharvest(ResultInfo resultInfo, PetData petData) {
         PlayerInfo player = playerManager.getPlayer(petData.getUserid());
         PetData pet = player.getPet(petData.getId());
@@ -279,15 +339,39 @@ public class PetService implements BaseServiceImpl<PetData> {
             resultInfo.setResp_code("111006");
             return false;
         }
+        ArrayList<PetData> pets = new ArrayList<>(1);
+        boolean add = pets.add(pet);
+        HashMap<String, Object> data = resultInfo.getData();
         Integer skillstatus = pet.getSkillstatus();
         //todo 添加不同技能的收获产物
         if (skillstatus == EPetSkillType.SEARCH.ID()) {
-
+            data.put("pets", pets);
         } else if (skillstatus == EPetSkillType.STEAL.ID()) {
-
+            data.put("pets", pets);
         } else if (skillstatus == EPetSkillType.TRICK.ID()) {
-
+            data.put("pets", pets);
         }
+        return true;
+    }
+
+
+    public boolean clean(ResultInfo resultInfo, Long userid, Long rubbishid, Long targetid) {
+        PlayerInfo player = playerManager.getPlayer(targetid);
+        Building oneBuilding = player.getOneBuilding(rubbishid);
+        if (oneBuilding == null) {
+            resultInfo.setResp_code("110013");
+            return false;
+        }
+        if (oneBuilding.getOwnerid() == userid) {
+            resultInfo.setResp_code("100014");
+            return false;
+        }
+        player.removeBuilding(oneBuilding);
+        //todo 增加友情点
+        HashMap<String, Object> data = resultInfo.getData();
+        ArrayList<Building> buildings = new ArrayList<>(1);
+        buildings.add(oneBuilding);
+        data.put("buildings", buildings);
         return true;
     }
 }

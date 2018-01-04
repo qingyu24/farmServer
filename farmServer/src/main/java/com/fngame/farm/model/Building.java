@@ -1,8 +1,10 @@
 package com.fngame.farm.model;
 
+import org.springframework.stereotype.Component;
+
 import java.io.Serializable;
 import java.util.Date;
-
+@Component
 public class Building implements Serializable {
     private Long id;
 
@@ -17,6 +19,8 @@ public class Building implements Serializable {
     private Integer xpos;
 
     private Integer ypos;
+
+    private Long ownerid;
 
     public Long getId() {
         return id;
@@ -72,5 +76,13 @@ public class Building implements Serializable {
 
     public void setYpos(Integer ypos) {
         this.ypos = ypos;
+    }
+
+    public Long getOwnerid() {
+        return ownerid;
+    }
+
+    public void setOwnerid(Long ownerid) {
+        this.ownerid = ownerid;
     }
 }

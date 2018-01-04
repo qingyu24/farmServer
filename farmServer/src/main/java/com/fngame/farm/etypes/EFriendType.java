@@ -9,6 +9,7 @@ public enum EFriendType {
     WAIT,//待同意
     Nearby;//附近的人p
 
+
     public int ID() {
         switch (this) {
 
@@ -20,6 +21,7 @@ public enum EFriendType {
                 return 2;
             case Nearby:
                 return 3;
+           /* case     */
         }
         return 0;
     }

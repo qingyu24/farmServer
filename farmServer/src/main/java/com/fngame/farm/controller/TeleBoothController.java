@@ -31,7 +31,7 @@ public class TeleBoothController implements BaseContorllerInterface<TeleBooth> {
     //添加订单
     @Override
     public ResultInfo add(RequserOrder order, TeleBooth teleBooth) {
-
+        resultInfo.setOrder(order);
         Boolean add = teleBoothService.add(resultInfo, teleBooth);
         if (add) {
             resultInfo.setSucess(true);
@@ -48,8 +48,9 @@ public class TeleBoothController implements BaseContorllerInterface<TeleBooth> {
     @Override
     public ResultInfo remove(RequserOrder order, TeleBooth teleBooth) {
         resultInfo.setOrder(order);
-        teleBoothService.remove(resultInfo,teleBooth);
-        return null;
+        Boolean remove = teleBoothService.remove(resultInfo, teleBooth);
+        resultInfo.setSucess(remove);
+        return resultInfo;
     }
 
     @Override
@@ -62,6 +63,15 @@ public class TeleBoothController implements BaseContorllerInterface<TeleBooth> {
         return resultInfo;
     }
 
+    @RequestMapping("friendOrder")
+    public ResultInfo getFriend(RequserOrder order, TeleBooth teleBooth) {
+        resultInfo.setOrder(order);
+        Boolean aBoolean = teleBoothService.getFriendOrder(resultInfo, teleBooth);
+        if (aBoolean) {
+            resultInfo.setSucess(true);
+        }
+        return resultInfo;
+    }
     /**
      * Achieve result info.
      * 玩家点击确认收订单货物

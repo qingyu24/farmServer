@@ -1,13 +1,15 @@
-/*
+
 package com.fngame.farm.controller;
 
 import com.fngame.farm.configer.Craft;
 import com.fngame.farm.controller.base.BaseContorllerInterface;
 import com.fngame.farm.controller.base.BaseController;
+import com.fngame.farm.etypes.EItemType;
 import com.fngame.farm.manager.ConfigManager;
 import com.fngame.farm.manager.PlayerManager;
+import com.fngame.farm.model.Building;
+import com.fngame.farm.model.CraftProduce;
 import com.fngame.farm.model.Crops;
-import com.fngame.farm.service.CropService;
 import com.fngame.farm.userdate.PlayerInfo;
 import com.fngame.farm.userdate.RequserOrder;
 import com.fngame.farm.userdate.ResultInfo;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,8 +27,7 @@ public class CropsController extends BaseController implements BaseContorllerInt
 
     @Autowired
     PlayerManager PlayerManager;
-    @Autowired
-    CropService cropService;
+
 
     //种植农作物
     @Override
@@ -37,12 +39,49 @@ public class CropsController extends BaseController implements BaseContorllerInt
         PlayerInfo playerInfo = PlayerManager.getPlayer(userId);
         if (null == playerInfo){
             //返回玩家不存在的错误;
+            resultInfo.setResp_code("300001");
+            return resultInfo;
         }
-        Crops crop = playerInfo.getCropByID(crops.getId());
+        Crops crop = playerInfo.getCropById(crops.getId());
         if(null == crop){
             //农作物种子不存在的错误;
+            resultInfo.setResp_code("300002");
+            return resultInfo;
         }
+        Building build = playerInfo.getBuildingByID(crop.getTargetId().longValue());
+        if (null == build) {
+            //没有对应的目标农田;
+            resultInfo.setResp_code("300003");
+            return resultInfo;
+        }
+        CraftProduce craft = playerInfo.getCraftByBuildingId(crop.getTargetId().longValue());
+        if(null != craft){
+            //这块农田已经处于被种植状态;
+            resultInfo.setResp_code("300004");
+            return resultInfo;
+        }
+        Craft baseCraft = ConfigManager.getInstance().getPropById(crop.getBaseid());
+        if (null == baseCraft){
+            //没有找到基础表里面的数据;
+            resultInfo.setResp_code("300005");
+            return resultInfo;
+        }
+        /*
+        String[] str = baseCraft.Staff.split("|");
+        for (int i = 0 ; i < str.length; ++ i){
+            String[] obj = str[i].split("_");
+            int id = Integer.parseInt(obj[0]);
+            int count = Integer.parseInt(obj[1]);
+            Crops myCrop = playerInfo.getCropsByBaseId(id);
+            if(null == myCrop || myCrop.getCount() < count){
+                resultInfo.setResp_code("300008");
+                return resultInfo;
+            }
+        }
+        */
 
+        playerInfo.insertCraft(EItemType.CROP.ID(), crops.getTargetId().longValue(), crop.getBaseid(), baseCraft.OutputNum);
+        resultInfo.setResp_code("000000");
         return resultInfo;
     }
 
@@ -57,28 +96,45 @@ public class CropsController extends BaseController implements BaseContorllerInt
 
     @Override
     public ResultInfo remove(RequserOrder order, Crops crops) {
-
         return null;
     }
-
+    //收获农作物;
     @Override
     public ResultInfo get(RequserOrder order, Crops crops) {
-        return null;
-    }
-
-    @RequestMapping("gain")
-    public ResultInfo gain(RequserOrder order, Crops crops) {
         resultInfo.setOrder(order);
-        cropService.gain(resultInfo, crops);
-        return null;
-    }
-
-    @RequestMapping("plant")
-    public ResultInfo plant(RequserOrder order, Crops crops) {
-        resultInfo.setOrder(order);
-        cropService.plant(resultInfo, crops);
-
-        return null;
+        Long userId = crops.getUserid();//所属用户的id;
+        PlayerInfo playerInfo = PlayerManager.getPlayer(userId);
+        if (null == playerInfo){
+            //返回玩家不存在的错误;
+            resultInfo.setResp_code("300001");
+            return resultInfo;
+        }
+        CraftProduce craft = playerInfo.getCraftListById(crops.getId().longValue());
+        if(null == craft){
+            //这块农田已经处于被种植状态;
+            resultInfo.setResp_code("300006");
+            return resultInfo;
+        }
+        Craft baseCraft = ConfigManager.getInstance().getPropById(craft.getProductbaseid());
+        if (null == baseCraft){
+            //没有找到基础表里面的数据;
+            resultInfo.setResp_code("300005");
+            return resultInfo;
+        }
+        int needTime = baseCraft.CraftTime.intValue();
+        if(new Date().getTime() - craft.getBegintime().getTime() < needTime){
+            //农作物还没有成熟;
+            resultInfo.setResp_code("300007");
+            return resultInfo;
+        }
+        boolean ret = playerInfo.removeCraftById(craft.getId());
+        if (ret){
+            //添加到农作物列表里面;
+            Crops newCrop = playerInfo.addCrops(craft.getProductbaseid(), craft.getSize());
+            resultInfo.getData().put("iteminfo", newCrop);
+        }
+        resultInfo.setResp_code("000000");
+        return resultInfo;
     }
 }
-*/
+

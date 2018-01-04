@@ -16,9 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("pet")
 public class PetController implements BaseContorllerInterface<PetData> {
 
+    /**
+     * The Result info.
+     */
     @Autowired
     ResultInfo resultInfo;
 
+    /**
+     * The Pet service.
+     */
     @Autowired
     PetService petService;
 
@@ -27,6 +33,13 @@ public class PetController implements BaseContorllerInterface<PetData> {
         return null;
     }
 
+    /**
+     * Gets .
+     *
+     * @param order   the order
+     * @param petData the pet data
+     * @return the
+     */
     @RequestMapping("getnew")
     public ResultInfo getnew(RequserOrder order, PetData petData) {
         resultInfo.setOrder(order);
@@ -50,18 +63,34 @@ public class PetController implements BaseContorllerInterface<PetData> {
 
     @Override
     public ResultInfo get(RequserOrder order, PetData petData) {
+        resultInfo.setOrder(order);
         Boolean aBoolean = petService.get(resultInfo, petData);
         resultInfo.setSucess(aBoolean);
         return resultInfo;
     }
 
+    /**
+     * Activity result info.
+     *
+     * @param order   the order
+     * @param petData the pet data
+     * @return the result info
+     */
     @RequestMapping("activity")
     public ResultInfo activity(RequserOrder order, PetData petData) {
         resultInfo.setOrder(order);
-        petService.activity(resultInfo, petData);
+        boolean activity = petService.activity(resultInfo, petData);
+        resultInfo.setSucess(activity);
         return resultInfo;
     }
 
+    /**
+     * Pet harvest result info.
+     *
+     * @param order   the order
+     * @param petData the pet data
+     * @return the result info
+     */
     @RequestMapping("petHarvest")
     public ResultInfo petHarvest(RequserOrder order, PetData petData) {
         resultInfo.setOrder(order);
@@ -69,4 +98,19 @@ public class PetController implements BaseContorllerInterface<PetData> {
         return resultInfo;
     }
 
+    /**
+     * Clean result info.
+     *
+     * @param order     the order
+     * @param userid    the userid 玩家本人id
+     * @param rubbishid the rubbishid ；垃圾id
+     * @param targetid  the targetid 家园主人id
+     * @return the result info
+     */
+    @RequestMapping("clean")
+    public ResultInfo clean(RequserOrder order, Long userid,Long rubbishid,Long targetid){
+        resultInfo.setOrder(order);
+        petService.clean(resultInfo,userid,rubbishid,targetid);
+    return resultInfo;
+    }
 }

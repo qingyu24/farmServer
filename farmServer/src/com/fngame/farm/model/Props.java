@@ -1,21 +1,19 @@
 package com.fngame.farm.model;
 
-import org.springframework.stereotype.Component;
-
-import java.io.Serializable;
-@Component
-public class Crops extends Goods  implements Serializable {
+public class Props {
     private Long id;
 
     private Long userid;
 
     private Integer baseid;
 
+    private Integer count;
+
+    private Long targetId;
+
     private Integer status;
 
-    private Integer targetId;
-
-    private Integer count;
+    private Integer type;
 
     public Long getId() {
         return id;
@@ -41,6 +39,22 @@ public class Crops extends Goods  implements Serializable {
         this.baseid = baseid;
     }
 
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    public Long getTargetId() {
+        return targetId;
+    }
+
+    public void setTargetId(Long targetId) {
+        this.targetId = targetId;
+    }
+
     public Integer getStatus() {
         return status;
     }
@@ -49,19 +63,11 @@ public class Crops extends Goods  implements Serializable {
         this.status = status;
     }
 
-    public Integer getTargetId() {
-        return targetId;
+    public Integer getType() {
+        return type;
     }
 
-    public void setTargetId(Integer targetId) {
-        this.targetId = targetId;
-    }
-
-    public Integer getCount() {
-        return count;
-    }
-
-    public void setCount(Integer count) {
-        this.count = count;
+    public void setType(Integer type) {
+        this.type = type;
     }
 }

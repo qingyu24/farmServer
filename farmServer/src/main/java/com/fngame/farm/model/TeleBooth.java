@@ -24,16 +24,19 @@ public class TeleBooth implements Serializable {
     private Long lefttime;
 
     public Long getLefttime() {
-        long begintime = this.getBegintime().getTime() + 6 * 60 * 1000 - System.currentTimeMillis();
-        long leftTime = Math.max(begintime, 0);
-        this.setLefttime(leftTime);
+        try {
+            long begintime = this.getBegintime().getTime() + 6 * 60 * 60 * 1000 - System.currentTimeMillis();
+            long leftTime = Math.max(begintime, 0);
+            this.setLefttime(leftTime);
+        }catch (Exception e){
+            lefttime=0L;
+        }
         return lefttime;
     }
 
     public void setLefttime(Long lefttime) {
         this.lefttime = lefttime;
     }
-
 
 
     public Long getId() {

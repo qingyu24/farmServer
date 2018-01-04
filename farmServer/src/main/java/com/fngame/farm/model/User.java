@@ -1,8 +1,10 @@
 package com.fngame.farm.model;
+import com.fngame.farm.util.PlayerMessage;
+
 import java.io.Serializable;
 import java.util.Date;
 
-public class User implements Serializable {
+public class User  implements Serializable {
     private Long userid;
 
     private String openid;
@@ -44,6 +46,7 @@ public class User implements Serializable {
     private Integer propsLevel;
 
     private Integer marketCapacity;
+
 
     public Long getUserid() {
         return userid;

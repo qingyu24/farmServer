@@ -3,6 +3,7 @@ package com.fngame.farm.manager;
 import com.fngame.farm.configer.*;
 import com.fngame.farm.model.Animal;
 import com.fngame.farm.model.Building;
+import com.fngame.farm.model.Props;
 import com.fngame.farm.userdate.PlayerInfo;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
@@ -45,6 +46,15 @@ public class ConfigManager {
 
     List list = new ArrayList(10);
 
+
+    public Craft getPropById(int Id) {
+        ArrayList<Craft> arrayList = loades.get(Craft.class.getSimpleName());
+        for (Craft craft : arrayList) {
+            if (craft.ItemID == Id)
+                return craft;
+        }
+        return null;
+    }
 
     public List<Order> getOrders(PlayerInfo playerInfo, int size) {
 

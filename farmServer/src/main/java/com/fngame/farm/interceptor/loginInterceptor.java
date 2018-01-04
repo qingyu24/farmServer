@@ -19,6 +19,7 @@ public class loginInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+
         StringBuilder sb = new StringBuilder();
         Map map = new HashMap();
         Enumeration pNames = request.getParameterNames();
@@ -28,7 +29,8 @@ public class loginInterceptor extends HandlerInterceptorAdapter {
             map.put(paramName, paramValue);
         }
         String ret = getSignData(map);
-
+        System.out.println("收到消息");
+        System.out.println(map.toString());
 /*        return Verify(ret, request.getParameter("sign"));*/
         return true;
     }

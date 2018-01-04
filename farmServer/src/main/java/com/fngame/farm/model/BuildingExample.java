@@ -526,6 +526,66 @@ public class BuildingExample {
             addCriterion("ypos not between", value1, value2, "ypos");
             return (Criteria) this;
         }
+
+        public Criteria andOwneridIsNull() {
+            addCriterion("ownerid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwneridIsNotNull() {
+            addCriterion("ownerid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwneridEqualTo(Long value) {
+            addCriterion("ownerid =", value, "ownerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwneridNotEqualTo(Long value) {
+            addCriterion("ownerid <>", value, "ownerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwneridGreaterThan(Long value) {
+            addCriterion("ownerid >", value, "ownerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwneridGreaterThanOrEqualTo(Long value) {
+            addCriterion("ownerid >=", value, "ownerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwneridLessThan(Long value) {
+            addCriterion("ownerid <", value, "ownerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwneridLessThanOrEqualTo(Long value) {
+            addCriterion("ownerid <=", value, "ownerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwneridIn(List<Long> values) {
+            addCriterion("ownerid in", values, "ownerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwneridNotIn(List<Long> values) {
+            addCriterion("ownerid not in", values, "ownerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwneridBetween(Long value1, Long value2) {
+            addCriterion("ownerid between", value1, value2, "ownerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOwneridNotBetween(Long value1, Long value2) {
+            addCriterion("ownerid not between", value1, value2, "ownerid");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -49,8 +49,6 @@ public class BaseAutowired {
     public FriendExample friendExample;
 
     @Autowired
-    CraftProduceMapper craftProduceMapper;
-    @Autowired
     CraftProduceExample craftProduceExample;
 
     @Autowired
@@ -68,4 +66,6 @@ public class BaseAutowired {
     protected PetDataExample petDataExample;
     @Autowired
     protected PetDataMapper petDataMapper;
+    @Autowired
+    protected  CraftProduceMapper craftProduceMapper;
 }

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fngame.farm.mapper.CropsMapper" >
+
+
     <cache type="com.fngame.farm.configer.baseconfiger.MybatisRedisCache">
         <property name="eviction" value="LRU" />
         <property name="flushInterval" value="6000000" />
@@ -11,7 +13,7 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="userid" property="userid" jdbcType="BIGINT" />
     <result column="baseid" property="baseid" jdbcType="INTEGER" />
-    <result column="status" property="status" jdbcType="SMALLINT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
     <result column="target_id" property="targetId" jdbcType="INTEGER" />
     <result column="count" property="count" jdbcType="INTEGER" />
   </resultMap>
@@ -112,7 +114,7 @@
       status, target_id, count
       )
     values (#{id,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{baseid,jdbcType=INTEGER}, 
-      #{status,jdbcType=SMALLINT}, #{targetId,jdbcType=INTEGER}, #{count,jdbcType=INTEGER}
+      #{status,jdbcType=INTEGER}, #{targetId,jdbcType=INTEGER}, #{count,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.fngame.farm.model.Crops" >
@@ -148,7 +150,7 @@
         #{baseid,jdbcType=INTEGER},
       </if>
       <if test="status != null" >
-        #{status,jdbcType=SMALLINT},
+        #{status,jdbcType=INTEGER},
       </if>
       <if test="targetId != null" >
         #{targetId,jdbcType=INTEGER},
@@ -177,7 +179,7 @@
         baseid = #{record.baseid,jdbcType=INTEGER},
       </if>
       <if test="record.status != null" >
-        status = #{record.status,jdbcType=SMALLINT},
+        status = #{record.status,jdbcType=INTEGER},
       </if>
       <if test="record.targetId != null" >
         target_id = #{record.targetId,jdbcType=INTEGER},
@@ -195,7 +197,7 @@
     set id = #{record.id,jdbcType=BIGINT},
       userid = #{record.userid,jdbcType=BIGINT},
       baseid = #{record.baseid,jdbcType=INTEGER},
-      status = #{record.status,jdbcType=SMALLINT},
+      status = #{record.status,jdbcType=INTEGER},
       target_id = #{record.targetId,jdbcType=INTEGER},
       count = #{record.count,jdbcType=INTEGER}
     <if test="_parameter != null" >
@@ -212,7 +214,7 @@
         baseid = #{baseid,jdbcType=INTEGER},
       </if>
       <if test="status != null" >
-        status = #{status,jdbcType=SMALLINT},
+        status = #{status,jdbcType=INTEGER},
       </if>
       <if test="targetId != null" >
         target_id = #{targetId,jdbcType=INTEGER},
@@ -227,7 +229,7 @@
     update fm_crops
     set userid = #{userid,jdbcType=BIGINT},
       baseid = #{baseid,jdbcType=INTEGER},
-      status = #{status,jdbcType=SMALLINT},
+      status = #{status,jdbcType=INTEGER},
       target_id = #{targetId,jdbcType=INTEGER},
       count = #{count,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}

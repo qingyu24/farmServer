@@ -47,9 +47,7 @@ public class FriendController implements BaseContorllerInterface<Friend> {
         Boolean add = friendService.remove(resultInfo, friend);
         if (!add) {
             resultInfo.setfalse();
-
         }
-
         return resultInfo;
     }
 

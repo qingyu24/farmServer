@@ -64,10 +64,11 @@ public class XlsReader {
             if (row == null) continue;
 
             for (int j = 0; j < row.getLastCellNum(); j++) {
-                XSSFCell cell0 = row0.getCell(j);
-                String key = cell0.getStringCellValue();
                 Field field;
                 try {
+                XSSFCell cell0 = row0.getCell(j);
+                if (cell0==null) continue;
+                String key = cell0.getStringCellValue();
                      field = t.getField(key);
                 }catch (Exception e){
                     e.printStackTrace();

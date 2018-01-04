@@ -1,6 +1,7 @@
 package com.fngame.farm.userdate;
 
 import com.fngame.farm.manager.ConfigManager;
+import com.fngame.farm.util.PlayerMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -8,6 +9,8 @@ import java.util.HashMap;
 
 @Component
 public class ResultInfo {
+    private Long userid;
+
     private String main;
 
     private String sub;
@@ -18,6 +21,17 @@ public class ResultInfo {
 
     private HashMap<String, Object> data;
 
+    private PlayerMessage playerMessage;
+
+    public PlayerMessage getPlayerMessage() {
+
+
+        return new PlayerMessage(userid);
+    }
+
+    public void setPlayerMessage(PlayerMessage playerMessage) {
+        this.playerMessage = playerMessage;
+    }
 
     @Autowired
     ConfigManager configManager;
@@ -55,18 +69,6 @@ public class ResultInfo {
     }
 
 
-    public void setMain(String main) {
-        this.main = main;
-        data.put("main", main);
-    }
-
-
-    public void setSub(String sub) {
-        this.sub = sub;
-        data.put("sub", sub);
-        data.put("sub", sub);
-    }
-
     public void setSucess(boolean issucess) {
         if (issucess) {
             this.resp_code = "000000";
@@ -84,12 +86,12 @@ public class ResultInfo {
 
     public void setOrder(RequserOrder order) {
         resp_code = null;
-
         resp_desc = null;
-        this.main = null;
-        this.sub = null;
+        userid = 0l;
+        main = null;
+        sub = null;
         if (data != null) data.clear();
-
+        this.userid = order.getUserid();
         this.main = order.main;
         this.sub = order.sub;
     }

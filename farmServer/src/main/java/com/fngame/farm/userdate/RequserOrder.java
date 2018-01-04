@@ -6,6 +6,15 @@ import org.springframework.stereotype.Component;
 public class RequserOrder {
     public String main;
     public String sub;
+    public Long userid;
+
+    public Long getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Long userid) {
+        this.userid = userid;
+    }
 
     public String getMain() {
         return main;

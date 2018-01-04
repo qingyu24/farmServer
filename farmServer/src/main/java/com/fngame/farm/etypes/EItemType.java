@@ -9,14 +9,12 @@ public enum EItemType {
     ANIMALE;
     public int ID() {
         switch (this) {
-
             case CROP:
                 return 1;
             case PROPS:
                 return 2;
             case ANIMALE:
                 return 3;
-
         }
         return 0;
     }

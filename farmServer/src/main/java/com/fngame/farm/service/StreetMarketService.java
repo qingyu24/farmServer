@@ -49,11 +49,11 @@ public class StreetMarketService {
         //上架物品在crops表或grops表中更新数据（count的加减）
         Goods goods = new Goods();
         if (flag == 0) {
-            goods = playerInfo.getCropByBaseId(baseid);
+            goods = playerInfo.getCropsByBaseId(baseid);
         } else {
             goods = playerInfo.getPropByBaseId(baseid);
         }
-        if (goods == null || goods.getCount() < number) {
+        if (goods == null || goods.getCount() < number) {//请求上架物品数超过拥有的物品总数
             resultInfo.setResp_code("111004");
             return result;
         }
@@ -94,7 +94,7 @@ public class StreetMarketService {
         Goods goods = new Goods();
         Integer flag = streetMarket.getFlag();
         if (flag == 0) {
-            goods = playerInfo.getCropByBaseId(streetMarket.getBaseid());
+            goods = playerInfo.getCropsByBaseId(streetMarket.getBaseid());
         } else {
             goods = playerInfo.getPropByBaseId(streetMarket.getBaseid());
         }
@@ -145,7 +145,7 @@ public class StreetMarketService {
         Goods goods = new Goods();
         Integer flag = streetMarket.getFlag();
         if (flag == 0) {
-            goods = playerInfo.getCropByBaseId(streetMarket.getBaseid());
+            goods = playerInfo.getCropsByBaseId(streetMarket.getBaseid());
         } else {
             goods = playerInfo.getPropByBaseId(streetMarket.getBaseid());
         }
@@ -192,10 +192,14 @@ public class StreetMarketService {
             resultInfo.setResp_code("111013");
             return result;
         }
+        if(streetMarket.getIsselloff()!=0){//物品未处于已售状态
+            resultInfo.setResp_code("111017");
+            return result;
+        }
         Goods goods = new Goods();
         Integer flag = streetMarket.getFlag();
         if (flag == 0) {
-            goods = playerInfo.getCropByBaseId(streetMarket.getBaseid());
+            goods = playerInfo.getCropsByBaseId(streetMarket.getBaseid());
         } else {
             goods = playerInfo.getPropByBaseId(streetMarket.getBaseid());
         }

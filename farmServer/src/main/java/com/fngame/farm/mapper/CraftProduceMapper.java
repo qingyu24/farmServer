@@ -2,8 +2,9 @@ package com.fngame.farm.mapper;
 
 import com.fngame.farm.model.CraftProduce;
 import com.fngame.farm.model.CraftProduceExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface CraftProduceMapper {
     int countByExample(CraftProduceExample example);

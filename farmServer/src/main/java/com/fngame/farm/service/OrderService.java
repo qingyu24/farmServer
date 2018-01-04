@@ -87,4 +87,10 @@ public class OrderService implements BaseServiceImpl<UserOrder> {
         data.put("orders", userOrders);
         return true;
     }
+
+    public boolean adhieve(ResultInfo resultInfo, UserOrder userOrder) {
+
+        return false;
+
+    }
 }

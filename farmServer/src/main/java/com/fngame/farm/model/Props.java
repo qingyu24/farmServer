@@ -1,8 +1,11 @@
 package com.fngame.farm.model;
 
+import org.springframework.stereotype.Component;
+
 import java.io.Serializable;
 
-public class Props  extends Goods implements Serializable {
+@Component
+public class Props extends Goods implements Serializable{
     private Long id;
 
     private Long userid;
@@ -12,6 +15,10 @@ public class Props  extends Goods implements Serializable {
     private Integer count;
 
     private Long targetId;
+
+    private Integer status;
+
+    private Integer type;
 
     public Long getId() {
         return id;
@@ -51,5 +58,21 @@ public class Props  extends Goods implements Serializable {
 
     public void setTargetId(Long targetId) {
         this.targetId = targetId;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 }
