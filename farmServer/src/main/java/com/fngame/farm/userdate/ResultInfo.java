@@ -3,11 +3,14 @@ package com.fngame.farm.userdate;
 import com.fngame.farm.manager.ConfigManager;
 import com.fngame.farm.util.PlayerMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 
+
 @Component
+@Scope("prototype")
 public class ResultInfo {
     private Long userid;
 

@@ -19,34 +19,6 @@ public class PlayerManager extends BaseAutowired {
         PlayerInfo playerInfo = (PlayerInfo) BeanTools.getBean(PlayerInfo.class);
         playerInfo.setId(userid);
 
-        //buildingExample.clear();
-        //buildingExample.createCriteria().andUseridEqualTo(userid);
-        //List<Building> buildings = buildingMapper.selectByExample(buildingExample);
-        //playerInfo.setBuildings(buildings);
-
-        //animalExample.clear();
-        // AnimalExample.Criteria criteria2 = animalExample.createCriteria();
-        //criteria2.andUseridEqualTo(userid);
-        //List<Animal> animales = animalMapper.selectByExample(animalExample);
-        // playerInfo.setAnimals(animales);
-
-        //propsExample.clear();
-        // PropsExample.Criteria criteria4 = propsExample.createCriteria();
-        // criteria4.andUseridEqualTo(userid);
-        //List<Props> props = propsMapper.selectByExample(propsExample);
-        //playerInfo.setPropss(props);
-
-        //orderExample.clear();
-        // UserOrderExample.Criteria criteria = orderExample.createCriteria();
-        //criteria.andUseridEqualTo(userid);
-        // List<UserOrder> orders = orderMapper.selectByExample(orderExample);
-        //playerInfo.setOrders(orders);
-
-        //cropsExample.clear();
-        //cropsExample.createCriteria().andUseridEqualTo(userid);
-        //List<Crops> crops = cropsMapper.selectByExample(cropsExample);
-        //playerInfo.setCrops(crops);
-
         return playerInfo;
     }
 

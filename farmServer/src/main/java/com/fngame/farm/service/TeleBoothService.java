@@ -30,11 +30,7 @@ public class TeleBoothService {
      */
     @Autowired
     TeleBoothMapper teleBoothMapper;
-    /**
-     * The Tele booth example.
-     */
-    @Autowired
-    TeleBoothExample teleBoothExample;
+
     /**
      * The Player manager.
      */
@@ -55,13 +51,16 @@ public class TeleBoothService {
         List<TeleBooth> teleBooths = player.getTeleBooths();
 
         Integer money = player.getUser().getMoney();
+        long maxID = teleBoothMapper.getMaxID();
         if (money < teleBooth.getMoney()) {
             resultInfo.setResp_code("700003");
             return false;
         }
+        teleBooth.setId(++maxID);
         if (teleBooths == null || teleBooths.size() < 5) {
             teleBooth.setBegintime(new Date());
             teleBooth.setAchieve(0);
+
             teleBoothMapper.insertSelective(teleBooth);
 
         }/* else if (teleBooths.size() == 1) {
@@ -138,9 +137,8 @@ public class TeleBoothService {
         }
 
         HashMap<String, Object> data = resultInfo.getData();
-        ArrayList<TeleBooth> objects = new ArrayList<>(1);
-        objects.add(teleBooth);
-        data.put("telebooth", objects);
+        List<TeleBooth> teleBooths1 = player.getTeleBooths();
+        data.put("telebooth", teleBooths1);
         return true;
 
 
@@ -275,7 +273,12 @@ public class TeleBoothService {
         for (Friend friend : friends) {
             Long userid = friend.getFriendid();
             List<TeleBooth> teleBooths = playerManager.getPlayer(userid).getTeleBooths();
-            list.addAll(teleBooths);
+
+            for (TeleBooth booth : teleBooths) {
+                if(booth.getLefttime()>0){
+                    list.add(booth);
+                }
+            }
         }
         resultInfo.getData().put("telebooth",list);
         return true;

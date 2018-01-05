@@ -27,8 +27,6 @@ public class FriendService {
     PlayerManager PlayerManager;
     @Autowired
     FriendMapper friendMapper;
-    @Autowired
-    FriendExample friendExample;
     List<Friend> m_friends = new ArrayList<>(2);
 
     @Transactional
@@ -61,6 +59,7 @@ public class FriendService {
 
     private Friend getNewFriends(User player, User fPlayer) {
         if (friendid == 0) {
+            FriendExample friendExample = new FriendExample();
             friendExample.clear();
             try {
                 friendid = friendMapper.getID();
@@ -98,7 +97,7 @@ public class FriendService {
             resultInfo.setResp_code("100005");
             return false;
         }
-
+        FriendExample friendExample = new FriendExample();
         friendExample.clear();
         FriendExample.Criteria criteria = friendExample.createCriteria();
         criteria.andUseridEqualTo(friend.getUserid());

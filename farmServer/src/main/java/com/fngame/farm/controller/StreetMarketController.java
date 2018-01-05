@@ -30,7 +30,7 @@ public class StreetMarketController {
     public ResultInfo getGoodsByUserId(RequserOrder requsetOrder, @RequestParam("userid") Long userid){
         resultInfo.setOrder(requsetOrder);
         List<StreetMarket> list= streetMarketService.getGoodsByUserId(resultInfo,userid);
-        if(list!=null){
+        if(list!=null&&list.size()!=0){
             resultInfo.setSucess(true);
         }
         return resultInfo;
@@ -111,10 +111,10 @@ public class StreetMarketController {
     @GetMapping(value = "/increaseMarketCapacity")
     public ResultInfo increaseMarketCapacity(RequserOrder requsetOrder,
                                              @RequestParam("userid") Long userid,//玩家id
-                                             @RequestParam("number") Integer number//扩充摊位数量
+                                             @RequestParam("ingot") Integer ingot//扩充消耗的钻石
     ){
         resultInfo.setOrder(requsetOrder);
-        Boolean agree =streetMarketService.increaseMarketCapacity(resultInfo, userid,number);
+        Boolean agree =streetMarketService.increaseMarketCapacity(resultInfo, userid,ingot);
         if(agree){
             resultInfo.setSucess(true);
         }

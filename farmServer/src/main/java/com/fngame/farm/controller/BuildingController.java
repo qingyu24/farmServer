@@ -1,9 +1,14 @@
 package com.fngame.farm.controller;
 
+import com.fngame.farm.configer.Entity;
 import com.fngame.farm.controller.base.BaseContorllerInterface;
 import com.fngame.farm.controller.base.BaseController;
+import com.fngame.farm.etypes.EItemType;
+import com.fngame.farm.manager.ConfigManager;
+import com.fngame.farm.manager.PlayerManager;
 import com.fngame.farm.model.Building;
 import com.fngame.farm.service.BuildingService;
+import com.fngame.farm.userdate.PlayerInfo;
 import com.fngame.farm.userdate.RequserOrder;
 import com.fngame.farm.userdate.ResultInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +24,8 @@ public class BuildingController extends BaseController implements BaseContorller
     BuildingService BuildingService;
     @Autowired
     ResultInfo resultInfo;
+    @Autowired
+    PlayerManager PlayerManager;
 
     @RequestMapping("add")
     public ResultInfo add(RequserOrder order, Building building) {
@@ -34,6 +41,26 @@ public class BuildingController extends BaseController implements BaseContorller
         if (b) {
             resultInfo.setSucess(true);
             resultInfo.getData().put("buildinfo", building);
+            //如果是果树建筑的话，需要在Craft里面添加果实的数据
+
+            Long userId = building.getUserid();//所属用户的id;
+            PlayerInfo playerInfo = PlayerManager.getPlayer(userId);
+            if (null == playerInfo){
+                //返回玩家不存在的错误;
+                resultInfo.setResp_code("300001");
+                return resultInfo;
+            }
+            Building build = playerInfo.getBuildingByID(building.getId());
+            if (null == build) {
+                //没有对应的目标建筑物;
+                resultInfo.setResp_code("200004");
+                return resultInfo;
+            }
+            Entity entity = ConfigManager.getInstance().getBuildingById(build.getBaseid());
+            if (entity.Type == EItemType.TREE.ID()){
+                playerInfo.insertCraft(EItemType.TREE.ID(), building.getId(), build.getBaseid() );
+            }
+
         }
         return resultInfo;
     }

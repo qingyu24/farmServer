@@ -10,6 +10,7 @@ import com.fngame.farm.manager.PlayerManager;
 import com.fngame.farm.model.Building;
 import com.fngame.farm.model.CraftProduce;
 import com.fngame.farm.model.Crops;
+import com.fngame.farm.model.Props;
 import com.fngame.farm.userdate.PlayerInfo;
 import com.fngame.farm.userdate.RequserOrder;
 import com.fngame.farm.userdate.ResultInfo;
@@ -42,7 +43,7 @@ public class CropsController extends BaseController implements BaseContorllerInt
             resultInfo.setResp_code("300001");
             return resultInfo;
         }
-        Crops crop = playerInfo.getCropById(crops.getId());
+        Props crop = playerInfo.getPropById(crops.getId());
         if(null == crop){
             //农作物种子不存在的错误;
             resultInfo.setResp_code("300002");
@@ -60,12 +61,7 @@ public class CropsController extends BaseController implements BaseContorllerInt
             resultInfo.setResp_code("300004");
             return resultInfo;
         }
-        Craft baseCraft = ConfigManager.getInstance().getPropById(crop.getBaseid());
-        if (null == baseCraft){
-            //没有找到基础表里面的数据;
-            resultInfo.setResp_code("300005");
-            return resultInfo;
-        }
+
         /*
         String[] str = baseCraft.Staff.split("|");
         for (int i = 0 ; i < str.length; ++ i){
@@ -80,7 +76,15 @@ public class CropsController extends BaseController implements BaseContorllerInt
         }
         */
 
-        playerInfo.insertCraft(EItemType.CROP.ID(), crops.getTargetId().longValue(), crop.getBaseid(), baseCraft.OutputNum);
+        CraftProduce cp = playerInfo.insertCraft(EItemType.CROP.ID(), crops.getTargetId().longValue(), crop.getBaseid());
+        if (null == cp){
+            //没有找到基础表里面的数据;
+            resultInfo.setResp_code("300005");
+            return resultInfo;
+        }
+        //删除仓库中的种子;
+
+        resultInfo.getData().put("craftinfo", cp);
         resultInfo.setResp_code("000000");
         return resultInfo;
     }
@@ -115,7 +119,7 @@ public class CropsController extends BaseController implements BaseContorllerInt
             resultInfo.setResp_code("300006");
             return resultInfo;
         }
-        Craft baseCraft = ConfigManager.getInstance().getPropById(craft.getProductbaseid());
+        Craft baseCraft = ConfigManager.getInstance().getCraftById(craft.getProductbaseid());
         if (null == baseCraft){
             //没有找到基础表里面的数据;
             resultInfo.setResp_code("300005");
@@ -130,7 +134,7 @@ public class CropsController extends BaseController implements BaseContorllerInt
         boolean ret = playerInfo.removeCraftById(craft.getId());
         if (ret){
             //添加到农作物列表里面;
-            Crops newCrop = playerInfo.addCrops(craft.getProductbaseid(), craft.getSize());
+            Props newCrop = playerInfo.addProp(craft.getProductbaseid(), craft.getSize());
             resultInfo.getData().put("iteminfo", newCrop);
         }
         resultInfo.setResp_code("000000");

@@ -1,11 +1,12 @@
 package com.fngame.farm.model;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-@Component
+
 public class TeleBoothExample {
     protected String orderByClause;
 

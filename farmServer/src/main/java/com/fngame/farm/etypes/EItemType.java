@@ -6,7 +6,8 @@ package com.fngame.farm.etypes;
 public enum EItemType {
     CROP,
     PROPS,
-    ANIMALE;
+    ANIMALE,
+    TREE;
     public int ID() {
         switch (this) {
             case CROP:
@@ -15,6 +16,8 @@ public enum EItemType {
                 return 2;
             case ANIMALE:
                 return 3;
+            case TREE:
+                return 4;
         }
         return 0;
     }

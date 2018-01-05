@@ -27,8 +27,7 @@ public class BuildingService {
     @Autowired
     UserMapper userMapper;
 
-    @Autowired
-    BuildingExample buildingExample;
+
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public boolean addBuilding(Building building) {
@@ -66,6 +65,7 @@ public class BuildingService {
         switch (s){
 /*            case 1:if(user.getMoney()) */
         }
+        BuildingExample buildingExample=new BuildingExample();
         buildingExample.clear();
         BuildingExample.Criteria criteria = buildingExample.createCriteria();
         criteria.andUseridEqualTo(building.getUserid());

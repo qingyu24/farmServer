@@ -6,16 +6,16 @@ import com.fngame.farm.model.Building;
 import com.fngame.farm.model.Props;
 import com.fngame.farm.userdate.PlayerInfo;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 @Component
+
 public class ConfigManager {
     public static ConfigManager instance;
-
     public static ConfigManager getInstance() {
         if (instance == null) {
             instance = new ConfigManager();
@@ -24,6 +24,7 @@ public class ConfigManager {
     }
 
     private HashMap<String, ArrayList> loades = ConfigLoaderManager.getInstance().getLoaders();
+
 
 
     public List getloader(Object o) {
@@ -44,10 +45,26 @@ public class ConfigManager {
         return null;
     }
 
+
+
+    /**
+     * 根据id获得某一个建筑;
+     * @param Id
+     * @return
+     */
+    public Entity getBuildingById(int Id) {
+        ArrayList<Entity> arrayList = loades.get(Entity.class.getSimpleName());
+        for (Entity entity : arrayList) {
+            if (entity.BuildingID == Id)
+                return entity;
+        }
+        return null;
+    }
+
     List list = new ArrayList(10);
 
 
-    public Craft getPropById(int Id) {
+    public Craft getCraftById(int Id) {
         ArrayList<Craft> arrayList = loades.get(Craft.class.getSimpleName());
         for (Craft craft : arrayList) {
             if (craft.ItemID == Id)
@@ -108,7 +125,7 @@ public class ConfigManager {
     public Pets getPetsConfig(Integer pets) {
         ArrayList<Pets> arrayList = loades.get(Pets.class.getSimpleName());
         for (Pets o : arrayList) {
-            if (o.PetID == pets)
+            if (o.PetID.intValue() == pets.intValue())
                 return o;
         }
 

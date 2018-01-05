@@ -94,7 +94,8 @@ public class PetController implements BaseContorllerInterface<PetData> {
     @RequestMapping("petHarvest")
     public ResultInfo petHarvest(RequserOrder order, PetData petData) {
         resultInfo.setOrder(order);
-        petService.petharvest(resultInfo, petData);
+        boolean petharvest = petService.petharvest(resultInfo, petData);
+        resultInfo.setSucess(petharvest);
         return resultInfo;
     }
 
@@ -108,9 +109,27 @@ public class PetController implements BaseContorllerInterface<PetData> {
      * @return the result info
      */
     @RequestMapping("clean")
-    public ResultInfo clean(RequserOrder order, Long userid,Long rubbishid,Long targetid){
+    public ResultInfo clean(RequserOrder order, Long userid, Long rubbishid, Long targetid) {
         resultInfo.setOrder(order);
-        petService.clean(resultInfo,userid,rubbishid,targetid);
-    return resultInfo;
+        boolean clean = petService.clean(resultInfo, userid, rubbishid, targetid);
+        resultInfo.setSucess(clean);
+        return resultInfo;
     }
+
+    /**
+     * Sleep result info.
+     * 返回单个宠物的信息
+     *
+     * @param order     the order
+
+     * @return the result info
+     */
+    @RequestMapping("sleep")
+    public ResultInfo sleep(RequserOrder order, PetData petData) {
+        resultInfo.setOrder(order);
+        boolean onePet = petService.getOnePet(resultInfo, petData);
+        resultInfo.setSucess(onePet);
+        return resultInfo;
+    }
+
 }

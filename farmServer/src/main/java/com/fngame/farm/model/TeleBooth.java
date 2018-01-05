@@ -27,9 +27,10 @@ public class TeleBooth implements Serializable {
         try {
             long begintime = this.getBegintime().getTime() + 6 * 60 * 60 * 1000 - System.currentTimeMillis();
             long leftTime = Math.max(begintime, 0);
-            this.setLefttime(leftTime);
-        }catch (Exception e){
-            lefttime=0L;
+            lefttime = leftTime;
+        } catch (Exception e) {
+            e.printStackTrace();
+            lefttime = 0L;
         }
         return lefttime;
     }

@@ -58,17 +58,17 @@ public class PetService implements BaseServiceImpl<PetData> {
             resultInfo.setResp_code("111002");
             return false;
         }
-            for (PetData pet : pets) {
-                Integer gettype1 = pet.getGettype();
-                if (gettype == EPetGetType.GIFT.ID()&&gettype1 == EPetGetType.GIFT.ID()) {
-                    resultInfo.setResp_code("111001");
-                    return false;
-                }
-                if(pet.getBaseid().intValue()==PetData.getBaseid().intValue()){
-                    resultInfo.setResp_code("110015");
-                    return false;
-                }
+        for (PetData pet : pets) {
+            Integer gettype1 = pet.getGettype();
+            if (gettype == EPetGetType.GIFT.ID() && gettype1 == EPetGetType.GIFT.ID()) {
+                resultInfo.setResp_code("111001");
+                return false;
             }
+            if (pet.getBaseid().intValue() == PetData.getBaseid().intValue()) {
+                resultInfo.setResp_code("110015");
+                return false;
+            }
+        }
 
         if (gettype == EPetGetType.GOLD.ID()) {
             Integer money = player.getUser().getMoney();
@@ -162,6 +162,20 @@ public class PetService implements BaseServiceImpl<PetData> {
                 resultInfo.setResp_code("111010");
                 return false;
             }
+            Pets petsConfig = configManager.getPetsConfig(DBPetData.getBaseid());
+            String[] skill1 = petsConfig.skill.split("|");
+            boolean flag = false;
+            for (String s : skill1) {
+                if (s.equals(String.valueOf(PetData.getSkillid()))) {
+                    flag = true;
+                }
+            }
+            if (!flag) {
+                resultInfo.setResp_code("110016");
+                return false;
+            }
+            //判断该宠物是否有该技能
+
 
             //释放技能扣除金币
             skill skill = configManager.getSkill(PetData.getSkillid());
@@ -197,7 +211,7 @@ public class PetService implements BaseServiceImpl<PetData> {
         player.updatePet(PetData);
         ArrayList<com.fngame.farm.model.PetData> petData = new ArrayList<>();
         petData.add(DBPetData);
-        resultInfo.getData().put("pets",petData);
+        resultInfo.getData().put("pets", petData);
         return true;
     }
 
@@ -277,7 +291,7 @@ public class PetService implements BaseServiceImpl<PetData> {
         long skillCD = 0;
         long waitCD = 0;
         if (petData.getSkillstatus() != 0) {
-            com.fngame.farm.configer.skill skill = ConfigManager.getInstance().getSkill(petData.getSkillstatus());
+            com.fngame.farm.configer.skill skill = ConfigManager.getInstance().getSkill(petData.getSkillid());
             if (skill != null) {
                 skillCD = skill.CostTime * 1000;
             }
@@ -289,7 +303,9 @@ public class PetService implements BaseServiceImpl<PetData> {
         if (time > 0) {
             if (petData.getSkillstatus() != 0 && petData.getStatus() == EPetStatueType.SKILING.ID()) return time;
             else {
+
                 logger.error("返回时间是出现未知错误");
+                return time;
             }
         } else {
             //如果时间到了而且没有换状态
@@ -331,18 +347,27 @@ public class PetService implements BaseServiceImpl<PetData> {
         PlayerInfo player = playerManager.getPlayer(petData.getUserid());
         PetData pet = player.getPet(petData.getId());
         this.getLefttime(pet);
-        if (pet.getStatus() != EPetStatueType.SKILING.ID()) {
+        if (pet.getStatus() == EPetStatueType.SKILING.ID() || pet.getStatus() == EPetStatueType.PACKSACK.ID()) {
             resultInfo.setResp_code("111005");
             return false;
         }
-        if (pet.getLefttime() != 0) {
+    /*    if (pet.getLefttime() != 0) {
             resultInfo.setResp_code("111006");
             return false;
+        }*/
+        petData.setPropsid(pet.getPropsid());
+        petData.setPropscount(pet.getPropscount());
+        if (pet.getPropsid() != 0) {
+            player.addProp(pet.getPropsid(), pet.getPropscount());
+            pet.setPropscount(0);
+            pet.setPropsid(0);
+            player.updatePet(pet);
         }
+
         ArrayList<PetData> pets = new ArrayList<>(1);
-        boolean add = pets.add(pet);
+        boolean add = pets.add(petData);
         HashMap<String, Object> data = resultInfo.getData();
-        Integer skillstatus = pet.getSkillstatus();
+  /*      Integer skillstatus = pet.getSkillstatus();
         //todo 添加不同技能的收获产物
         if (skillstatus == EPetSkillType.SEARCH.ID()) {
             data.put("pets", pets);
@@ -351,6 +376,8 @@ public class PetService implements BaseServiceImpl<PetData> {
         } else if (skillstatus == EPetSkillType.TRICK.ID()) {
             data.put("pets", pets);
         }
+*/
+        data.put("pets", pets);
         return true;
     }
 
@@ -372,6 +399,19 @@ public class PetService implements BaseServiceImpl<PetData> {
         ArrayList<Building> buildings = new ArrayList<>(1);
         buildings.add(oneBuilding);
         data.put("buildings", buildings);
+        return true;
+    }
+
+    public boolean getOnePet(ResultInfo resultInfo, PetData petData) {
+        PlayerInfo player = playerManager.getPlayer(petData.getUserid());
+        PetData pet = player.getPet(petData.getId());
+        if (pet == null) {
+            resultInfo.setResp_code("110004");
+            return false;
+        }
+        ArrayList<PetData> petData1 = new ArrayList<>(1);
+        petData1.add(pet);
+        resultInfo.getData().put("pets", petData1);
         return true;
     }
 }

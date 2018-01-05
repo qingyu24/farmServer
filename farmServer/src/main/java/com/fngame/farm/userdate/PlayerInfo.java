@@ -1,8 +1,9 @@
 package com.fngame.farm.userdate;
 
+import com.fngame.farm.configer.Craft;
 import com.fngame.farm.etypes.EFriendType;
-import com.fngame.farm.etypes.EPropType;
 import com.fngame.farm.manager.BaseAutowired;
+import com.fngame.farm.manager.ConfigManager;
 import com.fngame.farm.manager.PlayerManager;
 import com.fngame.farm.mapper.*;
 import com.fngame.farm.model.*;
@@ -32,7 +33,7 @@ public class PlayerInfo extends BaseAutowired implements Serializable {
     public List<FriendInfo> getFriendList() {
 
         FriendInfoMapper friendInfoMapper = (FriendInfoMapper) BeanTools.getBean(FriendInfoMapper.class);
-        FriendInfoExample friendInfoExample = (FriendInfoExample) BeanTools.getBean(FriendInfoExample.class);
+        FriendInfoExample friendInfoExample = new FriendInfoExample();
         friendInfoExample.clear();
         FriendInfoExample.Criteria criteria3 = friendInfoExample.createCriteria();
         criteria3.andUseridEqualTo(this.getId());
@@ -91,24 +92,56 @@ public class PlayerInfo extends BaseAutowired implements Serializable {
         return craftProduces;
     }
 
-    //插入一个待生产的物品;
-    public void insertCraft(int type, Long buildingId, int itemId, int size) {
+      
+     /*插入一个待生产的物品;
+     * @param type 物品的类型 参考EItemType
+     * @param buildingId //目标建筑的id；
+     * @param itemId //物品的基础表的ID；
+     */
+    public CraftProduce insertCraft(int type, Long buildingId, int itemId){
 
+        Craft baseCraft = ConfigManager.getInstance().getCraftById(itemId);
+        if (null == baseCraft){
+            return null;
+        }
         List<CraftProduce> list = getCraftListByBuildingId(buildingId);
         CraftProduceMapper mapper = (CraftProduceMapper) BeanTools.getBean(CraftProduceMapper.class);
-        CraftProduce craft = new CraftProduce();
+     
+        CraftProduce craft  = new CraftProduce();
+
         craft.setBegintime(new Date());
         craft.setUserid(getId());
         craft.setType(type);
         craft.setBuildingid(buildingId);
         craft.setProductbaseid(itemId);
-        craft.setSize(size);
+        craft.setSize(baseCraft.OutputNum);
         craft.setInproduce(list.size()); //排队待生产列表;
         mapper.insertSelective(craft);
+        return craft;
     }
 
+    /**
+     * 原材料是否充足;
+     * @param baseId
+     * @return
+     */
+    public boolean isEnoughStuff(int baseId) {
+        Craft baseCraft = ConfigManager.getInstance().getCraftById(baseId);
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        String[] str = baseCraft.Staff.split("|");
+        for (int i = 0; i < str.length; ++i) {
+            String[] obj = str[i].split("_");
+            int id = Integer.parseInt(obj[0]);
+            int count = Integer.parseInt(obj[1]);
+            Goods good = getOneGoods(id);
+            if (null == good || good.getCount() < count) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-    public boolean removeCraftById(Long id) {
+    public boolean removeCraftById(Long id){
         CraftProduceMapper mapper = (CraftProduceMapper) BeanTools.getBean(CraftProduceMapper.class);
         int count = mapper.deleteByPrimaryKey(id);
         return count > 0;
@@ -186,40 +219,38 @@ public class PlayerInfo extends BaseAutowired implements Serializable {
         return animals;
     }
 
+
+    /**
+     * 获取农作的列表;
+     * @return
+     */
     public List<Props> getCrops() {
         PropsMapper mapper = (PropsMapper) BeanTools.getBean(PropsMapper.class);
         PropsExample exp = new PropsExample();
         exp.clear();
-        PropsExample.Criteria criteria4 = exp.createCriteria();
-        criteria4.andUseridEqualTo(getId());
-        criteria4.andTypeEqualTo(EPropType.CROPS.ID());
+        exp.createCriteria().andUseridEqualTo(getId()).andTypeEqualTo(1);
         List<Props> props = mapper.selectByExample(exp);
         return props;
     }
 
-    public Crops getCropsByBaseId(int baseId) {
-        CropsMapper mapper = (CropsMapper) BeanTools.getBean(CropsMapper.class);
-        CropsExample exp = new CropsExample();
-        exp.clear();
-        exp.createCriteria().andUseridEqualTo(getId()).andBaseidEqualTo(baseId);
-        List<Crops> crops = mapper.selectByExample(exp);
-        return crops.isEmpty() ? null : crops.get(0);
-    }
-
     //添加一个农作物;
-    public Crops addCrops(int baseId, int count) {
-        CropsMapper mapper = (CropsMapper) BeanTools.getBean(CropsMapper.class);
 
-        Crops c = getCropsByBaseId(baseId);
+ 
+    public Props addProp(int baseId, int count) {
+        PropsMapper mapper = (PropsMapper) BeanTools.getBean(PropsMapper.class);
+
+        Props c = getPropByBaseId(baseId);
+
         if (null != c) {
             c.setCount(c.getCount() + count);
             return c;
+ 
         } else {
-            Crops crop = new Crops();
+            Props crop = new Props();
             crop.setUserid(getId());
             crop.setBaseid(baseId);
-            crop.setStatus( 0);
-            crop.setTargetId(0);
+            crop.setStatus(0);
+            crop.setTargetId(0L);
             crop.setCount(count);
             mapper.insertSelective(crop);
             return crop;
@@ -253,9 +284,6 @@ public class PlayerInfo extends BaseAutowired implements Serializable {
     * */
     public StreetMarket getOneStreetMarketInfo(Long id) {
         StreetMarketMapper mapper = (StreetMarketMapper) BeanTools.getBean(StreetMarketMapper.class);
-        StreetMarketExample exp = new StreetMarketExample();
-        exp.clear();
-        exp.createCriteria().andIdIsNotNull().andIdEqualTo(id);
         StreetMarket streetMarket = mapper.selectByPrimaryKey(id);
         return streetMarket;
     }
@@ -265,8 +293,6 @@ public class PlayerInfo extends BaseAutowired implements Serializable {
     * */
     public boolean addStreetMarketGoods(StreetMarket streetMarket) {
         StreetMarketMapper mapper = (StreetMarketMapper) BeanTools.getBean(StreetMarketMapper.class);
-        StreetMarketExample exp = new StreetMarketExample();
-        exp.clear();
         int row = mapper.insertSelective(streetMarket);
         return row > 0;
     }
@@ -276,8 +302,6 @@ public class PlayerInfo extends BaseAutowired implements Serializable {
     * */
     public boolean updateStreetMarketGoods(StreetMarket streetMarket) {
         StreetMarketMapper mapper = (StreetMarketMapper) BeanTools.getBean(StreetMarketMapper.class);
-        StreetMarketExample exp = new StreetMarketExample();
-        exp.clear();
         int row = mapper.updateByPrimaryKeySelective(streetMarket);
         return row > 0;
     }
@@ -286,30 +310,20 @@ public class PlayerInfo extends BaseAutowired implements Serializable {
     * 物品上架后在crops表或grops表中更新count值
     * */
 
-    public boolean updateGoodsCountNumber(Goods goods, Integer flag) {
+
+    public boolean updateGoodsCountNumber(Props props) {
         int row;
-        if (flag == 0) {
-            Crops crop = (Crops) goods;
-            row = cropsMapper.updateByPrimaryKeySelective(crop);
-        } else {
-            Props prop = (Props) goods;
-            row = propsMapper.updateByPrimaryKeySelective(prop);
-        }
+        row = propsMapper.updateByPrimaryKeySelective(props);
         return row > 0;
     }
 
     /*
     * 添加购买物品：购买物品后，当玩家没有该物品信息，需要新增数据
     * */
-    public boolean addBuyGoods(Goods goods, Integer flag) {
+ 
+    public boolean addBuyGoods(Props props) {
         int row;
-        if (flag == 0) {
-            Crops crop = (Crops) goods;
-            row = cropsMapper.insertSelective(crop);
-        } else {
-            Props prop = (Props) goods;
-            row = propsMapper.insertSelective(prop);
-        }
+        row = propsMapper.insertSelective(props);
         return row > 0;
     }
 
@@ -318,11 +332,36 @@ public class PlayerInfo extends BaseAutowired implements Serializable {
     * */
     public boolean deleteStreetMarketGoods(Long id) {
         StreetMarketMapper mapper = (StreetMarketMapper) BeanTools.getBean(StreetMarketMapper.class);
-        StreetMarketExample exp = new StreetMarketExample();
-        exp.clear();
         int row = mapper.deleteByPrimaryKey(id);
         return row > 0;
     }
+
+    /*
+    * 查询玩家对应的摊位上是否有物品
+    * */
+    public StreetMarket isEqualsStallNumber(Long userid,Integer stallnumber){
+        StreetMarketMapper mapper = (StreetMarketMapper) BeanTools.getBean(StreetMarketMapper.class);
+        StreetMarketExample exp = new StreetMarketExample();
+        exp.clear();
+        exp.createCriteria().andUseridEqualTo(userid).andStallnumberEqualTo(stallnumber);
+        List<StreetMarket> streetMarketList = mapper.selectByExample(exp);
+        return streetMarketList.isEmpty() ? null : streetMarketList.get(0);
+    }
+
+
+
+    /**
+     *@Author:Tian
+     *@Description: 物品上架后仓库中的count数若为0，则删除仓库的这条数据
+     *@Date: 12:28 2018/1/4
+     */
+
+    public boolean deleteGoods(Props props){
+        int row;
+        row = propsMapper.deleteByPrimaryKey(props.getId());
+        return row > 0;
+    }
+
 
     /*
     * 更新玩家数据:购买物品后玩家的金钱数增减
@@ -332,6 +371,91 @@ public class PlayerInfo extends BaseAutowired implements Serializable {
         return row > 0;
     }
 
+    /**
+     *@Author:Tian
+     *@Description: 获取车库信息
+     *@Date: 10:17 2018/1/4
+     */
+    public List<CarInfo> getCarInfoByUserId(Long userid){
+        CarInfoMapper mapper = (CarInfoMapper) BeanTools.getBean(CarInfoMapper.class);
+        CarInfoExample exp = new CarInfoExample();
+        exp.clear();
+        exp.createCriteria().andUseridEqualTo(userid);
+        List<CarInfo> carInfoList = mapper.selectByExample(exp);
+        return carInfoList;
+    }
+
+    public CarInfo getOneCarInfo(long carinfoid){
+        CarInfoMapper mapper = (CarInfoMapper) BeanTools.getBean(CarInfoMapper.class);
+        CarInfo carInfo=mapper.selectByPrimaryKey(carinfoid);
+        return carInfo;
+    }
+
+    /**
+     *@Author:Tian
+     *@Description: 获取留言信息
+     *@Date: 19:06 2018/1/4
+     */
+    public List<Message> getMessage(Long carinfoid){
+        MessageMapper mapper = (MessageMapper)BeanTools.getBean(MessageMapper.class);
+        MessageExample exp = new MessageExample();
+        exp.clear();
+        exp.createCriteria().andCarinfoidEqualTo(carinfoid);
+        List<Message> messageList = mapper.selectByExampleWithBLOBs(exp);
+        return messageList;
+    }
+
+    /**
+     *@Author:Tian
+     *@Description: 获得点赞数量
+     *@Date: 19:42 2018/1/4
+     */
+    public Integer getLikeInfoCount(Long carinfoid){
+        LikeInfoMapper mapper = (LikeInfoMapper)BeanTools.getBean(LikeInfoMapper.class);
+        LikeInfoExample exp = new LikeInfoExample();
+        exp.clear();
+        exp.createCriteria().andCarinfoidEqualTo(carinfoid);
+        int likeinfonum=mapper.countByExample(exp);
+        return likeinfonum;
+    }
+
+    /**
+     *@Author:Tian
+     *@Description: 判断玩家是否已点过赞
+     *@Date: 19:55 2018/1/4
+     */
+    public boolean userIsLikeInfo(Long carinfoid,Long userid){
+        LikeInfoMapper mapper = (LikeInfoMapper)BeanTools.getBean(LikeInfoMapper.class);
+        LikeInfoExample exp = new LikeInfoExample();
+        exp.clear();
+        exp.createCriteria().andCarinfoidEqualTo(carinfoid).andUseridEqualTo(userid);
+        List<LikeInfo> likeInfoList = mapper.selectByExample(exp);
+        if(likeInfoList==null||likeInfoList.size()==0){
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    /**
+     *@Author:Tian
+     *@Description: 点赞功能
+     *@Date: 10:03 2018/1/5
+     */
+    public boolean addLikeInfo(LikeInfo likeInfo){
+        LikeInfoMapper mapper = (LikeInfoMapper)BeanTools.getBean(LikeInfoMapper.class);
+        int row = mapper.insertSelective(likeInfo);
+        return row>0;
+    }
+ /*   public List getWarehouse() {
+        CropsMapper  mapper = (CropsMapper) BeanTools.getBean(CropsMapper.class);
+        CropsExample exp = new CropsExample();
+        exp.clear();
+        exp.createCriteria().andUseridEqualTo(getId());
+        exp.createCriteria().andWarehouseEqualTo(1);
+        List<Crops> crops = mapper.selectByExample(exp);
+        return crops;
+    }*/
 
     private List<Props> s_props;
 
@@ -344,17 +468,6 @@ public class PlayerInfo extends BaseAutowired implements Serializable {
         return props;
     }
 
-
-    public List<Crops> getSellingCrops() {
-        CropsMapper mapper = (CropsMapper) BeanTools.getBean(CropsMapper.class);
-        CropsExample exp = new CropsExample();
-        exp.clear();
-        exp.createCriteria().andUseridEqualTo(getId());
-        List<Crops> crops = mapper.selectByExample(exp);
-        return crops;
-    }
-
-
     public void UpdatePlayer() {
         PlayerManager bean = (PlayerManager) BeanTools.getBean(PlayerManager.class);
         bean.UpdatePlayer(this);
@@ -366,30 +479,44 @@ public class PlayerInfo extends BaseAutowired implements Serializable {
         exp.clear();
         PropsExample.Criteria criteria4 = exp.createCriteria();
         criteria4.andUseridEqualTo(getId()).andBaseidEqualTo(baseid);
-        criteria4.andUseridEqualTo(getId());
-        criteria4.andBaseidEqualTo(baseid);
-        criteria4.andUseridEqualTo(getId()).andBaseidEqualTo(baseid);
+        List<Props> props = mapper.selectByExample(exp);
+        return props.isEmpty() ? null : props.get(0);
+
+    }
+
+
+    public Props getPropById(Long Id) {
+        PropsMapper mapper = (PropsMapper) BeanTools.getBean(PropsMapper.class);
+        PropsExample exp = new PropsExample();
+        exp.clear();
+
+        PropsExample.Criteria criteria4 = exp.createCriteria();
+        criteria4.andUseridEqualTo(getId()).andIdEqualTo(Id.longValue());
         List<Props> props = mapper.selectByExample(exp);
 
         return props.isEmpty() ? null : props.get(0);
 
     }
 
-    public Crops getCropById(Long id) {
-        CropsMapper mapper = (CropsMapper) BeanTools.getBean(CropsMapper.class);
-        CropsExample exp = new CropsExample();
-        exp.clear();
-        exp.createCriteria().andUseridEqualTo(getId()).andIdEqualTo(id);
-        List<Crops> crops = mapper.selectByExample(exp);
-        return crops.isEmpty() ? null : crops.get(0);
+
+    /**
+     * 从粮仓或者货仓里面获取一个道具;
+     * @param baseid
+     * @return
+     */
+    public Goods getOneGoods(Integer baseid) {
+        Props cropss = this.getPropByBaseId(baseid);
+        return cropss;
     }
 
-    public Goods getOneGoods(Integer baseid) {
-        Crops cropss = this.getCropsByBaseId(baseid);
-        if (cropss == null) {
-            return this.getPropByBaseId(baseid);
-        }
-        return cropss;
+    /**
+     * 根据id从粮仓或者货仓里面删除一组道具;
+     * @param id
+     * @return
+     */
+    public boolean removeGoodsById(int id){
+
+        return true;
     }
 
     public List<PetData> getPets() {
@@ -443,6 +570,7 @@ public class PlayerInfo extends BaseAutowired implements Serializable {
     }
 
     public List<Friend> getAgreeFriends(Long userid) {
+        FriendExample friendExample = new FriendExample();
         friendExample.clear();
         FriendExample.Criteria criteria = friendExample.createCriteria();
         criteria.andUseridEqualTo(userid).andAgreeEqualTo(EFriendType.AGREE.ID());

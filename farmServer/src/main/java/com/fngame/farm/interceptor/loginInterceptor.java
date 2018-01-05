@@ -1,6 +1,8 @@
 package com.fngame.farm.interceptor;
 
 import com.fngame.farm.util.MD5;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -11,6 +13,8 @@ import java.util.*;
 
 @Component
 public class loginInterceptor extends HandlerInterceptorAdapter {
+    Logger logger = LoggerFactory.getLogger(this.getClass());
+
     public loginInterceptor() {
         super();
     }
@@ -29,8 +33,8 @@ public class loginInterceptor extends HandlerInterceptorAdapter {
             map.put(paramName, paramValue);
         }
         String ret = getSignData(map);
-        System.out.println("收到消息");
-        System.out.println(map.toString());
+        logger.info("请求地址为" + request.getServletPath());
+        logger.info("请求参数" + map.toString());
 /*        return Verify(ret, request.getParameter("sign"));*/
         return true;
     }
@@ -39,11 +43,13 @@ public class loginInterceptor extends HandlerInterceptorAdapter {
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
 
         super.postHandle(request, response, handler, modelAndView);
+
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         super.afterCompletion(request, response, handler, ex);
+
 
     }
 
